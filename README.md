@@ -1,5 +1,5 @@
 # About 
-
+A RPG Game based on Tupi-Guarani mythology in Brazil
 
 # Framework 
 
@@ -8,6 +8,9 @@
 
 # Features
 
+1. Isometric Map
+1. Physics
+1. Colision
 
 # Case Tools
 
@@ -19,6 +22,7 @@
 1. Facebook - Forum 
 1. Skype - Online Meeting 
 1. Office 365 Online - Documentation
+1. Canva - Diagramation
 
 
 # Links úteis
