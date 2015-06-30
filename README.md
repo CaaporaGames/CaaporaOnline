@@ -24,6 +24,14 @@ A RPG Game based on Tupi-Guarani mythology in Brazil
 1. Office 365 Online - Documentation
 1. Canva - Diagramation
 
+# Como rodar 
+
+1. Instale o PHP em sua máquina 
+1. Abra o terminal
+1. Vá até a pasta raiz onde estão os aquivos do jogo
+1. rode o comando php -S localhost:8000
+1. Abra o navegador em http://localhost:8000
+
 
 # Links úteis
 
