@@ -12,6 +12,7 @@ BasicGame.Boot = function (game) {
 };
 var isoGroup, water = [];
 var floorGroup;
+var treeGroup;
 var player;
 var cursors;
 BasicGame.Boot.prototype =
@@ -25,6 +26,7 @@ BasicGame.Boot.prototype =
 
         // game.load.atlasJSONHash('tileset', 'assets/tileset.png', 'assets/tileset.json');
         game.load.image('tile', 'assets/ground_tile.png');
+        game.load.image('tree', 'assets/tree.png');
         game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
         // Set the world size
         game.world.setBounds(0, 0, 2048, 1024);
@@ -36,6 +38,7 @@ BasicGame.Boot.prototype =
     create: function () {
         isoGroup = game.add.group();
         floorGroup = game.add.group();
+        treeGroup = game.add.group();
         
         // we won't really be using IsoArcade physics, but I've enabled it anyway so the debug bodies can be seen
         /*isoGroup.enableBody = true;
@@ -70,6 +73,32 @@ BasicGame.Boot.prototype =
                 floorTile.anchor.set(0.5);
             }
         }
+        
+        var treeTile;
+	        for (var xt = 1024; xt > 0; xt -= 35) {
+	            for (var yt = 1024; yt > 0; yt -= 35) {
+	            	
+	            	var rnd = rndNum(20);
+	            	
+	            	if (rnd == 0) {
+	            		treeTile = game.add.isoSprite(xt, yt, 0, 'tree', 0, treeGroup);
+	            		treeTile.anchor.set(0.5);
+	            	}
+	            	else if (rnd == 1)
+	            	{
+	            		treeTile = game.add.isoSprite(xt, yt, 0, 'tree', 0, treeGroup);
+	            		treeTile.anchor.set(0.5);
+	            	}
+	            	else if (rnd == 2)
+	            	{
+	            		treeTile = game.add.isoSprite(xt, yt, 0, 'tree', 0, treeGroup);
+	            		treeTile.anchor.set(0.5);
+	            	}
+	            	
+	            	
+
+	            }
+	        }
         
         /*var tiles = [
             9, 2, 1, 1, 4, 4, 1, 6, 2, 10, 2,
@@ -183,7 +212,15 @@ BasicGame.Boot.prototype =
         game.debug.text(game.time.fps || '--', 2, 14, "#a7aebe");
         // game.debug.text(Phaser.VERSION, 2, game.world.height - 2, "#ffff00");
     }
+    
 };
 
 game.state.add('Boot', BasicGame.Boot);
 game.state.start('Boot');
+
+// generate random number
+function rndNum(num) {
+
+    return Math.round(Math.random() * num);
+
+}
