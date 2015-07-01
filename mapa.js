@@ -139,6 +139,7 @@ BasicGame.Boot.prototype =
         
         //  Reset the players velocity (movement)
         player.body.velocity.x = 0;
+        player.body.velocity.y = 0;
 
         if (cursors.left.isDown)
         {
@@ -170,6 +171,8 @@ BasicGame.Boot.prototype =
             player.animations.stop();
 
             player.frame = 4;
+            player.body.velocity.x = 0;
+            player.body.velocity.y = 0;
         }
         
     },
