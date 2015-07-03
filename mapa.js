@@ -25,7 +25,7 @@ BasicGame.Boot.prototype =
         game.stage.disableVisibilityChange = false;*/
         
         // game.load.atlasJSONHash('tileset', 'assets/tileset.png', 'assets/tileset.json');
-        game.load.image('tile', 'assets/ground_tile.png');
+        game.load.image('ground', 'assets/ground_tile.png');
         game.load.image('tree', 'assets/tree.png');
         game.load.audio('backgroundMusic', ['assets/audio/amazon-florest.mp3', 'assets/audio/amazon-florest.ogg']);
         game.load.spritesheet('cobra', 'assets/king_cobra.png', 95, 96);
@@ -73,8 +73,12 @@ BasicGame.Boot.prototype =
         
         for (var xt = 1024; xt > 0; xt -= 35) {
             for (var yt = 1024; yt > 0; yt -= 35) {
-                floorTile = game.add.isoSprite(xt, yt, 0, 'tile', 0, floorGroup);
+                floorTile = game.add.isoSprite(xt, yt, 0.2, 'ground', 0, floorGroup);
                 floorTile.anchor.set(0.5,0);
+                
+                game.physics.isoArcade.enable(floorTile);
+                floorTile.body.collideWorldBounds = true;
+                floorTile.body.bounce.set(1, 1, 0.2);
                 
             }
         }
@@ -209,6 +213,8 @@ BasicGame.Boot.prototype =
         
         game.iso.topologicalSort(isoGroup);
         
+        //correção na junção dos sprites de solo
+        game.iso.topologicalSort(floorGroup);
        // game.physics.isoArcade.collide(treeGroup,player);
         
         //game.physics.isoArcade.collide(player);
@@ -261,9 +267,15 @@ BasicGame.Boot.prototype =
         
     },
     render: function () {
-        isoGroup.forEach(function (tile) {
-           // game.debug.body(tile, 'rgba(189, 221, 235, 0.6)', false);
+        isoGroup.forEach(function (tree) {
+            game.debug.body(tree, 'rgba(189, 221, 235, 0.6)', false);
         });
+        
+        /*
+        floorGroup.forEach(function (ground) {
+            game.debug.body(ground, 'rgba(189, 221, 235, 0.6)', false);
+        }); */
+         
         game.debug.text(game.time.fps || '--', 2, 14, "#a7aebe");
         // game.debug.text(Phaser.VERSION, 2, game.world.height - 2, "#ffff00");
     }
