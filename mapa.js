@@ -81,7 +81,7 @@ BasicGame.Boot.prototype =
 	            	
 	            	if (rnd == 0) {
 	            		treeTile = game.add.isoSprite(xt, yt, 0, 'tree', 0, isoGroup);
-	            		treeTile.anchor.set(0.5,0.2);
+	            		treeTile.anchor.set(0.5);
                                 game.physics.isoArcade.enable(treeTile);
                                 treeTile.body.collideWorldBounds = true;
                                 treeTile.body.immovable = true;
@@ -92,7 +92,7 @@ BasicGame.Boot.prototype =
 	            	else if (rnd == 1)
 	            	{
 	            		treeTile = game.add.isoSprite(xt, yt, 0, 'tree', 0, isoGroup);
-	            		treeTile.anchor.set(0.5,0.2);
+	            		treeTile.anchor.set(0.5);
                                 game.physics.isoArcade.enable(treeTile);
                                 treeTile.body.collideWorldBounds = true;
                                 treeTile.body.immovable = true;
@@ -101,7 +101,7 @@ BasicGame.Boot.prototype =
 	            	else if (rnd == 2)
 	            	{
 	            		treeTile = game.add.isoSprite(xt, yt, 0, 'tree', 0, isoGroup);
-	            		treeTile.anchor.set(0.5,0.2);
+	            		treeTile.anchor.set(0.5);
                                 game.physics.isoArcade.enable(treeTile);
                                 treeTile.body.collideWorldBounds = true;
                                 treeTile.body.immovable = true;
