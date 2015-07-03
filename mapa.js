@@ -14,6 +14,7 @@ var isoGroup, water = [];
 var floorGroup;
 var treeGroup;
 var player;
+var cobra;
 var cursors;
 BasicGame.Boot.prototype =
 {
@@ -27,6 +28,7 @@ BasicGame.Boot.prototype =
         // game.load.atlasJSONHash('tileset', 'assets/tileset.png', 'assets/tileset.json');
         game.load.image('tile', 'assets/ground_tile.png');
         game.load.image('tree', 'assets/tree.png');
+        game.load.spritesheet('cobra', 'assets/king_cobra_0.1/king_cobra.png', 95, 96);
         game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
         // Set the world size
         game.world.setBounds(0, 0, 2048, 1024);
@@ -75,30 +77,39 @@ BasicGame.Boot.prototype =
         }
         
         var treeTile;
-	        for (var xt = 1024; xt > 0; xt -= 35) {
-	            for (var yt = 1024; yt > 0; yt -= 35) {
-	            	
-	            	var rnd = rndNum(20);
-	            	
-	            	if (rnd == 0) {
-	            		treeTile = game.add.isoSprite(xt, yt, 0, 'tree', 0, treeGroup);
-	            		treeTile.anchor.set(0.5);
-	            	}
-	            	else if (rnd == 1)
-	            	{
-	            		treeTile = game.add.isoSprite(xt, yt, 0, 'tree', 0, treeGroup);
-	            		treeTile.anchor.set(0.5);
-	            	}
-	            	else if (rnd == 2)
-	            	{
-	            		treeTile = game.add.isoSprite(xt, yt, 0, 'tree', 0, treeGroup);
-	            		treeTile.anchor.set(0.5);
-	            	}
-	            	
-	            	
+        for (var xt = 1024; xt > 0; xt -= 35) {
+            for (var yt = 1024; yt > 0; yt -= 35) {
 
-	            }
-	        }
+                var rnd = rndNum(20);
+
+                if (rnd == 0) {
+                    treeTile = game.add.isoSprite(xt, yt, 0, 'tree', 0, floorGroup);
+                    treeTile.anchor.setTo(0.5, 1);
+                    game.physics.isoArcade.enable(treeTile);
+                    treeTile.body.collideWorldBounds = true;
+                    treeTile.body.immovable = true;
+                }
+                else if (rnd == 1)
+                {
+                    treeTile = game.add.isoSprite(xt, yt, 0, 'tree', 0, floorGroup);
+                    treeTile.anchor.setTo(0.5, 1);
+                    game.physics.isoArcade.enable(treeTile);
+                    treeTile.body.collideWorldBounds = true;
+                    treeTile.body.immovable = true;
+                }
+                else if (rnd == 2)
+                {
+                    treeTile = game.add.isoSprite(xt, yt, 0, 'tree', 0, floorGroup);
+                    treeTile.anchor.setTo(0.5, 1);
+                    game.physics.isoArcade.enable(treeTile);
+                    treeTile.body.collideWorldBounds = true;
+                    treeTile.body.immovable = true;
+                }
+
+
+
+            }
+        }
         
         /*var tiles = [
             9, 2, 1, 1, 4, 4, 1, 6, 2, 10, 2,
@@ -137,6 +148,15 @@ BasicGame.Boot.prototype =
             }
         }*/
         
+        // Create a cobra.
+        cobra = game.add.isoSprite(150, 180, 0, 'cobra', 0, floorGroup);
+        // Animations.
+        cobra.animations.add('left', [9, 10, 11], 10, true);
+        cobra.animations.add('right', [3, 4, 5], 10, true);
+        cobra.anchor.set(0.5);
+        game.physics.isoArcade.enable(cobra);
+        cobra.body.collideWorldBounds = true;
+        
         // Create player.
         player = game.add.isoSprite(50, 80, 0, 'dude', 0, floorGroup);
         // player = game.add.sprite(350, game.world.height - 350, 'dude');
@@ -173,9 +193,12 @@ BasicGame.Boot.prototype =
         if (cursors.left.isDown)
         {
             //  Move to the left
-            player.body.velocity.x = -150;
-
+            player.body.velocity.x = -150;            
             player.animations.play('left');
+            
+            // Cobra moves.
+            cobra.body.velocity.x = -150;
+            cobra.animations.play('left');
         }
         else if (cursors.right.isDown)
         {
@@ -183,6 +206,9 @@ BasicGame.Boot.prototype =
             player.body.velocity.x = 150;
 
             player.animations.play('right');
+            
+            cobra.body.velocity.x = 150;
+            cobra.animations.play('right');
         }
         else if (cursors.up.isDown)
         {
