@@ -18,11 +18,9 @@ var cursors;
 BasicGame.Boot.prototype =
 {
     preload: function () {
-        game.time.advancedTiming = true;
+        
         /*game.debug.renderShadow = false;
         game.stage.disableVisibilityChange = false;*/
-
-        game.plugins.add(new Phaser.Plugin.Isometric(game));
         
         // game.load.atlasJSONHash('tileset', 'assets/tileset.png', 'assets/tileset.json');
         game.load.image('tile', 'assets/ground_tile.png');
@@ -32,9 +30,12 @@ BasicGame.Boot.prototype =
         // Set the world size
         game.world.setBounds(0, 0, 2048, 1024);
         // Start the physical system
+        
+        game.time.advancedTiming = true;
        
          game.physics.startSystem(Phaser.Plugin.Isometric.ISOARCADE);
          
+         game.plugins.add(new Phaser.Plugin.Isometric(game));
         //  Enable p2 physics
 	//game.physics.startSystem(Phaser.Physics.P2JS);
 
@@ -42,7 +43,7 @@ BasicGame.Boot.prototype =
        // game.physics.p2.restitution = 0.8;
     
         // set the middle of the world in the middle of the screen
-        game.iso.anchor.setTo(0.5, 0);
+        game.iso.anchor.setTo(0.5, 0.2);
     },
     create: function () {
         isoGroup = game.add.group();
@@ -65,7 +66,7 @@ BasicGame.Boot.prototype =
         for (var xt = 1024; xt > 0; xt -= 35) {
             for (var yt = 1024; yt > 0; yt -= 35) {
                 floorTile = game.add.isoSprite(xt, yt, 0, 'tile', 0, isoGroup);
-                floorTile.anchor.set(0.5,0.2);
+                //floorTile.anchor.set(0.5,0.2);
                 
              //   game.physics.p2.enable(floorTile);
               //  floorTile.body.setCircle(44);     
@@ -77,7 +78,7 @@ BasicGame.Boot.prototype =
 	        for (var xt = 1024; xt > 0; xt -= 35) {
 	            for (var yt = 1024; yt > 0; yt -= 35) {
 	            	
-	            	var rnd = rndNum(90);
+	            	var rnd = rndNum(190);
 	            	
 	            	if (rnd == 0) {
 	            		treeTile = game.add.isoSprite(xt, yt, 0, 'tree', 0, isoGroup);
@@ -109,13 +110,12 @@ BasicGame.Boot.prototype =
                                
 	            	}else if (rnd == 3)
 	            	{
-	            		treeTile = game.add.isoSprite(xt, yt, -10, 'cube', 0, isoGroup);
-	            		treeTile.anchor.set(0.5,0.2);
+	            		treeTile = game.add.isoSprite(xt, yt, 0, 'cube', 0, isoGroup);
+	            		treeTile.anchor.set(0.5);
                                 game.physics.isoArcade.enable(treeTile);
                                 treeTile.body.collideWorldBounds = true;
-                                //treeTile.body.immovable = true;
                                 treeTile.body.bounce.set(1, 1, 0.2);
-                                treeTile.body.drag.set(100, 100, 0);
+                            
                                
 	            	}
                         
@@ -129,21 +129,23 @@ BasicGame.Boot.prototype =
       // Create player.
         player = game.add.isoSprite(50, 80, 0, 'dude', 0, isoGroup);
         // player = game.add.sprite(350, game.world.height - 350, 'dude');
+    
         
+        player.anchor.set(0.5);
 
+        game.physics.isoArcade.enable(player);
+        player.body.collideWorldBounds = true;
         //  Our two animations, walking left and right.
         player.animations.add('left', [0, 1, 2, 3], 10, true);
         player.animations.add('right', [5, 6, 7, 8], 10, true);
-        player.anchor.set(0.5);
+      
         //  Player physics properties. Give the little guy a slight bounce.
-        game.physics.isoArcade.enable(player);
+        
 /*        player.body.bounce.y = 0.2;
         player.body.gravity.y = 300; */
-        player.body.collideWorldBounds = true;
-        
-        player.body.bounce.set(1, 1, 0.2);
-        
-       // game.physics.p2.enable(player);
+      
+      // game.physics.p2.enable(player);
+    
        // player.body.setCircle(44);      
         game.camera.follow(player);
         
@@ -157,6 +159,8 @@ BasicGame.Boot.prototype =
         });*/
         
         game.physics.isoArcade.collide(isoGroup);
+        
+        game.iso.topologicalSort(isoGroup);
         
        // game.physics.isoArcade.collide(treeGroup,player);
         
