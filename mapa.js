@@ -16,6 +16,7 @@ var treeGroup;
 var player;
 var cobra;
 var cursors;
+var backgroundMusic;
 BasicGame.Boot.prototype =
 {
     preload: function () {
@@ -26,6 +27,7 @@ BasicGame.Boot.prototype =
         // game.load.atlasJSONHash('tileset', 'assets/tileset.png', 'assets/tileset.json');
         game.load.image('tile', 'assets/ground_tile.png');
         game.load.image('tree', 'assets/tree.png');
+        game.load.audio('backgroundMusic', ['assets/audio/amazon-florest.mp3', 'assets/audio/amazon-florest.ogg']);
         game.load.spritesheet('cobra', 'assets/king_cobra.png', 95, 96);
         game.load.image('cube', 'assets/cube.png');
         game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
@@ -55,6 +57,10 @@ BasicGame.Boot.prototype =
         // we won't really be using IsoArcade physics, but I've enabled it anyway so the debug bodies can be seen
         /*isoGroup.enableBody = true;
         isoGroup.physicsBodyType = Phaser.Plugin.Isometric.ISOARCADE;*/
+        
+        // Adicionando som de fundo.
+        backgroundMusic = game.add.audio('backgroundMusic');
+        backgroundMusic.play();
         
         // set the gravity in our game
         game.physics.isoArcade.gravity.setTo(0, 0, -500);
@@ -156,12 +162,9 @@ BasicGame.Boot.prototype =
                         game.physics.isoArcade.enable(treeTile);
                         treeTile.body.collideWorldBounds = true;
                         treeTile.body.bounce.set(1, 1, 0.2);
-                            
-                               
 	            	}
-                    
 	            }
-	        }
+        }
         
         // Create a cobra.
         cobra = game.add.isoSprite(150, 180, 0, 'cobra', 0, floorGroup);
