@@ -47,7 +47,7 @@ BasicGame.Boot.prototype =
         // game.physics.p2.restitution = 0.8;
     
         // set the middle of the world in the middle of the screen
-        game.iso.anchor.setTo(0.5, 0.2);
+        game.iso.anchor.setTo(0.5, 0);
     },
     create: function () {
         floorGroup = game.add.group();
@@ -71,14 +71,10 @@ BasicGame.Boot.prototype =
         
         var floorTile;
         
-        for (var xt = 1024; xt > 0; xt -= 35) {
-            for (var yt = 1024; yt > 0; yt -= 35) {
+        for (var xt = 0; xt < 1024; xt += 35) {
+            for (var yt = 0; yt < 1024; yt += 35) {
                 floorTile = game.add.isoSprite(xt, yt, 0.2, 'ground', 0, floorGroup);
-                floorTile.anchor.set(0.5,0);
-                
-                game.physics.isoArcade.enable(floorTile);
-                floorTile.body.collideWorldBounds = true;
-                floorTile.body.bounce.set(1, 1, 0.2);
+                floorTile.anchor.set(0.5,0.2);
                 
             }
         }
@@ -214,7 +210,7 @@ BasicGame.Boot.prototype =
         game.iso.topologicalSort(isoGroup);
         
         //correção na junção dos sprites de solo
-        game.iso.topologicalSort(floorGroup);
+        // game.iso.topologicalSort(floorGroup);
        // game.physics.isoArcade.collide(treeGroup,player);
         
         //game.physics.isoArcade.collide(player);
@@ -267,9 +263,11 @@ BasicGame.Boot.prototype =
         
     },
     render: function () {
+        
+        /*
         isoGroup.forEach(function (tree) {
             game.debug.body(tree, 'rgba(189, 221, 235, 0.6)', false);
-        });
+        }); */
         
         /*
         floorGroup.forEach(function (ground) {
