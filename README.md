@@ -23,6 +23,7 @@ A RPG Game based on Tupi-Guarani mythology in Brazil
 1. Skype - Online Meeting 
 1. Office 365 Online - Documentation
 1. Canva - Diagramation
+1. SharedLatex (https://pt.sharelatex.com/) - Publication of scientific Documents 
 
 # Como rodar 
 
