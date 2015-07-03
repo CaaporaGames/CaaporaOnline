@@ -50,8 +50,8 @@ BasicGame.Boot.prototype =
         game.iso.anchor.setTo(0.5, 0.2);
     },
     create: function () {
-        isoGroup = game.add.group();
         floorGroup = game.add.group();
+        isoGroup = game.add.group();
         treeGroup = game.add.group();
         
         // we won't really be using IsoArcade physics, but I've enabled it anyway so the debug bodies can be seen
@@ -73,12 +73,9 @@ BasicGame.Boot.prototype =
         
         for (var xt = 1024; xt > 0; xt -= 35) {
             for (var yt = 1024; yt > 0; yt -= 35) {
-                floorTile = game.add.isoSprite(xt, yt, 0, 'tile', 0, isoGroup);
-                //floorTile.anchor.set(0.5,0.2);
+                floorTile = game.add.isoSprite(xt, yt, 0, 'tile', 0, floorGroup);
+                floorTile.anchor.set(0.5,0);
                 
-             //   game.physics.p2.enable(floorTile);
-              //  floorTile.body.setCircle(44);     
-             //  floorTile.body.static = true;
             }
         }
         
@@ -167,7 +164,7 @@ BasicGame.Boot.prototype =
         }
         
         // Create a cobra.
-        cobra = game.add.isoSprite(150, 180, 0, 'cobra', 0, floorGroup);
+        cobra = game.add.isoSprite(150, 180, 0, 'cobra', 0, isoGroup);
         // Animations.
         cobra.animations.add('left', [9, 10, 11], 10, true);
         cobra.animations.add('right', [3, 4, 5], 10, true);
