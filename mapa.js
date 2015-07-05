@@ -3,7 +3,7 @@ var width = window.innerWidth;
 var height = window.innerHeight;
 
 // using canvas here just because it runs faster for the body debug stuff
-var game = new Phaser.Game(width, height, Phaser.AUTO, 'test', null, true, false);
+var game = new Phaser.Game(800, 600, Phaser.AUTO, 'test', null, true, false);
 
 var BasicGame = function (game) { };
 
@@ -32,7 +32,7 @@ BasicGame.Boot.prototype =
         game.load.image('cube', 'assets/cube.png');
         game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
         // Set the world size
-        game.world.setBounds(0, 0, 2048, 1024);
+        game.world.setBounds(0, 0, 4048, 2024);
         // Start the physical system
         
         game.time.advancedTiming = true;
@@ -54,13 +54,15 @@ BasicGame.Boot.prototype =
         isoGroup = game.add.group();
         treeGroup = game.add.group();
         
+        
+        this.camera = {x:0, y:0, direction:'', isMoving:false};
         // we won't really be using IsoArcade physics, but I've enabled it anyway so the debug bodies can be seen
         /*isoGroup.enableBody = true;
         isoGroup.physicsBodyType = Phaser.Plugin.Isometric.ISOARCADE;*/
         
         // Adicionando som de fundo.
         backgroundMusic = game.add.audio('backgroundMusic');
-        backgroundMusic.play();
+        //backgroundMusic.play();
         
         // set the gravity in our game
         game.physics.isoArcade.gravity.setTo(0, 0, -500);
@@ -71,55 +73,18 @@ BasicGame.Boot.prototype =
         
         var floorTile;
         
-        for (var xt = 0; xt < 1024; xt += 35) {
-            for (var yt = 0; yt < 1024; yt += 35) {
+        for (var xt = 0; xt < 2024; xt += 35) {
+            for (var yt = 0; yt < 2024; yt += 35) {
                 floorTile = game.add.isoSprite(xt, yt, 0.2, 'ground', 0, floorGroup);
                 floorTile.anchor.set(0.5,0.2);
                 
             }
         }
-        
-        /*var tiles = [
-            9, 2, 1, 1, 4, 4, 1, 6, 2, 10, 2,
-            2, 6, 1, 0, 4, 4, 0, 0, 2, 2, 2,
-            6, 1, 0, 0, 4, 4, 0, 0, 8, 8, 2,
-            0, 0, 0, 0, 4, 4, 0, 0, 0, 9, 2,
-            0, 0, 0, 0, 4, 4, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 4, 4, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 4, 4, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 4, 4, 0, 0, 0, 0, 0,
-            11, 11, 12, 11, 3, 3, 11, 12, 11, 11, 11,
-            3, 7, 3, 3, 3, 3, 3, 3, 7, 3, 3,
-            7, 1, 7, 7, 3, 3, 7, 7, 1, 1, 7
-        ];
-
-        var size = 32;
-
-        var i = 0, tile;
-        for (var y = size; y <= game.physics.isoArcade.bounds.frontY - size; y += size) {
-            for (var x = size; x <= game.physics.isoArcade.bounds.frontX - size; x += size) {
-                // this bit would've been so much cleaner if I'd ordered the tileArray better, but I can't be bothered fixing it :P
-                tile = game.add.isoSprite(x, y, tileArray[tiles[i]].match("water") ? 0 : game.rnd.pick([2, 3, 4]), 'tileset', tileArray[tiles[i]], isoGroup);
-                tile.anchor.set(0.5);
-                tile.smoothed = false;
-                tile.body.moves = false;
-                if (tiles[i] === 4) {
-                    tile.isoZ += 6;
-                }
-                if (tiles[i] <= 10 && (tiles[i] < 5 || tiles[i] > 6)) {
-                    tile.scale.x = game.rnd.pick([-1, 1]);
-                }
-                if (tiles[i] === 0) {
-                    //water.push(tile);
-                }
-                i++;
-            }
-        }*/
 	        
         var treeTile;
         
-        for (var xt = 1024; xt > 0; xt -= 35) {
-	            for (var yt = 1024; yt > 0; yt -= 35) {
+        for (var xt = 2024; xt > 0; xt -= 35) {
+	            for (var yt = 2024; yt > 0; yt -= 35) {
 	            	
 	            	var rnd = rndNum(190);
 	            	
@@ -173,7 +138,8 @@ BasicGame.Boot.prototype =
         cobra.body.collideWorldBounds = true;
       
         // Create player.
-        player = game.add.isoSprite(50, 80, 0, 'dude', 0, isoGroup);
+        player = game.add.isoSprite(30, 80, 0, 'dude', 0, isoGroup);
+        
 
         // player = game.add.sprite(350, game.world.height - 350, 'dude');
     
@@ -194,7 +160,7 @@ BasicGame.Boot.prototype =
       // game.physics.p2.enable(player);
     
        // player.body.setCircle(44);      
-        game.camera.follow(player);
+       // game.camera.follow(player);
         
         cursors = game.input.keyboard.createCursorKeys();
         
@@ -209,6 +175,7 @@ BasicGame.Boot.prototype =
         
         game.iso.topologicalSort(isoGroup);
         
+        this.moveCamera();
         //correção na junção dos sprites de solo
         // game.iso.topologicalSort(floorGroup);
        // game.physics.isoArcade.collide(treeGroup,player);
@@ -276,7 +243,43 @@ BasicGame.Boot.prototype =
          
         game.debug.text(game.time.fps || '--', 2, 14, "#a7aebe");
         // game.debug.text(Phaser.VERSION, 2, game.world.height - 2, "#ffff00");
-    }
+    },
+    
+    moveCamera: function(){
+        if (this.camera.isMoving)
+            return;
+
+        this.camera.isMoving = true;
+        var mustMove = false;
+
+        if (player.y > game.camera.y + game.height) {
+            this.camera.y += 1;
+            mustMove = true;
+        }
+        else if (player.y < game.camera.y) {
+            this.camera.y -= 1;
+            mustMove = true;
+        }
+        else if (player.x > game.camera.x + game.width) {
+            this.camera.x += 1;
+            mustMove = true;
+        }
+        else if (player.x < game.camera.x) {
+            this.camera.x -= 1;
+            mustMove = true;
+        }
+
+        if (mustMove) {
+            var t = game.add.tween(game.camera).to({x:this.camera.x*game.width, y:this.camera.y*game.height}, 600);
+            t.start();
+            t.onComplete.add(function(){this.camera.isMoving = false;}, this);
+        }
+        else {
+            this.camera.isMoving = false;
+        }
+    },
+    
+    
     
 };
 
