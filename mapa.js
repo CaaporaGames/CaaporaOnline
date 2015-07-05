@@ -17,6 +17,8 @@ var player;
 var cobra;
 var cursors;
 var backgroundMusic;
+var text;
+ 
 BasicGame.Boot.prototype =
 {
     preload: function () {
@@ -30,6 +32,7 @@ BasicGame.Boot.prototype =
         game.load.audio('backgroundMusic', ['assets/audio/amazon-florest.mp3', 'assets/audio/amazon-florest.ogg']);
         game.load.spritesheet('cobra', 'assets/king_cobra.png', 95, 96);
         game.load.image('cube', 'assets/cube.png');
+        game.load.image('lifeBar', 'assets/life-bar.png');
         game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
         // Set the world size
         game.world.setBounds(0, 0, 4048, 2024);
@@ -49,10 +52,15 @@ BasicGame.Boot.prototype =
         // set the middle of the world in the middle of the screen
         game.iso.anchor.setTo(0.5, 0);
     },
+    
+   
+    
     create: function () {
         floorGroup = game.add.group();
         isoGroup = game.add.group();
         treeGroup = game.add.group();
+        
+       // isoGroup.create(100, 0, 'lifeBar');
         
         
         this.camera = {x:0, y:0, direction:'', isMoving:false};
@@ -143,8 +151,18 @@ BasicGame.Boot.prototype =
 
         // player = game.add.sprite(350, game.world.height - 350, 'dude');
     
+        var style = { font: "bold 14px Arial", fill: "#333", wordWrap: true, wordWrapWidth: 150, align: "center" };
         
+        text = game.add.text(20, -50, "Caapora - HP: 100%", style);
+        text.anchor.set(0.5);
+
+         player.addChild(text);
+    
         player.anchor.set(0.5);
+        
+        player.lifebar = game.add.sprite(-20, -30, 'lifeBar');
+        player.lifebar.anchor.setTo(0.2,1);
+        player.addChild(player.lifebar);
 
         game.physics.isoArcade.enable(player);
         player.body.collideWorldBounds = true;
@@ -170,6 +188,7 @@ BasicGame.Boot.prototype =
             w.isoZ = (-2 * Math.sin((game.time.now + (w.isoX * 7)) * 0.004)) + (-1 * Math.sin((game.time.now + (w.isoY * 8)) * 0.005));
             w.alpha = Phaser.Math.clamp(1 + (w.isoZ * 0.1), 0.2, 1);
         });*/
+        
         
         game.physics.isoArcade.collide(isoGroup);
         
