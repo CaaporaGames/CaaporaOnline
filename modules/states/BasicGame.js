@@ -7,7 +7,7 @@ define([
            
         };
 
-        BasicGame.Boot = function () {
+        BasicGame = function () {
             // nothing here
         };
 
@@ -20,7 +20,7 @@ define([
         var backgroundMusic;
         var text;
 
-        BasicGame.Boot.prototype = {
+        BasicGame.prototype = {
 
             preload: function () {
 
