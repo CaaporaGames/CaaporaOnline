@@ -1,6 +1,6 @@
 requirejs.config({
   paths: {
-    Phaser: 'bower_components/phaser/build/phaser.min',  
+    Phaser: 'bower_components/phaser/build/phaser',  
     PhaserIsometricPlugin: 'bower_components/phaser-plugin-isometric/dist/phaser-plugin-isometric' 
     },
   shim: {

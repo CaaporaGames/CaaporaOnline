@@ -21,5 +21,8 @@
     "phaser-plugin-isometric": "*",
     "phaser": "~2.2.2",
     "requirejs": "~2.1.18"
+  },
+  "devDependencies": {
+    "requirejs": "~2.1.18"
   }
 }
