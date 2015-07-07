@@ -1,0 +1,23 @@
+{
+  "name": "phaser-plugin-isometric",
+  "version": "0.9.0",
+  "homepage": "https://github.com/ZeroDragon/phaser-plugin-isometric",
+  "authors": [
+    "(ZeroDragon <zr.drgn@gmail.com>)",
+    "(Lewis Lane <septimus@rotates.org>)"
+  ],
+  "description": "Phaser Isometric is a comprehensive axonometric plugin for Phaser which provides an API for handling axonometric projection of assets in 3D space to the screen. The goal has been to mimic as closely as possible the existing APIs provided by Phaser for standard orthogonal 2D projection, but add a third dimension. Also included is an Arcade-based 3D AABB physics engine, which again is closely equivalent in functionality and its API.",
+  "main": "/dist/phaser-plugin-isometric.min.js",
+  "keywords": [
+    "phaser.io",
+    "isometric"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

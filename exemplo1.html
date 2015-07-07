@@ -3,11 +3,15 @@
     <head>
         <meta charset="UTF-8" />
         <title>Exemplo Zelda Style Game!</title>
-        <script src="phaser.min.js"></script>
-        <script src="plugins/phaser-plugin-isometric.js"></script>
-        <script src="experimentos/zeldastyle.js"></script>
+        <script src="bower_components/phaser/build/phaser.js"></script>  
         <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="stylesheet" href="experimentos/style.css">
+        
+        <script>
+            
+            if (window['p2'] && window['PIXI'] && window['Phaser']) { console.log('globals ahoy'); }
+            
+        </script>
     </head>
     <body>
 

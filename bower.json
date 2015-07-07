@@ -1,0 +1,25 @@
+{
+  "name": "caapora-online",
+  "version": "0.0.1",
+  "authors": [
+    "Rômulo Lima <romulolink@gmail.com>",
+    "Mateus Souza <rhinoceroshead@gmail.com>"
+  ],
+  "description": "RPG Game",
+  "moduleType": [
+    "amd"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "phaser-plugin-isometric": "*",
+    "phaser": "~2.2.2",
+    "requirejs": "~2.1.18"
+  }
+}
