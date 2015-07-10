@@ -34,7 +34,7 @@ define([
                 game.load.image('tree', 'assets/tree.png');
                 game.load.audio('backgroundMusic', ['assets/audio/amazon-florest.mp3', '../assets/audio/amazon-florest.ogg']);
                 game.load.spritesheet('cobra', 'assets/king_cobra.png', 95, 96);
-                game.load.image('cube', 'assets/cube.png');
+                game.load.image('rock', 'assets/rock.png');
                 game.load.image('lifeBar', 'assets/life-bar.png');
                 game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
                 // Set the world size
@@ -59,6 +59,7 @@ define([
                 floorGroup = game.add.group();
                 isoGroup = game.add.group();
                 treeGroup = game.add.group();
+                
 
 
                // isoGroup.create(100, 0, 'lifeBar');
@@ -91,6 +92,7 @@ define([
                 }
 
                 var treeTile;
+                var rocksTile;
 
                 for (var xt = 2024; xt > 0; xt -= 35) {
                             for (var yt = 2024; yt > 0; yt -= 35) {
@@ -128,11 +130,11 @@ define([
                                 }
                             else if (rnd == 3)
                                 {
-                                        treeTile = game.add.isoSprite(xt, yt, 0, 'cube', 0, isoGroup);
-                                        treeTile.anchor.set(0.5);
-                                game.physics.isoArcade.enable(treeTile);
-                                treeTile.body.collideWorldBounds = true;
-                                treeTile.body.bounce.set(1, 1, 0.2);
+                                        rocksTile = game.add.isoSprite(xt, yt, 0, 'rock', 0, isoGroup);
+                                        rocksTile.anchor.set(0.5);
+                                game.physics.isoArcade.enable(rocksTile);
+                                rocksTile.body.collideWorldBounds = true;
+                                rocksTile.body.bounce.set(1, 1, 0.2);
                                 }
                             }
                 }
