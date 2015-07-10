@@ -12,18 +12,20 @@ requirejs.config({
 });
 
 var game = {};
-
+//a ordem importa neste caso
 require([
+    
   'modules/PhaserGame',
-  'modules/states/GameTitle',
+  'modules/states/BasicGame',
+  'modules/states/GameTitle'
  // 'modules/states/Preload',
-  'modules/states/BasicGame'
+  
 ], function (PhaserGame, BasicGame,GameTitle) { //PhaserGame, BootState, PreloadState,
 
   game = new PhaserGame(800, 600, Phaser.AUTO , 'test', null, true, false);
  
  // game.state.add('Boot', BootState);
-  game.state.add('BasicGame', BasicGame.Boot);
   game.state.add('GameTitle', GameTitle);
+  game.state.add('BasicGame', BasicGame);  
   game.state.start('GameTitle');
 });

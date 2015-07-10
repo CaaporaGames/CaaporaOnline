@@ -23,6 +23,8 @@ define([
         BasicGame.prototype = {
 
             preload: function () {
+                
+                console.log("preload de BasicGame");
 
                 /*game.debug.renderShadow = false;
                 game.stage.disableVisibilityChange = false;*/
@@ -69,7 +71,7 @@ define([
 
                 // Adicionando som de fundo.
                 backgroundMusic = game.add.audio('backgroundMusic');
-                backgroundMusic.play();
+                // backgroundMusic.play();
 
                 // set the gravity in our game
                 game.physics.isoArcade.gravity.setTo(0, 0, -500);
