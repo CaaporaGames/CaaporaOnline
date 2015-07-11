@@ -19,6 +19,8 @@ define([
         var cursors;
         var backgroundMusic;
         var text;
+        var miniMapPlayerSprite;
+        var i = 0;
 
         BasicGame.prototype = {
 
@@ -60,9 +62,27 @@ define([
                 isoGroup = game.add.group();
                 treeGroup = game.add.group();
                 
-
-
-               // isoGroup.create(100, 0, 'lifeBar');
+                // tentando desenhar o minimap
+                var miniMapBmd = game.add.bitmapData(game.width / 5, game.height / 5);
+                miniMapBmd.ctx.fillStyle = '#00BF32';
+                miniMapBmd.ctx.fillRect(10, 20, 100, 100);
+                
+                var miniMapSprite = game.add.sprite(1000, 800, miniMapBmd);
+                miniMapSprite.fixedToCamera = true;
+                miniMapSprite.cameraOffset.setTo(670, 470);
+                
+                
+                // player no mini map
+                var miniMapPlayer = game.add.bitmapData(game.width / 5, game.height / 5);
+                miniMapPlayer.ctx.fillStyle = '#000';
+                miniMapPlayer.ctx.fillRect(10, 20, 5, 5);
+                
+                this.miniMapPlayerSprite = game.add.sprite(1000, 800, miniMapPlayer);
+                this.miniMapPlayerSprite.fixedToCamera = true;
+                this.miniMapPlayerSprite.cameraOffset.setTo(700, 500);
+                
+               
+          // isoGroup.create(100, 0, 'lifeBar');
 
 
                 this.camera = {x:0, y:0, direction:'', isMoving:false};
@@ -140,7 +160,7 @@ define([
                 }
 
                 // Create a cobra.
-                cobra = game.add.isoSprite(150, 180, 0, 'cobra', 0, isoGroup);
+                cobra = game.add.isoSprite(game.world.randomX, game.world.randomY, 0, 'cobra', 0, isoGroup);
                 // Animations.
                 cobra.animations.add('left', [9, 10, 11], 10, true);
                 cobra.animations.add('right', [3, 4, 5], 10, true);
@@ -149,7 +169,7 @@ define([
                 cobra.body.collideWorldBounds = true;
 
                 // Create player.
-                player = game.add.isoSprite(30, 80, 0, 'dude', 0, isoGroup);
+                player = game.add.isoSprite(1000, 800, 11, 'dude', 0, isoGroup);
 
 
                 // player = game.add.sprite(350, game.world.height - 350, 'dude');
@@ -192,7 +212,8 @@ define([
                     w.alpha = Phaser.Math.clamp(1 + (w.isoZ * 0.1), 0.2, 1);
                 });*/
 
-
+                this.miniMapPlayerSprite.cameraOffset.setTo(700, 500);
+                
                 game.physics.isoArcade.collide(isoGroup);
 
                 game.iso.topologicalSort(isoGroup);
@@ -222,6 +243,7 @@ define([
                 }
                 else if (cursors.right.isDown)
                 {
+        
                     //  Move to the right
                     player.body.velocity.x = 150;
 
@@ -264,6 +286,10 @@ define([
                 }); */
 
                 game.debug.text(game.time.fps || '--', 2, 14, "#a7aebe");
+                game.debug.text("Player x = " + Math.round(player.x) || '--', 2, 44, "#a7aebe");
+                game.debug.text("Player y = " + Math.round(player.y) || '--', 2, 84, "#a7aebe");
+                game.debug.text("Player z = " + Math.round(player.z) || '--', 2, 124, "#a7aebe");
+                
                 // game.debug.text(Phaser.VERSION, 2, game.world.height - 2, "#ffff00");
             },
             moveCamera: function(){
