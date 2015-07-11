@@ -20,6 +20,7 @@ define([
         var backgroundMusic;
         var text;
         var miniMapPlayerSprite;
+        var miniMapCobraSprite;
         var i = 0;
 
         BasicGame.prototype = {
@@ -81,7 +82,16 @@ define([
                 this.miniMapPlayerSprite.fixedToCamera = true;
                 this.miniMapPlayerSprite.cameraOffset.setTo(700, 500);
                 
-               
+            
+                // King cobra
+                var miniMapCobra = game.add.bitmapData(game.width / 5, game.height / 5);
+                miniMapCobra.ctx.fillStyle = '#ff0000';
+                miniMapCobra.ctx.fillRect(10, 20, 5, 5);
+                
+                this.miniMapCobraSprite = game.add.sprite(1000, 800, miniMapCobra);
+                this.miniMapCobraSprite.fixedToCamera = true;
+                this.miniMapCobraSprite.cameraOffset.setTo(720, 520);
+                
           // isoGroup.create(100, 0, 'lifeBar');
 
 
@@ -160,7 +170,7 @@ define([
                 }
 
                 // Create a cobra.
-                cobra = game.add.isoSprite(game.world.randomX, game.world.randomY, 0, 'cobra', 0, isoGroup);
+                cobra = game.add.isoSprite(700, 500, 0, 'cobra', 0, isoGroup);
                 // Animations.
                 cobra.animations.add('left', [9, 10, 11], 10, true);
                 cobra.animations.add('right', [3, 4, 5], 10, true);
@@ -211,8 +221,10 @@ define([
                     w.isoZ = (-2 * Math.sin((game.time.now + (w.isoX * 7)) * 0.004)) + (-1 * Math.sin((game.time.now + (w.isoY * 8)) * 0.005));
                     w.alpha = Phaser.Math.clamp(1 + (w.isoZ * 0.1), 0.2, 1);
                 });*/
-
-                this.miniMapPlayerSprite.cameraOffset.setTo(700, 500);
+                
+                this.miniMapPlayerSprite.cameraOffset.setTo((player.x / 3), (player.y / 3) + 250);
+               
+                this.miniMapCobraSprite.cameraOffset.setTo((cobra.x / 3), (cobra.y / 3) + 250);
                 
                 game.physics.isoArcade.collide(isoGroup);
 
