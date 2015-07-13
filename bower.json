@@ -20,7 +20,8 @@
   "dependencies": {
     "phaser-plugin-isometric": "*",
     "phaser": "~2.2.2",
-    "requirejs": "~2.1.18"
+    "requirejs": "~2.1.18",
+    "easystarjs": "~0.2.1"
   },
   "devDependencies": {
     "requirejs": "~2.1.18"
