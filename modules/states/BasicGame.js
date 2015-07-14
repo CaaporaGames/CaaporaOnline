@@ -15,7 +15,7 @@ define([
   var treeGroup;
   var player;
   var cobra;
-  var cursors;
+  var up, down, right, left, up_left, up_right, down_left, down_right;
   var backgroundMusic;
   var text;
   var miniMapPlayerSprite;
@@ -72,7 +72,7 @@ define([
 
   // [0] siginifica os tiles que podem andar.
   easystar.setAcceptableTiles([0]);
-  //easystar.enableCornerCutting();
+  easystar.enableCornerCutting();
   easystar.enableDiagonals();
 
 
@@ -112,10 +112,10 @@ define([
       game.load.spritesheet('cobra', 'assets/king_cobra.png', 95, 96);
       game.load.image('rock', 'assets/rock.png');
       game.load.image('lifeBar', 'assets/life-bar.png');
-      game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
+      game.load.spritesheet('dude', 'assets/enemy2.png', 70, 74);
       game.load.spritesheet('cowboy','assets/enemy1.png', 70, 74);
       // Set the world size
-      game.world.setBounds(0, 0, 4048, 2024);
+      game.world.setBounds(0, 0, 2048, 1024);
       // Start the physical system
 
       game.time.advancedTiming = true;
@@ -257,9 +257,14 @@ define([
       game.physics.isoArcade.enable(player);
       player.body.collideWorldBounds = true;
       //  Our two animations, walking left and right.
-      player.animations.add('left', [0, 1, 2, 3], 10, true);
-      player.animations.add('right', [5, 6, 7, 8], 10, true);
-
+      player.animations.add('down', [0, 1, 2, 3, 4, 5, 6, 7], 10, true);
+      player.animations.add('down left', [8, 9, 10, 11, 12, 13, 14, 15], 10, true);
+      player.animations.add('left', [16, 17, 18, 19, 20, 21, 22, 23], 10, true);
+      player.animations.add('up left', [24, 25, 26, 27, 28, 29, 30, 31], 10, true);
+      player.animations.add('up', [32, 33, 34, 35, 36, 37, 38, 39], 10, true);
+      player.animations.add('up right', [40, 41, 42, 43, 44, 45, 46, 47], 10, true);
+      player.animations.add('right', [48, 49, 50, 51, 52, 53, 54, 55], 10, true);
+      player.animations.add('down right', [56, 57, 58, 59, 60, 61, 62, 63], 10, true);
       //  Player physics properties. Give the little guy a slight bounce.
 
       /*        player.body.bounce.y = 0.2;
@@ -393,10 +398,19 @@ define([
 
       }, timeStep);
 
-      cursors = game.input.keyboard.createCursorKeys();
+      // KeyCodes do Keyboard.
+      up = game.input.keyboard.addKey(Phaser.Keyboard.UP);
+      down = game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
+      left = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
+      right = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
+      up_left = game.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_7);
+      down_left = game.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_1);
+      down_right = game.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_3);
+      up_right = game.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_9);
 
     },
     update: function () {
+
       /*water.forEach(function (w) {
       w.isoZ = (-2 * Math.sin((game.time.now + (w.isoX * 7)) * 0.004)) + (-1 * Math.sin((game.time.now + (w.isoY * 8)) * 0.005));
       w.alpha = Phaser.Math.clamp(1 + (w.isoZ * 0.1), 0.2, 1);
@@ -404,7 +418,7 @@ define([
 
       this.miniMapPlayerSprite.cameraOffset.setTo((player.x / 3), (player.y / 3) + 250);
 
-      this.miniMapCobraSprite.cameraOffset.setTo((cobra.x / 3), (cobra.y / 3) + 250);
+      this.miniMapCobraSprite.cameraOffset.setTo((cowboy.x / 3), (cowboy.y / 3) + 250);
 
       game.physics.isoArcade.collide(isoGroup);
 
@@ -423,27 +437,63 @@ define([
       player.body.velocity.x = 0;
       player.body.velocity.y = 0;
 
-      if (cursors.left.isDown)
+      if (left.isDown)
       {
         //  Move to the left
         player.body.velocity.x = -150;
+        player.body.velocity.y = 150;
         player.animations.play('left');
       }
-      else if (cursors.right.isDown)
+      else if (right.isDown)
       {
         //  Move to the right
         player.body.velocity.x = 150;
-        player.animations.play('right');
-      }
-      else if (cursors.up.isDown)
-      {
         player.body.velocity.y = -150;
+
         player.animations.play('right');
       }
-      else if (cursors.down.isDown)
+      else if (up.isDown)
       {
+        player.body.velocity.x = -150;
+        player.body.velocity.y = -150;
+
+        player.animations.play('up');
+      }
+      else if (down.isDown)
+      {
+        player.body.velocity.x = 150;
         player.body.velocity.y = 150;
-        player.animations.play('left');
+        player.animations.play('down');
+      }
+      else if (up_left.isDown)
+      {
+        //  NOROESTE
+        player.body.velocity.x = -150;
+        player.body.velocity.y = 0;
+
+        player.animations.play('up left');
+      }
+      else if (down_left.isDown)
+      {
+        // SUDOESTE
+        player.body.velocity.x = 0;
+        player.body.velocity.y = 150;
+
+        player.animations.play('down left');
+      }
+      else if (up_right.isDown)
+      {
+        // NORDESTE
+        player.body.velocity.x = 0;
+        player.body.velocity.y = -150;
+        player.animations.play('up right');
+      }
+      else if (down_right.isDown)
+      {
+        // SUDESTE
+        player.body.velocity.x = 150;
+        player.body.velocity.y = 0;
+        player.animations.play('down right');
       }
       else
       {
