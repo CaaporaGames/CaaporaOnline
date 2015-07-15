@@ -12,8 +12,8 @@ define([
 
                      console.log("iniciando game title");
                      game.load.bitmapFont('desyrel', 'assets/fonts/bitmapFonts/desyrel.png', 'assets/fonts/bitmapFonts/desyrel.xml');
-                     game.load.image('bg', 'assets/caipora-background.png');
-                     game.load.image('btnStart','assets/PlayButton.png');
+                     game.load.image('bg', 'assets/images/caipora-background.png');
+                     game.load.image('btnStart','assets/images/PlayButton.png');
 
                  },
                 create: function(){

@@ -11,8 +11,8 @@ define([
     preload: function() {
 
       game.load.bitmapFont('desyrel', 'assets/fonts/bitmapFonts/desyrel.png', 'assets/fonts/bitmapFonts/desyrel.xml');
-      game.load.image('bg', 'assets/caipora-background.png');
-      game.load.image('gameover', 'assets/caapora-gameover.png');
+      game.load.image('bg', 'assets/images/caipora-background.png');
+      game.load.image('gameover', 'assets/images/caapora-gameover.png');
 
     },
 
