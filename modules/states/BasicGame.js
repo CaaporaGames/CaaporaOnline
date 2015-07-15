@@ -13,7 +13,7 @@ define([
   var isoGroup;
   var floorGroup;
   var treeGroup;
-  var player;
+  var player, cowboy;
   var cobra;
   var up, down, right, left, up_left, up_right, down_left, down_right;
   var backgroundMusic;
@@ -579,6 +579,17 @@ define([
 
       if (currentEnemyXtile > 28) currentEnemyXtile = 28;
       if (currentEnemyYtile > 28) currentEnemyYtile = 28;
+
+      // Check if enemy collided with player.
+      var collision = false;
+
+      collision = game.physics.isoArcade.collide(cowboy, player);
+
+      if(collision) {
+
+        game.state.start('GameOver');
+
+      }
 
     },
     render: function () {

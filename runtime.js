@@ -18,15 +18,17 @@ require([
 
   'modules/PhaserGame',
   'modules/states/BasicGame',
-  'modules/states/GameTitle'
+  'modules/states/GameTitle',
+  'modules/states/GameOver'
  // 'modules/states/Preload',
 
-], function (PhaserGame, BasicGame,GameTitle) { //PhaserGame, BootState, PreloadState,
+], function (PhaserGame, BasicGame, GameTitle, GameOver) { //PhaserGame, BootState, PreloadState,
 
   game = new PhaserGame(800, 600, Phaser.AUTO , 'test', null, true, false);
 
  // game.state.add('Boot', BootState);
   game.state.add('GameTitle', GameTitle);
   game.state.add('BasicGame', BasicGame);
+  game.state.add('GameOver', GameOver);
   game.state.start('GameTitle');
 });
