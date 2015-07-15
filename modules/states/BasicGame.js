@@ -106,14 +106,14 @@ define([
       game.stage.disableVisibilityChange = false;*/
       // console.log(game);
       // game.load.atlasJSONHash('tileset', 'assets/tileset.png', 'assets/tileset.json');
-      game.load.image('ground', 'assets/ground_tile.png');
-      game.load.image('tree', 'assets/tree.png');
+      game.load.image('ground', 'assets/images/ground_tile.png');
+      game.load.image('tree', 'assets/images/tree.png');
       game.load.audio('backgroundMusic', ['assets/audio/amazon-florest.mp3', 'assets/audio/amazon-florest.ogg']);
-      game.load.spritesheet('cobra', 'assets/king_cobra.png', 95, 96);
-      game.load.image('rock', 'assets/rock.png');
-      game.load.image('lifeBar', 'assets/life-bar.png');
-      game.load.spritesheet('dude', 'assets/enemy2.png', 70, 74);
-      game.load.spritesheet('cowboy','assets/enemy1.png', 70, 74);
+      game.load.spritesheet('cobra', 'assets/images/king_cobra.png', 95, 96);
+      game.load.image('rock', 'assets/images/rock.png');
+      game.load.image('lifeBar', 'assets/images/life-bar.png');
+      game.load.spritesheet('dude', 'assets/images/enemy2.png', 70, 74);
+      game.load.spritesheet('cowboy','assets/images/enemy1.png', 70, 74);
       // Set the world size
       game.world.setBounds(0, 0, 2048, 1024);
       // Start the physical system
@@ -265,6 +265,16 @@ define([
       player.animations.add('up right', [40, 41, 42, 43, 44, 45, 46, 47], 10, true);
       player.animations.add('right', [48, 49, 50, 51, 52, 53, 54, 55], 10, true);
       player.animations.add('down right', [56, 57, 58, 59, 60, 61, 62, 63], 10, true);
+
+      // Instanciando objeto caapora.
+      player.caapora = new Caapora();
+      console.log(
+        'CAAPORA\n' +
+        'Life: ' + player.caapora.getBaseLife() + '\n' +
+        'Energy: ' + player.caapora.getBaseEnergy() + '\n' +
+        'Defense: ' + player.caapora.getBaseDefense() + '\n' +
+        'Attack: ' + player.caapora.getBaseAttack()
+      );
       //  Player physics properties. Give the little guy a slight bounce.
 
       /*        player.body.bounce.y = 0.2;
@@ -299,6 +309,16 @@ define([
 
       // set the slow down rate on each axis (X, Y, Z)
       cowboy.body.drag.set(100, 100, 0);
+
+      // Instanciando objeto enemy.
+      cowboy.enemy = new Enemy();
+      console.log(
+        'INIMIGO\n' +
+        'Life: ' + cowboy.enemy.getBaseLife() + '\n' +
+        'Energy: ' + cowboy.enemy.getBaseEnergy() + '\n' +
+        'Defense: ' + cowboy.enemy.getBaseDefense() + '\n' +
+        'Attack: ' + cowboy.enemy.getBaseAttack()
+      );
 
       setInterval(function(){
 
@@ -580,18 +600,26 @@ define([
       if (currentEnemyXtile > 28) currentEnemyXtile = 28;
       if (currentEnemyYtile > 28) currentEnemyYtile = 28;
 
-      // Check if enemy collided with player.
+      // Each time enemy collide with player, he loses 10 life points.
       var collision = false;
 
       collision = game.physics.isoArcade.collide(cowboy, player);
 
       if(collision) {
+        var currentLife = player.caapora.getBaseLife() - 10;
 
-        game.state.start('GameOver');
+        player.caapora.setBaseLife(currentLife);
+        console.log('Caapora loses 10 of life points.\n' + 'Current life: ' + player.caapora.getBaseLife());
+
+        // Game is over when the life reaches 0.
+        if(currentLife == 0){
+          game.state.start('GameOver');
+        }
 
       }
 
     },
+
     render: function () {
 
       /*
@@ -611,6 +639,7 @@ define([
 
       // game.debug.text(Phaser.VERSION, 2, game.world.height - 2, "#ffff00");
     },
+
     moveCamera: function(){
       if (this.camera.isMoving)
       return;
@@ -643,11 +672,12 @@ define([
       else {
         this.camera.isMoving = false;
       }
-    },
+    }
 
   };
 
   return BasicGame;
+
 });
 //
 ///// <reference path="phaser.js" />
@@ -665,5 +695,97 @@ define([
 function rndNum(num) {
 
   return Math.round(Math.random() * num);
+
+};
+
+function Caapora() {
+
+  // Atributos base do personagem.
+
+  var baseLife = 100;
+  var baseEnergy = 120;
+  var baseDefense = 10;
+  var baseAttack = 10;
+
+
+  // Getters and Setters.
+
+  this.getBaseLife = function(){
+    return baseLife;
+  };
+
+  this.setBaseLife = function(life){
+    baseLife = life;
+  };
+
+  this.getBaseEnergy = function(){
+    return baseEnergy;
+  };
+
+  this.setBaseEnergy = function(energy){
+    baseEnergy = energy;
+  };
+
+  this.getBaseDefense = function(){
+    return baseDefense;
+  };
+
+  this.setBaseDefense = function(defense){
+    baseDefense = defense
+  };
+
+  this.getBaseAttack = function(){
+    return baseAttack;
+  };
+
+  this.setBaseAttack = function(attack){
+    baseAttack = attack;
+  }
+
+};
+
+function Enemy() {
+
+  // Atributos base do inimigo.
+
+  var baseLife = 100;
+  var baseEnergy = 120;
+  var baseDefense = 10;
+  var baseAttack = 10;
+
+
+  // Getters and Setters.
+
+  this.getBaseLife = function(){
+    return baseLife;
+  };
+
+  this.setBaseLife = function(life){
+    baseLife = life;
+  };
+
+  this.getBaseEnergy = function(){
+    return baseEnergy;
+  };
+
+  this.setBaseEnergy = function(energy){
+    baseEnergy = energy;
+  };
+
+  this.getBaseDefense = function(){
+    return baseDefense;
+  };
+
+  this.setBaseDefense = function(defense){
+    baseDefense = defense
+  };
+
+  this.getBaseAttack = function(){
+    return baseAttack;
+  };
+
+  this.setBaseAttack = function(attack){
+    baseAttack = attack;
+  }
 
 }
