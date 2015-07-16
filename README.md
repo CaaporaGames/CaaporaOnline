@@ -1,6 +1,8 @@
 # About 
 A RPG Game based on Tupi-Guarani mythology in Brazil
 
+Acesse Aqui: https://caaporagames.github.io
+
 # Framework 
 
 1. Phaser (https://phaser.io/)
@@ -26,6 +28,8 @@ A RPG Game based on Tupi-Guarani mythology in Brazil
 1. Office 365 Online - Documentation
 1. Canva - Diagramation
 1. SharedLatex (https://pt.sharelatex.com/) - Publication of scientific Documents 
+1. Gmail - Email ( caaporaonline@gmail.com )
+1. Google Analytics
 
 # Como rodar 
 1. Instale o NodeJS, o NPM vem junto. 
@@ -50,4 +54,5 @@ A RPG Game based on Tupi-Guarani mythology in Brazil
 
 # Links úteis
 
-https://bitbucket.org/tutorials/markdowndemo
+## Github Markdown Example
+https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
