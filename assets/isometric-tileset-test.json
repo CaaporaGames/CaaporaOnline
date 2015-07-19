@@ -1,0 +1,42 @@
+{ "height":10,
+ "layers":[
+        {
+         "data":[27, 27, 19, 19, 19, 27, 27, 27, 27, 27, 27, 19, 19, 19, 19, 19, 19, 19, 19, 27, 27, 19, 19, 19, 19, 19, 9, 19, 19, 27, 27, 3, 3, 3, 3, 3, 3, 19, 19, 27, 27, 19, 19, 15, 15, 15, 15, 10, 19, 27, 27, 21, 21, 21, 21, 21, 21, 21, 21, 27, 27, 19, 19, 19, 19, 19, 19, 19, 19, 27, 27, 19, 19, 19, 19, 19, 19, 19, 8, 27, 27, 19, 19, 19, 19, 19, 19, 19, 19, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27],
+         "height":10,
+         "name":"Camada de Tiles 1",
+         "opacity":0.949999988079071,
+         "type":"tilelayer",
+         "visible":true,
+         "width":10,
+         "x":0,
+         "y":0
+        }],
+ "nextobjectid":1,
+ "orientation":"isometric",
+ "properties":
+    {
+
+    },
+ "renderorder":"right-down",
+ "tileheight":37,
+ "tilesets":[
+        {
+         "firstgid":1,
+         "image":"images/Caapora-tileset-teste.png",
+         "imageheight":185,
+         "imagewidth":384,
+         "margin":0,
+         "name":"Caapora-tileset-teste",
+         "properties":
+            {
+
+            },
+         "spacing":0,
+         "tileheight":37,
+         "tilewidth":64,
+         "transparentcolor":"#ff00ff"
+        }],
+ "tilewidth":64,
+ "version":1,
+ "width":10
+}

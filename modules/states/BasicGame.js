@@ -95,7 +95,9 @@ define([
 
   var tileSize = 35;
   var mapSize = 30;
-
+  
+  var map;
+  var layer;
   // **********************************
 
   BasicGame.prototype = {
@@ -126,6 +128,10 @@ define([
 
       game.plugins.add(new Phaser.Plugin.Isometric(game));
       
+      game.load.tilemap('map', 'assets/isometric-tileset-test.json', null, Phaser.Tilemap.TILED_JSON);
+      
+      
+      
    
 
       //  Enable p2 physics
@@ -141,6 +147,14 @@ define([
       floorGroup = game.add.group();
       isoGroup = game.add.group();
       treeGroup = game.add.group();
+      
+      
+      map = game.add.tilemap('map');
+      
+      layer = map.createLayer('Tile Layer 1');
+
+        layer.resizeWorld();
+
 
       game.plugins.add(PhaserDebug);
       // tentando desenhar o minimap
@@ -193,6 +207,7 @@ define([
 
       var floorTile;
 
+      
       for (var xt = 0; xt < mapSize * tileSize; xt += tileSize) {
         for (var yt = 0; yt < mapSize * tileSize; yt += tileSize) {
           floorTile = game.add.isoSprite(xt, yt, 0.2, 'ground', 0, floorGroup);
