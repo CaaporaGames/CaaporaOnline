@@ -1,8 +1,10 @@
 define([
   'Phaser',
+  'PhaserDebug',
+  'PhaserTiled',
   'PhaserIsometricPlugin',
   'EasyStar'
-], function (Phaser) {
+], function (Phaser,PhaserDebug,PhaserTiled) {
 
   var BasicGame;
 
@@ -123,6 +125,9 @@ define([
       game.physics.startSystem(Phaser.Plugin.Isometric.ISOARCADE);
 
       game.plugins.add(new Phaser.Plugin.Isometric(game));
+      
+   
+
       //  Enable p2 physics
       //game.physics.startSystem(Phaser.Physics.P2JS);
 
@@ -137,6 +142,7 @@ define([
       isoGroup = game.add.group();
       treeGroup = game.add.group();
 
+      game.plugins.add(PhaserDebug);
       // tentando desenhar o minimap
       var miniMapBmd = game.add.bitmapData(game.width / 5, game.height / 5);
       miniMapBmd.ctx.fillStyle = '#00BF32';

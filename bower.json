@@ -24,6 +24,8 @@
     "easystarjs": "~0.2.1"
   },
   "devDependencies": {
-    "requirejs": "~2.1.18"
+    "requirejs": "~2.1.18",
+    "phaser-debug": "~1.1.6",
+    "phaser-tiled": "~1.4.1"
   }
 }

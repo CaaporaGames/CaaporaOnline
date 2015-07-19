@@ -1,5 +1,7 @@
 define([
-  'Phaser'
+  'Phaser',
+  'PhaserDebug',
+  'PhaserTiled'
   //'modules/extensions/MyExtension',
   //'modules/units/MyUnit',
   //'modules/factories/MyFactory'
