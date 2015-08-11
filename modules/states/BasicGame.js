@@ -38,7 +38,7 @@ define([
   // 8 - player start point
 
   var level = [[0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0],
-              [0,1,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+              [0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
               [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,1,0,0,0,0,0,0,0,0,0],
               [0,0,0,0,2,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
               [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -86,10 +86,17 @@ define([
   var currentEnemyXtile;
   var currentEnemyYtile;
 
-  var currentNextPointX; // next movement point in X
-  var currentNextPointY; // next movement point in Y
+  var currentEnemyXtile2;
+  var currentEnemyYtile2;
 
-  var enemyDirection = "STOP";
+  var currentNextPointX; // next movement point in X for cowboy.
+  var currentNextPointY; // next movement point in Y for cowboy.
+
+  var currentNextPointX2; // next movement point in X for cobra.
+  var currentNextPointY2; // next movement point in Y for cobra.
+
+  var cowboyDirection = "STOP";
+  var cobraDirection = "STOP";
 
   //************* TILES ***************
 
@@ -111,13 +118,13 @@ define([
       // console.log(game);
       // game.load.atlasJSONHash('tileset', 'assets/tileset.png', 'assets/tileset.json');
       game.load.image('ground', 'assets/images/ground_tile.png');
-      game.load.image('tree', 'assets/images/tree.png');
+      game.load.image('tree', 'assets/images/tree2.png');
       game.load.audio('backgroundMusic', ['assets/audio/amazon-florest.mp3', 'assets/audio/amazon-florest.ogg']);
-      game.load.spritesheet('cobra', 'assets/images/king_cobra.png', 95, 96);
+      game.load.spritesheet('cobra', 'assets/images/enemy1.png', 70, 74);
       game.load.image('rock', 'assets/images/rock.png');
       game.load.image('lifeBar', 'assets/images/life-bar.png');
       game.load.spritesheet('dude', 'assets/images/enemy2.png', 70, 74);
-      game.load.spritesheet('cowboy','assets/images/enemy1.png', 70, 74);
+      game.load.spritesheet('cowboy', 'assets/images/enemy1.png', 70, 74);
       // Set the world size
       game.world.setBounds(0, 0, 2048, 1024);
       // Start the physical system
@@ -248,13 +255,29 @@ define([
       }
 
       // Create a cobra.
-      cobra = game.add.isoSprite(700, 500, 0, 'cobra', 0, isoGroup);
-      // Animations.
-      cobra.animations.add('left', [9, 10, 11], 10, true);
-      cobra.animations.add('right', [3, 4, 5], 10, true);
+      cobra = game.add.isoSprite(5 * tileSize, 5 * tileSize, 0, 'cobra', 0, isoGroup);
+
+      // add the animations from the spritesheet
+      cobra.animations.add('S', [0, 1, 2, 3, 4, 5, 6, 7], 10, true);
+      cobra.animations.add('SW', [8, 9, 10, 11, 12, 13, 14, 15], 10, true);
+      cobra.animations.add('W', [16, 17, 18, 19, 20, 21, 22, 23], 10, true);
+      cobra.animations.add('NW', [24, 25, 26, 27, 28, 29, 30, 31], 10, true);
+      cobra.animations.add('N', [32, 33, 34, 35, 36, 37, 38, 39], 10, true);
+      cobra.animations.add('NE', [40, 41, 42, 43, 44, 45, 46, 47], 10, true);
+      cobra.animations.add('E', [48, 49, 50, 51, 52, 53, 54, 55], 10, true);
+      cobra.animations.add('SE', [56, 57, 58, 59, 60, 61, 62, 63], 10, true);
+
       cobra.anchor.set(0.5);
+
+      // enable physics on the cobra enemy
       game.physics.isoArcade.enable(cobra);
       cobra.body.collideWorldBounds = true;
+
+      // set the physics bounce amount on each axis  (X, Y, Z)
+      cobra.body.bounce.set(0.2, 0.2, 0);
+
+      // set the slow down rate on each axis (X, Y, Z)
+      cobra.body.drag.set(100, 100, 0);
 
       // Create player.
       player = game.add.isoSprite(1000, 800, 11, 'dude', 0, isoGroup);
@@ -304,7 +327,7 @@ define([
       // game.physics.p2.enable(player);
 
       // player.body.setCircle(44);
-      // game.camera.follow(player);
+      game.camera.follow(player);
 
       //  ***  create an enemy cowboy  ***
       cowboy = game.add.isoSprite(4 * tileSize, 4 * tileSize, 0, 'cowboy', 0, isoGroup);
@@ -359,7 +382,7 @@ define([
 
             console.log("GO LEFT UP");
 
-            enemyDirection = "NW";
+            cowboyDirection = "NW";
           }
           else if (currentNextPointX == currentEnemyXtile && currentNextPointY < currentEnemyYtile)
           {
@@ -367,7 +390,7 @@ define([
 
             console.log("GO UP");
 
-            enemyDirection = "N";
+            cowboyDirection = "N";
 
           }
           else if (currentNextPointX > currentEnemyXtile && currentNextPointY < currentEnemyYtile)
@@ -376,7 +399,7 @@ define([
 
             console.log("GO RIGHT UP");
 
-            enemyDirection = "NE";
+            cowboyDirection = "NE";
 
           }
           else if (currentNextPointX < currentEnemyXtile && currentNextPointY == currentEnemyYtile)
@@ -385,7 +408,7 @@ define([
 
             console.log("GO LEFT");
 
-            enemyDirection = "W";
+            cowboyDirection = "W";
 
           }
           else if (currentNextPointX > currentEnemyXtile && currentNextPointY == currentEnemyYtile)
@@ -394,7 +417,7 @@ define([
 
             console.log("GO RIGHT");
 
-            enemyDirection = "E";
+            cowboyDirection = "E";
 
           }
           else if (currentNextPointX > currentEnemyXtile && currentNextPointY > currentEnemyYtile)
@@ -403,7 +426,7 @@ define([
 
             console.log("GO RIGHT DOWN");
 
-            enemyDirection = "SE";
+            cowboyDirection = "SE";
 
           }
           else if (currentNextPointX == currentEnemyXtile && currentNextPointY > currentEnemyYtile)
@@ -412,7 +435,7 @@ define([
 
             console.log("GO DOWN");
 
-            enemyDirection = "S";
+            cowboyDirection = "S";
 
           }
           else if (currentNextPointX < currentEnemyXtile && currentNextPointY > currentEnemyYtile)
@@ -421,19 +444,125 @@ define([
 
             console.log("GO LEFT DOWN");
 
-            enemyDirection = "SW";
+            cowboyDirection = "SW";
 
           }
           else
           {
 
-            enemyDirection = "STOP";
+            cowboyDirection = "STOP";
 
           }
 
-          if (enemyDirection != "STOP") cowboy.animations.play(enemyDirection);
+          if (cowboyDirection != "STOP") cowboy.animations.play(cowboyDirection);
 
         });
+
+        easystar.calculate();
+
+      }, timeStep);
+
+      setInterval(function(){
+
+        /*
+          CALCULO PARA A COBRA.
+          ______________________________________________________________________
+        */
+        easystar.findPath(currentEnemyXtile2, currentEnemyYtile2, currentPlayerXtile, currentPlayerYtile, function( path ) {
+          if (path === null) {
+            console.log("The path to the destination point was not found.");
+          }
+
+          if (path) {
+            currentNextPointX2 = path[1].x;
+            currentNextPointY2 = path[1].y;
+          }
+
+          if (currentNextPointX2 < currentEnemyXtile2 && currentNextPointY2 < currentEnemyYtile2)
+          {
+            // left up
+
+            console.log("GO LEFT UP");
+
+            cobraDirection = "NW";
+          }
+          else if (currentNextPointX2 == currentEnemyXtile2 && currentNextPointY2 < currentEnemyYtile2)
+          {
+            // up
+
+            console.log("GO UP");
+
+            cobraDirection = "N";
+
+          }
+          else if (currentNextPointX2 > currentEnemyXtile2 && currentNextPointY2 < currentEnemyYtile2)
+          {
+            // right up
+
+            console.log("GO RIGHT UP");
+
+            cobraDirection = "NE";
+
+          }
+          else if (currentNextPointX2 < currentEnemyXtile2 && currentNextPointY2 == currentEnemyYtile2)
+          {
+            // left
+
+            console.log("GO LEFT");
+
+            cobraDirection = "W";
+
+          }
+          else if (currentNextPointX2 > currentEnemyXtile2 && currentNextPointY2 == currentEnemyYtile2)
+          {
+            // right
+
+            console.log("GO RIGHT");
+
+            cobraDirection = "E";
+
+          }
+          else if (currentNextPointX2 > currentEnemyXtile2 && currentNextPointY2 > currentEnemyYtile2)
+          {
+            // right down
+
+            console.log("GO RIGHT DOWN");
+
+            cobraDirection = "SE";
+
+          }
+          else if (currentNextPointX2 == currentEnemyXtile2 && currentNextPointY2 > currentEnemyYtile2)
+          {
+            // down
+
+            console.log("GO DOWN");
+
+            cobraDirection = "S";
+
+          }
+          else if (currentNextPointX2 < currentEnemyXtile2 && currentNextPointY2 > currentEnemyYtile2)
+          {
+            // left down
+
+            console.log("GO LEFT DOWN");
+
+            cobraDirection = "SW";
+
+          }
+          else
+          {
+
+            cobraDirection = "STOP";
+
+          }
+
+          if (cobraDirection != "STOP") cobra.animations.play(cobraDirection);
+
+        });
+        /*
+          ______________________________________________________________________
+          CALCULO PARA A COBRA.
+        */
 
         easystar.calculate();
 
@@ -549,55 +678,121 @@ define([
       // Move the ENEMY
       var enemySpeed = 90;
 
-      if (enemyDirection == "N") {
+      /*
+      Movimentos do cowboy.
+      _________________________________________________________
+      */
+      if (cowboyDirection == "N") {
         cowboy.body.velocity.x = -enemySpeed;
         cowboy.body.velocity.y = -enemySpeed;
       }
-      else if (enemyDirection == "S")
+      else if (cowboyDirection == "S")
       {
         cowboy.body.velocity.x = enemySpeed;
         cowboy.body.velocity.y = enemySpeed;
       }
-      else if (enemyDirection == "E") {
+      else if (cowboyDirection == "E") {
         cowboy.body.velocity.x = enemySpeed;
         cowboy.body.velocity.y = -enemySpeed;
       }
-      else if (enemyDirection == "W")
+      else if (cowboyDirection == "W")
       {
         cowboy.body.velocity.x = -enemySpeed;
         cowboy.body.velocity.y = enemySpeed;
       }
-      else if (enemyDirection == "SE")
+      else if (cowboyDirection == "SE")
       {
         cowboy.body.velocity.x = enemySpeed;
         cowboy.body.velocity.y = 0;
       }
-      else if (enemyDirection == "NW")
+      else if (cowboyDirection == "NW")
       {
         cowboy.body.velocity.x = -enemySpeed;
         cowboy.body.velocity.y = 0;
       }
-      else if (enemyDirection == "SW")
+      else if (cowboyDirection == "SW")
       {
         cowboy.body.velocity.x = 0;
         cowboy.body.velocity.y = enemySpeed;
       }
 
-      else if (enemyDirection == "NE")
+      else if (cowboyDirection == "NE")
       {
         cowboy.body.velocity.x = 0;
         cowboy.body.velocity.y = -enemySpeed;
       }
-      else if (enemyDirection == "STOP")
+      else if (cowboyDirection == "STOP")
       {
         cowboy.body.velocity.x = 0;
         cowboy.body.velocity.y = 0;
       }
-      else // JUST IN CASE IF enemyDirection wouldnt exist we stop the cowboy movement
+      else // JUST IN CASE IF cowboyDirection wouldnt exist we stop the cowboy movement
       {
         cowboy.body.velocity.x = 0;
         cowboy.body.velocity.y = 0;
       }
+      /*
+      _________________________________________________________
+      Movimentos do cowboy.
+      */
+
+      /*
+      Movimentos do cobra.
+      _________________________________________________________
+      */
+      if (cobraDirection == "N") {
+        cobra.body.velocity.x = -enemySpeed;
+        cobra.body.velocity.y = -enemySpeed;
+      }
+      else if (cobraDirection == "S")
+      {
+        cobra.body.velocity.x = enemySpeed;
+        cobra.body.velocity.y = enemySpeed;
+      }
+      else if (cobraDirection == "E") {
+        cobra.body.velocity.x = enemySpeed;
+        cobra.body.velocity.y = -enemySpeed;
+      }
+      else if (cobraDirection == "W")
+      {
+        cobra.body.velocity.x = -enemySpeed;
+        cobra.body.velocity.y = enemySpeed;
+      }
+      else if (cobraDirection == "SE")
+      {
+        cobra.body.velocity.x = enemySpeed;
+        cobra.body.velocity.y = 0;
+      }
+      else if (cobraDirection == "NW")
+      {
+        cobra.body.velocity.x = -enemySpeed;
+        cobra.body.velocity.y = 0;
+      }
+      else if (cobraDirection == "SW")
+      {
+        cobra.body.velocity.x = 0;
+        cobra.body.velocity.y = enemySpeed;
+      }
+
+      else if (cobraDirection == "NE")
+      {
+        cobra.body.velocity.x = 0;
+        cobra.body.velocity.y = -enemySpeed;
+      }
+      else if (cobraDirection == "STOP")
+      {
+        cobra.body.velocity.x = 0;
+        cobra.body.velocity.y = 0;
+      }
+      else // JUST IN CASE IF cobraDirection wouldnt exist we stop the cowboy movement
+      {
+        cobra.body.velocity.x = 0;
+        cobra.body.velocity.y = 0;
+      }
+      /*
+      _________________________________________________________
+      Movimentos do cobra.
+      */
 
       currentPlayerXtile = Math.floor(player.body.position.x / tileSize);
       currentPlayerYtile = Math.floor(player.body.position.y / tileSize);
@@ -620,6 +815,25 @@ define([
 
       if (currentEnemyXtile > 28) currentEnemyXtile = 28;
       if (currentEnemyYtile > 28) currentEnemyYtile = 28;
+
+      /*
+      Posição atual da cobra.
+      _________________________________________________________________________________________
+      */
+      currentEnemyXtile2 = Math.floor(cobra.body.position.x / tileSize);
+      currentEnemyYtile2 = Math.floor(cobra.body.position.y / tileSize);
+
+      // PREVENT FROM GOING OUT FROM THE LOGICAL ARRAY BECAUSE OF THE PHASER PHYSICS ENGINE
+
+      if (currentEnemyXtile2 < 0) currentEnemyXtile2 = 0;
+      if (currentEnemyYtile2 < 0) currentEnemyYtile2 = 0;
+
+      if (currentEnemyXtile2 > 28) currentEnemyXtile2 = 28;
+      if (currentEnemyYtile2 > 28) currentEnemyYtile2 = 28;
+      /*
+      _________________________________________________________________________________________
+      Posição atual da cobra.
+      */
 
       // Each time enemy collide with player, he loses 10 life points.
       var collision = false;
