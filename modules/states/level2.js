@@ -1,20 +1,16 @@
 define([
   'Phaser',
-  'PhaserDebug',
-  'PhaserTiled',
   'PhaserIsometricPlugin',
   'EasyStar'
-], function (Phaser,PhaserDebug,PhaserTiled) {
+], function (Phaser) {
 
-  var BasicGame;
+  var level2;
 
-  BasicGame = function () {
+  level2 = function () {
     // nothing here
   };
 
-  var isoGroup;
-  var floorGroup;
-  var treeGroup;
+  var isoGroup, floorGroup, treeGroup, grassGroup;
   var player, cowboy;
   var cobra, cat;
   var up, down, right, left, up_left, up_right, down_left, down_right;
@@ -24,7 +20,6 @@ define([
   var miniMapCobraSprite;
   var i = 0;
   var numRandomico = 0;
-  var relogio = 0;
 
   // ********************* EasyStar setup *********************
 
@@ -102,23 +97,25 @@ define([
 
   var tileSize = 35;
   var mapSize = 30;
-  
-  var map;
-  var layer;
+
   // **********************************
 
-  BasicGame.prototype = {
+  level2.prototype = {
 
     preload: function () {
 
-      console.log("preload de BasicGame");
+      console.log("preload de level2");
 
       /*game.debug.renderShadow = false;
       game.stage.disableVisibilityChange = false;*/
       // console.log(game);
       // game.load.atlasJSONHash('tileset', 'assets/tileset.png', 'assets/tileset.json');
-      game.load.image('ground', 'assets/images/ground_tile.png');
-      game.load.image('tree', 'assets/images/tree2.png');
+      game.load.image('ground', 'assets/images/sand.png');
+      game.load.image('cactus1', 'assets/images/cactus1.png');
+      game.load.image('cactus2', 'assets/images/cactus2.png');
+      game.load.image('grass1', 'assets/images/grass1.png');
+      game.load.image('grass2', 'assets/images/grass2.png');
+      game.load.image('grass3', 'assets/images/grass3.png');
       game.load.audio('backgroundMusic', ['assets/audio/amazon-florest.mp3', 'assets/audio/amazon-florest.ogg']);
       game.load.spritesheet('cobra', 'assets/images/enemy1.png', 70, 74);
       game.load.image('rock', 'assets/images/rock.png');
@@ -135,13 +132,6 @@ define([
       game.physics.startSystem(Phaser.Plugin.Isometric.ISOARCADE);
 
       game.plugins.add(new Phaser.Plugin.Isometric(game));
-      
-      game.load.tilemap('map', 'assets/isometric-tileset-test.json', null, Phaser.Tilemap.TILED_JSON);
-      
-      
-      
-   
-
       //  Enable p2 physics
       //game.physics.startSystem(Phaser.Physics.P2JS);
 
@@ -155,16 +145,8 @@ define([
       floorGroup = game.add.group();
       isoGroup = game.add.group();
       treeGroup = game.add.group();
-      
-      
-      map = game.add.tilemap('map');
-      
-      layer = map.createLayer('Tile Layer 1');
+      grassGroup = game.add.group();
 
-        layer.resizeWorld();
-
-
-      game.plugins.add(PhaserDebug);
       // tentando desenhar o minimap
       var miniMapBmd = game.add.bitmapData(game.width / 5, game.height / 5);
       miniMapBmd.ctx.fillStyle = '#00BF32';
@@ -210,12 +192,11 @@ define([
       game.physics.isoArcade.gravity.setTo(0, 0, -500);
 
       // set the Background color of our game
-      game.stage.backgroundColor = "0x009900";
+      game.stage.backgroundColor = "0x0000AA";
 
 
       var floorTile;
 
-      
       for (var xt = 0; xt < mapSize * tileSize; xt += tileSize) {
         for (var yt = 0; yt < mapSize * tileSize; yt += tileSize) {
           floorTile = game.add.isoSprite(xt, yt, 0.2, 'ground', 0, floorGroup);
@@ -224,9 +205,33 @@ define([
         }
       }
 
+      // create the grass tiles randomly
+      // var grassTile;
+      // for (var xt = 1024; xt > 0; xt -= 35) {
+      //     for (var yt = 1024; yt > 0; yt -= 35) {
+      //
+      //       var rnd = rndNum(20);
+      //
+      //       if (rnd == 0) {
+      //         grassTile = game.add.isoSprite(xt, yt, 0, 'grass1', 0, grassGroup);
+      //         grassTile.anchor.set(0.5);
+      //       }
+      //       else if (rnd == 1)
+      //       {
+      //         grassTile = game.add.isoSprite(xt, yt, 0, 'grass2', 0, grassGroup);
+      //         grassTile.anchor.set(0.5);
+      //       }
+      //       else if (rnd == 2)
+      //       {
+      //         grassTile = game.add.isoSprite(xt, yt, 0, 'grass3', 0, grassGroup);
+      //         grassTile.anchor.set(0.5);
+      //       }
+      //
+      //     }
+      // }
+
       var treeTile;
       var rocksTile;
-
 
       for (var yt = 0; yt < level.length; yt++) {
 
@@ -235,13 +240,22 @@ define([
         for (var xt = 0; xt < level[yt].length; xt++) {
 
           if (tile[xt] == 1) {
-            treeTile = game.add.isoSprite(xt * tileSize, yt * tileSize, 0, 'tree', 0, isoGroup);
+            var rnd = rndNum(1);
+
+            if (rnd == 0) {
+              treeTile = game.add.isoSprite(xt * tileSize, yt * tileSize, 0, 'cactus1', 0, isoGroup);
+            }
+            else
+            {
+              treeTile = game.add.isoSprite(xt * tileSize, yt * tileSize, 0, 'cactus2', 0, isoGroup);
+            }
             treeTile.anchor.set(0.5);
             game.physics.isoArcade.enable(treeTile);
             treeTile.body.collideWorldBounds = true;
             treeTile.body.immovable = true;
             treeTile.tint = 0x86bfda;
             treeTile.body.bounce.set(1, 1, 0.2);
+
           }
           else if (tile[xt] == 2)
           {
@@ -553,19 +567,11 @@ define([
       down_right = game.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_3);
       up_right = game.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_9);
 
-        // O cat se movimentará randomicamente a cada 3 segundos.
         setInterval(function () {
 
             numRandomico = rndNum(4);
 
         }, 3000);
-
-        // Fazendo o relogio funcionar.
-        setInterval(function () {
-
-            relogio += 1000;
-
-        }, 1000);
 
     },
     update: function () {
@@ -876,15 +882,10 @@ define([
         console.log('Caapora loses 10 of life points.\n' + 'Current life: ' + player.caapora.getBaseLife());
 
         // Game is over when the life reaches 0.
-        if (currentLife == 0) {
+        if(currentLife == 0){
           game.state.start('GameOver');
         }
 
-      }
-
-      // Quando o relogio atingir 5 minutos, e o gato não for capturado, muda para o level 2.
-      if (relogio > 60000) {
-        game.state.start('level2');
       }
 
     },
@@ -945,7 +946,7 @@ define([
 
   };
 
-  return BasicGame;
+  return level2;
 
 });
 //
