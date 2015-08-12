@@ -257,16 +257,16 @@ define([
 
       // set the slow down rate on each axis (X, Y, Z)
       cobra.body.drag.set(100, 100, 0);
-        
+
         // Create a cat.
       cat = game.add.isoSprite(6 * tileSize, 6 * tileSize, 0, 'cat', 0, isoGroup);
 
       // add the animations from the spritesheet
-      cat.animations.add('S', [1, 5, 9], 10, true);      
-      cat.animations.add('W', [0, 4, 8], 10, true);      
-      cat.animations.add('N', [2, 6, 10], 10, true);      
+      cat.animations.add('S', [1, 5, 9], 10, true);
+      cat.animations.add('W', [0, 4, 8], 10, true);
+      cat.animations.add('N', [2, 6, 10], 10, true);
       cat.animations.add('E', [3, 7, 11], 10, true);
-      
+
 
       cat.anchor.set(0.5);
 
@@ -578,12 +578,12 @@ define([
       down_left = game.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_1);
       down_right = game.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_3);
       up_right = game.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_9);
-        
+
         setInterval(function () {
-            
+
             numRandomico = rndNum(4);
-            
-        }, 5000);
+
+        }, 3000);
 
     },
     update: function () {
@@ -609,46 +609,46 @@ define([
       //game.physics.isoArcade.collide(player);
       //game.physics.p2.
       // game.physics.isoArcade.collide(water);
-        
+
         cat.body.velocity.x = 0;
         cat.body.velocity.y = 0;
-        
+
         if (numRandomico == 1) {
-            
+
             cat.body.velocity.x = 90;
             cat.body.velocity.y = 90;
             cat.animations.play('S');
-            
+
         } else if (numRandomico == 2) {
-            
+
             cat.body.velocity.x = -90;
             cat.body.velocity.y = -90;
             cat.animations.play('N');
-            
+
         } else if (numRandomico == 3) {
-            
+
             cat.body.velocity.x = -90;
             cat.body.velocity.y = 90;
             cat.animations.play('W');
-            
+
         } else if (numRandomico == 4) {
-            
+
             cat.body.velocity.x = 90;
             cat.body.velocity.y = -90;
             cat.animations.play('E');
-            
+
         } else {
-            
+
             //  Stand still
             cat.animations.stop();
 
             cat.frame = 1;
-            
+
             cat.body.velocity.x = 0;
             cat.body.velocity.y = 0;
-            
+
         }
-            
+
 
       //  Reset the players velocity (movement)
       player.body.velocity.x = 0;
@@ -841,8 +841,8 @@ define([
       Movimentos da cobra.
       */
 
-      currentPlayerXtile = Math.floor(player.body.position.x / tileSize);
-      currentPlayerYtile = Math.floor(player.body.position.y / tileSize);
+      currentPlayerXtile = Math.floor(cat.body.position.x / tileSize);
+      currentPlayerYtile = Math.floor(cat.body.position.y / tileSize);
 
       // PREVENT FROM GOING OUT FROM THE LOGICAL ARRAY BECAUSE OF THE PHASER PHYSICS ENGINE
 
