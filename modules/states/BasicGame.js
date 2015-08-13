@@ -138,8 +138,8 @@ define([
       
       game.load.tilemap('map', 'assets/isometric-tileset-test.json', null, Phaser.Tilemap.TILED_JSON);
       
-      
-      
+   
+
    
 
       //  Enable p2 physics
@@ -159,12 +159,12 @@ define([
       
       map = game.add.tilemap('map');
       
-      layer = map.createLayer('Tile Layer 1');
+     // layer = map.createLayer('Tile Layer 1');
 
-        layer.resizeWorld();
+     //   layer.resizeWorld();
 
 
-      game.plugins.add(PhaserDebug);
+      // game.plugins.add(PhaserDebug);
       // tentando desenhar o minimap
       var miniMapBmd = game.add.bitmapData(game.width / 5, game.height / 5);
       miniMapBmd.ctx.fillStyle = '#00BF32';
