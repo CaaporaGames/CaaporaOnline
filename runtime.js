@@ -19,14 +19,12 @@ requirejs.config({
 
           deps: ['Phaser']
       }
-      
   }
 });
 
 var game = {};
 //a ordem importa neste caso
 require([
-
   'modules/PhaserGame',
   'modules/states/BasicGame',
   'modules/states/level2',

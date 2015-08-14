@@ -1,6 +1,5 @@
 define([
-  'Phaser',
-  'PhaserIsometricPlugin'
+  'Phaser'
 ], function (Phaser) {
 
         var GameTitle;
