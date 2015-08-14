@@ -308,17 +308,7 @@ define([
       cat.body.drag.set(100, 100, 0);
 
   
-      game.physics.isoArcade.enable(player);
-      player.body.collideWorldBounds = true;
-      //  Our two animations, walking left and right.
-      player.animations.add('down', [0, 1, 2, 3, 4, 5, 6, 7], 10, true);
-      player.animations.add('down left', [8, 9, 10, 11, 12, 13, 14, 15], 10, true);
-      player.animations.add('left', [16, 17, 18, 19, 20, 21, 22, 23], 10, true);
-      player.animations.add('up left', [24, 25, 26, 27, 28, 29, 30, 31], 10, true);
-      player.animations.add('up', [32, 33, 34, 35, 36, 37, 38, 39], 10, true);
-      player.animations.add('up right', [40, 41, 42, 43, 44, 45, 46, 47], 10, true);
-      player.animations.add('right', [48, 49, 50, 51, 52, 53, 54, 55], 10, true);
-      player.animations.add('down right', [56, 57, 58, 59, 60, 61, 62, 63], 10, true);
+      
      
       console.log(
         'CAAPORA\n' +
@@ -357,7 +347,7 @@ define([
       cowboy.body.collideWorldBounds = true;
 
       // set the physics bounce amount on each axis  (X, Y, Z)
-      cowboy.body.bounce.set(0.2, 0.2, 0);
+      cowboy.body.bounce.set(1.2, 1.2, 0);
 
       // set the slow down rate on each axis (X, Y, Z)
       cowboy.body.drag.set(100, 100, 0);
@@ -564,8 +554,30 @@ define([
     update: function () {
 
       
-      caapora.setText("Caapora - HP: " + caapora.getBaseLife());
+      // Each time enemy collide with player, he loses 10 life points.
+    var collision = false;
 
+    collision = game.physics.isoArcade.collide(cowboy, player);
+    
+    collision2 = game.physics.isoArcade.collide(cobra, player);
+    
+     if(collision || collision2) {
+     
+      var currentLife = caapora.getBaseLife() - 2;
+
+      caapora.setBaseLife(currentLife);
+      caapora.setText("Caapora - HP: " + caapora.getBaseLife());
+      
+      console.log('Caapora loses 2 of life points.\n' + 'Current life: ' + caapora.getBaseLife());
+
+      // Game is over when the life reaches 0.
+      if (currentLife == 0) {
+        game.state.start('GameOver');
+      }
+
+    }
+
+        caapora.checkMovement();
       /*water.forEach(function (w) {
       w.isoZ = (-2 * Math.sin((game.time.now + (w.isoX * 7)) * 0.004)) + (-1 * Math.sin((game.time.now + (w.isoY * 8)) * 0.005));
       w.alpha = Phaser.Math.clamp(1 + (w.isoZ * 0.1), 0.2, 1);
@@ -628,79 +640,6 @@ define([
 
     }
     
-
-
-    //  Reset the players velocity (movement)
-    player.body.velocity.x = 0;
-    player.body.velocity.y = 0;
-
-    if (left.isDown)
-    {
-      //  Move to the left
-      player.body.velocity.x = -150;
-      player.body.velocity.y = 150;
-      player.animations.play('left');
-    }
-    else if (right.isDown)
-    {
-      //  Move to the right
-      player.body.velocity.x = 150;
-      player.body.velocity.y = -150;
-
-      player.animations.play('right');
-    }
-    else if (up.isDown)
-    {
-      player.body.velocity.x = -150;
-      player.body.velocity.y = -150;
-
-      player.animations.play('up');
-    }
-    else if (down.isDown)
-    {
-      player.body.velocity.x = 150;
-      player.body.velocity.y = 150;
-      player.animations.play('down');
-    }
-    else if (up_left.isDown)
-    {
-      //  NOROESTE
-      player.body.velocity.x = -150;
-      player.body.velocity.y = 0;
-
-      player.animations.play('up left');
-    }
-    else if (down_left.isDown)
-    {
-      // SUDOESTE
-      player.body.velocity.x = 0;
-      player.body.velocity.y = 150;
-
-      player.animations.play('down left');
-    }
-    else if (up_right.isDown)
-    {
-      // NORDESTE
-      player.body.velocity.x = 0;
-      player.body.velocity.y = -150;
-      player.animations.play('up right');
-    }
-    else if (down_right.isDown)
-    {
-      // SUDESTE
-      player.body.velocity.x = 150;
-      player.body.velocity.y = 0;
-      player.animations.play('down right');
-    }
-    else
-    {
-      //  Stand still
-      player.animations.stop();
-
-      player.frame = 4;
-      player.body.velocity.x = 0;
-      player.body.velocity.y = 0;
-    }
 
     // Move the ENEMY
     var enemySpeed = 90;
@@ -862,24 +801,7 @@ define([
     Posição atual da cobra.
     */
 
-    // Each time enemy collide with player, he loses 10 life points.
-    var collision = false;
-
-    collision = game.physics.isoArcade.collide(cowboy, player);
-
-    if(collision) {
-      var currentLife = player.caapora.getBaseLife() - 10;
-
-      player.caapora.setBaseLife(currentLife);
-      console.log('Caapora loses 10 of life points.\n' + 'Current life: ' + player.caapora.getBaseLife());
-
-      // Game is over when the life reaches 0.
-      if (currentLife == 0) {
-        game.state.start('GameOver');
-      }
-
-    }
-
+    
     // Quando o tempo atingir 5 minutos, e o gato não for capturado, muda para o level 2.
     if (tempo > 60000) {
       game.state.start('level2');
@@ -949,7 +871,49 @@ game.debug.text("Player z = " + Math.round(player.z) || '--', 2, 124, "#a7aebe")
     getPlayer: function (){
 
         return player;
-    }
+    },
+    
+    getIsoGroup: function(){
+        return isoGroup;
+    },
+    
+    getLeft : function(){
+        return left;
+       
+    },
+    
+    setLeft : function(l){
+        left = l;
+    },
+    
+    getRight : function(){
+        return right;
+       
+    },
+    
+    setRight : function(r){
+        right = r;
+    },
+    
+    getUp : function(){
+        return up;
+       
+    },
+    
+    setUp : function(u){
+        up = u;
+    },
+    
+    getDown : function(){
+        return down;
+       
+    },
+    
+    setDown : function(d){
+        down = d;
+    },
+    
+    
 
 
 };
