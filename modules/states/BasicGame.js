@@ -868,10 +868,10 @@ define([
     collision = game.physics.isoArcade.collide(cowboy, player);
 
     if(collision) {
-      var currentLife = player.caapora.getBaseLife() - 10;
+      var currentLife = caapora.getBaseLife() - 2;
 
-      player.caapora.setBaseLife(currentLife);
-      console.log('Caapora loses 10 of life points.\n' + 'Current life: ' + player.caapora.getBaseLife());
+      caapora.setBaseLife(currentLife);
+      console.log('Caapora loses 2 of life points.\n' + 'Current life: ' + caapora.getBaseLife());
 
       // Game is over when the life reaches 0.
       if (currentLife == 0) {
@@ -949,6 +949,10 @@ game.debug.text("Player z = " + Math.round(player.z) || '--', 2, 124, "#a7aebe")
     getPlayer: function (){
 
         return player;
+    },
+    
+    getIsoGroup: function(){
+        return isoGroup;
     }
 
 

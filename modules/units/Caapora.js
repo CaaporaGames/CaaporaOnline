@@ -19,7 +19,7 @@
 			key = opts.image;
 		}
     
-                this.game.setPlayer(this.game.game.add.isoSprite(x, y, 11, image, 0, this.game.game.isoGroup));	
+                this.game.setPlayer(this.game.game.add.isoSprite(x, y, 11, image, 0, this.game.getIsoGroup()));	
 		
                 player = this.game.getPlayer();
                 //this.fullWidth = this.sprite.width;
