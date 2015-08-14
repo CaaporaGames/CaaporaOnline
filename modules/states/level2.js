@@ -967,7 +967,7 @@ function rndNum(num) {
   return Math.round(Math.random() * num);
 
 };
-
+/*
 function Caapora() {
 
   // Atributos base do personagem.
@@ -1058,4 +1058,4 @@ function Enemy() {
     baseAttack = attack;
   }
 
-}
+}*/

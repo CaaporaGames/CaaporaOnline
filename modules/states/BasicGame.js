@@ -15,7 +15,7 @@ define([
   var isoGroup;
   var floorGroup;
   var treeGroup;
-  var player, cowboy;
+  var player, cowboy,caapora;
   var cobra, cat;
   var up, down, right, left, up_left, up_right, down_left, down_right;
   var backgroundMusic;
@@ -125,8 +125,9 @@ define([
       game.load.image('lifeBar', 'assets/images/life-bar.png');
       game.load.spritesheet('dude', 'assets/images/enemy2.png', 70, 74);
       game.load.spritesheet('cowboy', 'assets/images/enemy1.png', 70, 74);
-        game.load.spritesheet('cat', 'assets/images/cat.png', 29, 28);
-      // Set the world size
+      game.load.spritesheet('cat', 'assets/images/cat.png', 29, 28);
+      
+        // Set the world size
       game.world.setBounds(0, 0, 2048, 1024);
       // Start the physical system
 
@@ -136,12 +137,8 @@ define([
 
       game.plugins.add(new Phaser.Plugin.Isometric(game));
       
-      game.load.tilemap('map', 'assets/isometric-tileset-test.json', null, Phaser.Tilemap.TILED_JSON);
-      
+      //game.load.tilemap('map', 'assets/isometric-tileset-test.json', null, Phaser.Tilemap.TILED_JSON);
    
-
-   
-
       //  Enable p2 physics
       //game.physics.startSystem(Phaser.Physics.P2JS);
 
@@ -151,20 +148,35 @@ define([
       // set the middle of the world in the middle of the screen
       game.iso.anchor.setTo(0.5, 0);
     },
+    
     create: function () {
       floorGroup = game.add.group();
       isoGroup = game.add.group();
       treeGroup = game.add.group();
       
+  
+           // player = game.add.isoSprite(900, 800, 11, 'dude', 0, isoGroup);	
+
+                /*
+                player.lifebar = game.add.sprite(-20, -30, 'lifeBar');
+                player.lifebar.anchor.setTo(0.2,1);
+                player.addChild(player.lifebar);*/
       
-      map = game.add.tilemap('map');
-      
-     // layer = map.createLayer('Tile Layer 1');
 
-     //   layer.resizeWorld();
+                 // Instanciando objeto caapora.
+                 
+                caapora = new Caapora({
+                      game: this
+
+                }); 
 
 
-      // game.plugins.add(PhaserDebug);
+              //map = game.add.tilemap('map');
+
+
+              
+
+     // game.plugins.add(PhaserDebug);
       // tentando desenhar o minimap
       var miniMapBmd = game.add.bitmapData(game.width / 5, game.height / 5);
       miniMapBmd.ctx.fillStyle = '#00BF32';
@@ -302,25 +314,7 @@ define([
       // set the slow down rate on each axis (X, Y, Z)
       cat.body.drag.set(100, 100, 0);
 
-      // Create player.
-      player = game.add.isoSprite(1000, 800, 11, 'dude', 0, isoGroup);
-
-
-      // player = game.add.sprite(350, game.world.height - 350, 'dude');
-
-      var style = { font: "bold 14px Arial", fill: "#333", wordWrap: true, wordWrapWidth: 150, align: "center" };
-
-      text = game.add.text(20, -50, "Caapora - HP: 100%", style);
-      text.anchor.set(0.5);
-
-      player.addChild(text);
-
-      player.anchor.set(0.5);
-
-      player.lifebar = game.add.sprite(-20, -30, 'lifeBar');
-      player.lifebar.anchor.setTo(0.2,1);
-      player.addChild(player.lifebar);
-
+  
       game.physics.isoArcade.enable(player);
       player.body.collideWorldBounds = true;
       //  Our two animations, walking left and right.
@@ -332,15 +326,13 @@ define([
       player.animations.add('up right', [40, 41, 42, 43, 44, 45, 46, 47], 10, true);
       player.animations.add('right', [48, 49, 50, 51, 52, 53, 54, 55], 10, true);
       player.animations.add('down right', [56, 57, 58, 59, 60, 61, 62, 63], 10, true);
-
-      // Instanciando objeto caapora.
-      player.caapora = new Caapora();
+     
       console.log(
         'CAAPORA\n' +
-        'Life: ' + player.caapora.getBaseLife() + '\n' +
-        'Energy: ' + player.caapora.getBaseEnergy() + '\n' +
-        'Defense: ' + player.caapora.getBaseDefense() + '\n' +
-        'Attack: ' + player.caapora.getBaseAttack()
+        'Life: ' + caapora.getBaseLife() + '\n' +
+        'Energy: ' + caapora.getBaseEnergy() + '\n' +
+        'Defense: ' + caapora.getBaseDefense() + '\n' +
+        'Attack: ' + caapora.getBaseAttack()
       );
       //  Player physics properties. Give the little guy a slight bounce.
 
@@ -568,7 +560,11 @@ define([
         }, 1000);
 
     },
+    
     update: function () {
+
+      
+      caapora.setText("Caapora - HP: " + caapora.getBaseLife());
 
       /*water.forEach(function (w) {
       w.isoZ = (-2 * Math.sin((game.time.now + (w.isoX * 7)) * 0.004)) + (-1 * Math.sin((game.time.now + (w.isoY * 8)) * 0.005));
@@ -941,7 +937,16 @@ define([
       else {
         this.camera.isMoving = false;
       }
+    },
+    
+    setPlayer: function(p){
+        player = p;
+    },
+    
+    getPlayer: function(){
+        return player;
     }
+    
 
   };
 
@@ -966,95 +971,3 @@ function rndNum(num) {
   return Math.round(Math.random() * num);
 
 };
-
-function Caapora() {
-
-  // Atributos base do personagem.
-
-  var baseLife = 100;
-  var baseEnergy = 120;
-  var baseDefense = 10;
-  var baseAttack = 10;
-
-
-  // Getters and Setters.
-
-  this.getBaseLife = function(){
-    return baseLife;
-  };
-
-  this.setBaseLife = function(life){
-    baseLife = life;
-  };
-
-  this.getBaseEnergy = function(){
-    return baseEnergy;
-  };
-
-  this.setBaseEnergy = function(energy){
-    baseEnergy = energy;
-  };
-
-  this.getBaseDefense = function(){
-    return baseDefense;
-  };
-
-  this.setBaseDefense = function(defense){
-    baseDefense = defense
-  };
-
-  this.getBaseAttack = function(){
-    return baseAttack;
-  };
-
-  this.setBaseAttack = function(attack){
-    baseAttack = attack;
-  }
-
-};
-
-function Enemy() {
-
-  // Atributos base do inimigo.
-
-  var baseLife = 100;
-  var baseEnergy = 120;
-  var baseDefense = 10;
-  var baseAttack = 10;
-
-
-  // Getters and Setters.
-
-  this.getBaseLife = function(){
-    return baseLife;
-  };
-
-  this.setBaseLife = function(life){
-    baseLife = life;
-  };
-
-  this.getBaseEnergy = function(){
-    return baseEnergy;
-  };
-
-  this.setBaseEnergy = function(energy){
-    baseEnergy = energy;
-  };
-
-  this.getBaseDefense = function(){
-    return baseDefense;
-  };
-
-  this.setBaseDefense = function(defense){
-    baseDefense = defense
-  };
-
-  this.getBaseAttack = function(){
-    return baseAttack;
-  };
-
-  this.setBaseAttack = function(attack){
-    baseAttack = attack;
-  }
-
-}

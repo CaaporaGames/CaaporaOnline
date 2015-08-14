@@ -1,11 +1,12 @@
 define([
   'Phaser',
   'PhaserDebug',
-  'PhaserTiled'
+  'PhaserTiled',
   //'modules/extensions/MyExtension',
-  //'modules/units/MyUnit',
+  'modules/units/Caapora',
+  'modules/units/Enemy'
   //'modules/factories/MyFactory'
-], function (Phaser) {
+], function (Phaser, Caapora, Enemy) {
     
     //console.log('phaser', Phaser);
     //console.log('PIXI', PIXI);

@@ -31,10 +31,11 @@ require([
   'modules/states/BasicGame',
   'modules/states/level2',
   'modules/states/GameTitle',
-  'modules/states/GameOver'
+  'modules/states/GameOver',
+ // 'modules/units/Caapora'
  // 'modules/states/Preload',
 
-], function (PhaserGame, BasicGame, level2, GameTitle, GameOver) { //PhaserGame, BootState, PreloadState,
+], function (PhaserGame, BasicGame, level2, GameTitle, GameOver, Caapora) { //PhaserGame, BootState, PreloadState,
 
   game = new PhaserGame(800, 600, Phaser.AUTO , 'test', null, true, false);
 
