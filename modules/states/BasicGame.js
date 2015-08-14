@@ -7,7 +7,6 @@ define([
 ], function (Phaser, PhaserDebug, PhaserTiled) {
 
   var BasicGame;
-
   BasicGame = function () {
     // nothing here
   };
