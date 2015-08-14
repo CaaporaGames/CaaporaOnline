@@ -5,9 +5,11 @@ define([
     //'modules/extensions/MyExtension',
     'modules/units/Caapora',
     'modules/units/Cowboy',
-    'modules/units/Enemy'
+    'modules/units/Enemy',
+    'modules/units/Cobra',
+    'modules/units/Cat'
             //'modules/factories/MyFactory'
-], function (Phaser, Caapora, Cowboy, Enemy) {
+], function (Phaser, Caapora, Cowboy, Enemy, Cobra, Cat) {
 
     //console.log('phaser', Phaser);
     //console.log('PIXI', PIXI);
