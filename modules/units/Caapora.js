@@ -1,4 +1,3 @@
-
 // Atributos base do personagem.
 var baseLife = 100;
 var baseEnergy = 120;
@@ -8,11 +7,16 @@ var player = {};
 var x = 900;
 var y = 800;
 var textCaapora;
+var caaporaSprite;
+var keyboard;
+
 
 function Caapora(opts) {
 
     // Nome do Sprite
     var image = 'dude';
+    keyboard = new Keyboard();
+    
     // Passa a referencia da Classe BasicGame e BasicGame.game para ser 
     // modificado nesta classe
     this.basicGame = opts.basicGame;
@@ -24,41 +28,39 @@ function Caapora(opts) {
     }
 
     // Inclui o Player do BasicGame como o Sprite
-    this.basicGame.setPlayer(this.basicGame.add.isoSprite(x, y, 11, image, 0, this.basicGame.getIsoGroup()));
-    // Pega a referencia do Player da Classe BasicGame
-    player = this.basicGame.getPlayer();
+    caaporaSprite = game.add.isoSprite(x, y, 11, image, 0, this.basicGame.getIsoGroup());
     //this.fullWidth = this.sprite.width;
 
 
-    player.anchor.set(0.5);
+    caaporaSprite.anchor.set(0.5);
 
     // Inclui a Barra de vida do Player   
-    player.lifebar = this.game.add.sprite(-20, -30, 'lifeBar');
-    player.lifebar.anchor.setTo(0.2, 1);
-    player.addChild(player.lifebar);
+    caaporaSprite.lifebar = this.game.add.sprite(-20, -30, 'lifeBar');
+    caaporaSprite.lifebar.anchor.setTo(0.2, 1);
+    caaporaSprite.addChild(caaporaSprite.lifebar);
 
     // Inclui o texto acima da barra de vida
     // Este texto será atualizado no Update do game loop
     var style = {font: "bold 14px Arial", fill: "#333", wordWrap: true, wordWrapWidth: 150, align: "center"};
     textCaapora = this.game.add.text(20, -50, "Caapora - HP:  100", style);
     textCaapora.anchor.set(0.5);
-    player.addChild(textCaapora);
-    player.anchor.set(0.5);
+    caaporaSprite.addChild(textCaapora);
+    caaporaSprite.anchor.set(0.5);
 
     // Habilita a Fisica no Player e Colisão
-    this.game.physics.isoArcade.enable(player);
-    player.body.collideWorldBounds = true;
+    this.game.physics.isoArcade.enable(caaporaSprite);
+    caaporaSprite.body.collideWorldBounds = true;
 
     // Adiciona a animação referente a movimentação
     //  Our two animations, walking left and right.
-    player.animations.add('down', [0, 1, 2, 3, 4, 5, 6, 7], 10, true);
-    player.animations.add('down left', [8, 9, 10, 11, 12, 13, 14, 15], 10, true);
-    player.animations.add('left', [16, 17, 18, 19, 20, 21, 22, 23], 10, true);
-    player.animations.add('up left', [24, 25, 26, 27, 28, 29, 30, 31], 10, true);
-    player.animations.add('up', [32, 33, 34, 35, 36, 37, 38, 39], 10, true);
-    player.animations.add('up right', [40, 41, 42, 43, 44, 45, 46, 47], 10, true);
-    player.animations.add('right', [48, 49, 50, 51, 52, 53, 54, 55], 10, true);
-    player.animations.add('down right', [56, 57, 58, 59, 60, 61, 62, 63], 10, true);
+    caaporaSprite.animations.add('down', [0, 1, 2, 3, 4, 5, 6, 7], 10, true);
+    caaporaSprite.animations.add('down left', [8, 9, 10, 11, 12, 13, 14, 15], 10, true);
+    caaporaSprite.animations.add('left', [16, 17, 18, 19, 20, 21, 22, 23], 10, true);
+    caaporaSprite.animations.add('up left', [24, 25, 26, 27, 28, 29, 30, 31], 10, true);
+    caaporaSprite.animations.add('up', [32, 33, 34, 35, 36, 37, 38, 39], 10, true);
+    caaporaSprite.animations.add('up right', [40, 41, 42, 43, 44, 45, 46, 47], 10, true);
+    caaporaSprite.animations.add('right', [48, 49, 50, 51, 52, 53, 54, 55], 10, true);
+    caaporaSprite.animations.add('down right', [56, 57, 58, 59, 60, 61, 62, 63], 10, true);
 
 
 }
@@ -67,21 +69,21 @@ function Caapora(opts) {
 // Por algum motivo os atributos não podem ser acessados diretamente (?)
 Caapora.prototype = {
     // Getters and Setters.
+    setBaseLife: function (life) {
+        baseLife = life;
+    },
     getBaseLife: function () {
         return baseLife;
+    },
+    setCaaporaSprite: function (cs) {
+        caaporaSprite = cs;
+    },
+    getCaaporaSprite: function () {
+        return caaporaSprite;
     },
     setText: function (textX) {
 
         textCaapora.setText(textX);
-    },
-    setPlayer: function (pl) {
-        player = pl;
-    },
-    getPlayer: function () {
-        return player;
-    },
-    setBaseLife: function (life) {
-        baseLife = life;
     },
     getBaseEnergy: function () {
         return baseEnergy;
@@ -105,36 +107,36 @@ Caapora.prototype = {
     checkMovement: function () {
 
         //  Reset the players velocity (movement)
-        player.body.velocity.x = 0;
-        player.body.velocity.y = 0;
+        caaporaSprite.body.velocity.x = 0;
+        caaporaSprite.body.velocity.y = 0;
 
-        if (this.basicGame.getLeft().isDown)
+        if (keyboard.getLeft().isDown)
         {
             //  Move to the left
-            player.body.velocity.x = -150;
-            player.body.velocity.y = 150;
-            player.animations.play('left');
+            caaporaSprite.body.velocity.x = -150;
+            caaporaSprite.body.velocity.y = 150;
+            caaporaSprite.animations.play('left');
         }
-        else if (this.basicGame.getRight().isDown)
+        else if (keyboard.getRight().isDown)
         {
             //  Move to the right
-            player.body.velocity.x = 150;
-            player.body.velocity.y = -150;
+            caaporaSprite.body.velocity.x = 150;
+            caaporaSprite.body.velocity.y = -150;
 
-            player.animations.play('right');
+            caaporaSprite.animations.play('right');
         }
-        else if (this.basicGame.getUp().isDown)
+        else if (keyboard.getUp().isDown)
         {
-            player.body.velocity.x = -150;
-            player.body.velocity.y = -150;
+            caaporaSprite.body.velocity.x = -150;
+            caaporaSprite.body.velocity.y = -150;
 
-            player.animations.play('up');
-        }
-        else if (this.basicGame.getDown().isDown)
+            caaporaSprite.animations.play('up');
+        } 
+        else if (keyboard.getDown().isDown)
         {
-            player.body.velocity.x = 150;
-            player.body.velocity.y = 150;
-            player.animations.play('down');
+            caaporaSprite.body.velocity.x = 150;
+            caaporaSprite.body.velocity.y = 150;
+            caaporaSprite.animations.play('down');
         }
         /*
          else if (up_left.isDown)
@@ -170,11 +172,11 @@ Caapora.prototype = {
         else
         {
             //  Stand still
-            player.animations.stop();
+            caaporaSprite.animations.stop();
 
-            player.frame = 4;
-            player.body.velocity.x = 0;
-            player.body.velocity.y = 0;
+            caaporaSprite.frame = 4;
+            caaporaSprite.body.velocity.x = 0;
+            caaporaSprite.body.velocity.y = 0;
         }
 
     }

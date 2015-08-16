@@ -19,10 +19,6 @@ define([
   var cobra, cat;
   var up, down, right, left, up_left, up_right, down_left, down_right;
   var backgroundMusic;
-  var text;
-  var miniMapPlayerSprite;
-  var miniMapCobraSprite;
-  var i = 0;
   var numRandomico = 0;
   var tempo = 0;
   var relogio;
@@ -95,15 +91,11 @@ define([
   var currentNextPointX2; // next movement point in X for cobra.
   var currentNextPointY2; // next movement point in Y for cobra.
 
-  var cobraDirection = "STOP";
-
   //************* TILES ***************
 
   var tileSize = 35;
-  var mapSize = 30;
+  var mapSize = 50;
 
-  var map;
-  var layer;
   // **********************************
 
   BasicGame.prototype = {
@@ -119,17 +111,18 @@ define([
       game.load.image('ground', 'assets/images/ground_tile.png');
       game.load.image('tree', 'assets/images/tree2.png');
       game.load.audio('backgroundMusic', ['assets/audio/amazon-florest.mp3', 'assets/audio/amazon-florest.ogg']);
-      game.load.spritesheet('cobra', 'assets/images/enemy1.png', 70, 74);
       game.load.image('rock', 'assets/images/rock.png');
       game.load.image('lifeBar', 'assets/images/life-bar-green.png');
       game.load.image('lifeBarRed', 'assets/images/life-bar-red.png');
       game.load.spritesheet('dude', 'assets/images/enemy2.png', 70, 74);
       game.load.spritesheet('cowboy', 'assets/images/enemy1.png', 70, 74);
       game.load.spritesheet('cat', 'assets/images/cat.png', 29, 28);
-
+      game.load.spritesheet('cobra', 'assets/images/enemy1.png', 70, 74);
+      game.load.image('backgroundfase', 'assets/images/backgroundFase1.png');
       // Set the world size
-
-      game.world.setBounds(0, 0, 2048, 1024);
+     
+      
+      game.world.setBounds(0, 0, 2548, 2548);
       // Start the physical system
 
       game.time.advancedTiming = true;
@@ -150,11 +143,14 @@ define([
       game.iso.anchor.setTo(0.5, 0);
     },
     create: function () {
-      floorGroup = game.add.group();
+     
+          game.add.sprite(0, 0, 'backgroundfase');
+          
+        floorGroup = game.add.group();
       isoGroup = game.add.group();
       treeGroup = game.add.group();
 
-
+     
 
       // Instanciando objeto caapora.
 
@@ -164,7 +160,8 @@ define([
 
 
       });
-
+      
+      player = caapora.getCaaporaSprite();
 
       // game.plugins.add(PhaserDebug);
       // tentando desenhar o minimap
