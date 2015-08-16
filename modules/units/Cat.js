@@ -15,7 +15,7 @@ function Cat (opts) {
     key = opts.image;
   }
 
-  this.basicGame.setCat(this.basicGame.add.isoSprite(6 * this.basicGame.getTileSize(), 6 * this.basicGame.getTileSize(), 0, 'cat', 0, this.basicGame.getIsoGroup()));
+  this.basicGame.setCat(this.basicGame.add.isoSprite(11 * this.basicGame.getTileSize(), 11 * this.basicGame.getTileSize(), 0, 'cat', 0, this.basicGame.getIsoGroup()));
   cat = this.basicGame.getCat();
 
   // add the animations from the spritesheet

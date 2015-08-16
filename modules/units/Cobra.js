@@ -23,9 +23,8 @@ function Cobra (opts) {
   if (opts.image) {
     key = opts.image;
   }
-
-  this.basicGame.setCobra(this.basicGame.add.isoSprite(5 * this.basicGame.getTileSize(), 5 * this.basicGame.getTileSize(), 0, image, 0, this.basicGame.getIsoGroup()));
-  cobra = this.basicGame.getCobra();
+  
+  cobra = game.add.isoSprite(15 * this.basicGame.getTileSize(), 15 * this.basicGame.getTileSize(), 0, image, 0, this.basicGame.getIsoGroup())
 
   cobra.anchor.set(0.5);
 
@@ -213,5 +212,9 @@ Cobra.prototype = {
     _________________________________________________________
     Movimentos da cobra.
     */
-  }
+   
+  },
+   getCobraSprite : function(){
+       return cobra;
+   }
 }

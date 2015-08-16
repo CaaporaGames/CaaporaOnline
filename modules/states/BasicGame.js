@@ -118,11 +118,11 @@ define([
       game.load.spritesheet('cowboy', 'assets/images/enemy1.png', 70, 74);
       game.load.spritesheet('cat', 'assets/images/cat.png', 29, 28);
       game.load.spritesheet('cobra', 'assets/images/enemy1.png', 70, 74);
-      game.load.image('backgroundfase', 'assets/images/backgroundFase1.png');
+      game.load.image('grass', 'assets/images/grass.png');
       // Set the world size
      
       
-      game.world.setBounds(0, 0, 2548, 2548);
+      game.world.setBounds(0, 0, 3548, 3548);
       // Start the physical system
 
       game.time.advancedTiming = true;
@@ -143,25 +143,57 @@ define([
       game.iso.anchor.setTo(0.5, 0);
     },
     create: function () {
-     
-          game.add.sprite(0, 0, 'backgroundfase');
+    
+      // Grama no fundo
+      tilesprite = game.add.tileSprite(0, 0, 4000, 4000, 'grass');
           
-        floorGroup = game.add.group();
+      floorGroup = game.add.group();
       isoGroup = game.add.group();
       treeGroup = game.add.group();
 
      
-
       // Instanciando objeto caapora.
 
       caapora = new Caapora({
-        basicGame: this,
-        game: this.game,
+        group: isoGroup,
+        game: this.game
 
 
       });
       
-      player = caapora.getCaaporaSprite();
+      catObj = new Cat({
+          basicGame: this,
+          game: this.game
+        });
+      
+      
+      
+      
+      // Instanciando objeto caapora.
+
+      cowboyObj = new Cowboy({
+        basicGame: this,
+        game: this.game,
+        easystar : this.getEasystar(),
+        timeStep : this.getTimeStep()
+
+      });
+      
+      
+      // Instanciando objeto cobra.
+        cobraObj = new Cobra({
+          basicGame: this,
+          game: this.game,
+          easystar: this.getEasystar(),
+          timeStep: this.getTimeStep()
+        });
+        
+        cobra = cobraObj.getCobraSprite();
+        // Instanciando objeto enemy.
+        cowboy.enemy = new Enemy();
+        player = caapora.getCaaporaSprite();
+      
+
 
       // game.plugins.add(PhaserDebug);
       // tentando desenhar o minimap
@@ -209,7 +241,7 @@ define([
       game.physics.isoArcade.gravity.setTo(0, 0, -500);
 
       // set the Background color of our game
-      game.stage.backgroundColor = "0x009900";
+      game.stage.backgroundColor = "0xffff";
 
 
       var floorTile;
@@ -281,17 +313,7 @@ define([
       game.camera.follow(player);
 
 
-      // Instanciando objeto caapora.
-
-      cowboyObj = new Cowboy({
-        basicGame: this,
-        game: this.game,
-        easystar : this.getEasystar(),
-        timeStep : this.getTimeStep()
-
-      });
-      // Instanciando objeto enemy.
-      cowboy.enemy = new Enemy();
+      
       console.log(
         'INIMIGO\n' +
         'Life: ' + cowboyObj.getBaseLife() + '\n' +
@@ -310,14 +332,7 @@ define([
 
         timeStep);
 
-        // Instanciando objeto cobra.
-        cobraObj = new Cobra({
-          basicGame: this,
-          game: this.game,
-          easystar: this.getEasystar(),
-          timeStep: this.getTimeStep()
-        });
-
+        
 
         setInterval(function () {
 
@@ -325,10 +340,7 @@ define([
 
         }, timeStep);
 
-        catObj = new Cat({
-          basicGame: this,
-          game: this.game
-        });
+     
 
         // KeyCodes do Keyboard.
         up = game.input.keyboard.addKey(Phaser.Keyboard.UP);
@@ -364,7 +376,6 @@ define([
       },
       update: function () {
 
-
         // Each time enemy collide with player, he loses 10 life points.
         var collision = false;
 
@@ -372,7 +383,7 @@ define([
 
         collision2 = game.physics.isoArcade.collide(cobra, player);
 
-        if (collision || collision2) {
+        if (collision) {
 
           var currentLife = caapora.getBaseLife() - 2;
 
@@ -410,15 +421,7 @@ define([
 
       game.iso.topologicalSort(isoGroup);
 
-      this.moveCamera();
-      //correção na junção dos sprites de solo
-      // game.iso.topologicalSort(floorGroup);
-      // game.physics.isoArcade.collide(treeGroup,player);
-
-      //game.physics.isoArcade.collide(player);
-      //game.physics.p2.
-      // game.physics.isoArcade.collide(water);
-
+   
       // Move the ENEMY
       cowboyObj.movement();
 
@@ -483,42 +486,6 @@ define([
   game.debug.text("Player z = " + Math.round(player.z) || '--', 2, 124, "#a7aebe");
 
   // game.debug.text(Phaser.VERSION, 2, game.world.height - 2, "#ffff00");
-},
-moveCamera: function () {
-  if (this.camera.isMoving)
-  return;
-
-  this.camera.isMoving = true;
-  var mustMove = false;
-
-  if (player.y > game.camera.y + game.height) {
-    this.camera.y += 1;
-    mustMove = true;
-  }
-  else if (player.y < game.camera.y) {
-    this.camera.y -= 1;
-    mustMove = true;
-  }
-  else if (player.x > game.camera.x + game.width) {
-    this.camera.x += 1;
-    mustMove = true;
-  }
-  else if (player.x < game.camera.x) {
-    this.camera.x -= 1;
-    mustMove = true;
-  }
-
-  if (mustMove) {
-    var t = game.add.tween(game.camera).to({x: this.camera.x * game.width, y: this.camera.y * game.height}, 600);
-    t.start();
-    t.onComplete.add(function () {
-      this.camera.isMoving = false;
-    }, this);
-  }
-  else {
-    this.camera.isMoving = false;
-  }
-
 },
 //Getters and Setters
 

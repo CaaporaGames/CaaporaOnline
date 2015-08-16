@@ -31,5 +31,5 @@ Keyboard.prototype = {
 
     setUp: function (u) {  up = u;  },
 
-    getDown: function () {  return down; },
+    getDown: function () {  return down; }
 }

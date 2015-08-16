@@ -36,7 +36,7 @@ function Cowboy(opts) {
     }
 
     // Inclui o Cowboy do BasicGame como o Sprite
-    this.basicGame.setCowboy(this.basicGame.add.isoSprite(4 * this.basicGame.getTileSize(), 4 * this.basicGame.getTileSize(), 0, image, 0, this.basicGame.getIsoGroup()));
+    this.basicGame.setCowboy(this.basicGame.add.isoSprite(17 * this.basicGame.getTileSize(), 17 * this.basicGame.getTileSize(), 0, image, 0, this.basicGame.getIsoGroup()));
     // Pega a referencia do Player da Classe BasicGame
     cowboy = this.basicGame.getCowboy();
     //this.fullWidth = this.sprite.width;

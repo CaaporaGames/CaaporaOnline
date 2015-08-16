@@ -19,8 +19,8 @@ function Caapora(opts) {
     
     // Passa a referencia da Classe BasicGame e BasicGame.game para ser 
     // modificado nesta classe
-    this.basicGame = opts.basicGame;
     this.game = opts.game;
+    this.group = opts.group;
 
     // Permite modificar o nome do sprite
     if (opts.image) {
@@ -28,7 +28,7 @@ function Caapora(opts) {
     }
 
     // Inclui o Player do BasicGame como o Sprite
-    caaporaSprite = game.add.isoSprite(x, y, 11, image, 0, this.basicGame.getIsoGroup());
+    caaporaSprite = game.add.isoSprite(x, y, 11, image, 0, this.group);
     //this.fullWidth = this.sprite.width;
 
 
