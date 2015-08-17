@@ -22,6 +22,7 @@ define([
   var numRandomico = 0;
   var tempo = 0;
   var relogio;
+  var collision = false;
 
   // ********************* EasyStar setup *********************
   var easystar = new EasyStar.js();
@@ -120,9 +121,9 @@ define([
       game.load.spritesheet('cobra', 'assets/images/enemy1.png', 70, 74);
       game.load.image('grass', 'assets/images/grass.png');
       // Set the world size
-     
-      
-      game.world.setBounds(0, 0, 3548, 3548);
+
+
+      game.world.setBounds(0, 0, 2048, 1024);
       // Start the physical system
 
       game.time.advancedTiming = true;
@@ -143,15 +144,15 @@ define([
       game.iso.anchor.setTo(0.5, 0);
     },
     create: function () {
-    
+
       // Grama no fundo
       tilesprite = game.add.tileSprite(0, 0, 4000, 4000, 'grass');
-          
+
       floorGroup = game.add.group();
       isoGroup = game.add.group();
       treeGroup = game.add.group();
 
-     
+
       // Instanciando objeto caapora.
 
       caapora = new Caapora({
@@ -160,15 +161,15 @@ define([
 
 
       });
-      
+
       catObj = new Cat({
           basicGame: this,
           game: this.game
         });
-      
-      
-      
-      
+
+
+
+
       // Instanciando objeto caapora.
 
       cowboyObj = new Cowboy({
@@ -178,8 +179,8 @@ define([
         timeStep : this.getTimeStep()
 
       });
-      
-      
+
+
       // Instanciando objeto cobra.
         cobraObj = new Cobra({
           basicGame: this,
@@ -187,12 +188,12 @@ define([
           easystar: this.getEasystar(),
           timeStep: this.getTimeStep()
         });
-        
+
         cobra = cobraObj.getCobraSprite();
         // Instanciando objeto enemy.
         cowboy.enemy = new Enemy();
         player = caapora.getCaaporaSprite();
-      
+
 
 
       // game.plugins.add(PhaserDebug);
@@ -313,7 +314,7 @@ define([
       game.camera.follow(player);
 
 
-      
+
       console.log(
         'INIMIGO\n' +
         'Life: ' + cowboyObj.getBaseLife() + '\n' +
@@ -323,16 +324,13 @@ define([
       );
 
 
-      setInterval(
-        function() {
+      setInterval(function() {
 
           cowboyObj.IA();
 
-        },
+        }, timeStep);
 
-        timeStep);
 
-        
 
         setInterval(function () {
 
@@ -340,7 +338,7 @@ define([
 
         }, timeStep);
 
-     
+
 
         // KeyCodes do Keyboard.
         up = game.input.keyboard.addKey(Phaser.Keyboard.UP);
@@ -376,35 +374,39 @@ define([
       },
       update: function () {
 
-        // Each time enemy collide with player, he loses 10 life points.
-        var collision = false;
-
         collision = game.physics.isoArcade.collide(cowboy, player);
-
         collision2 = game.physics.isoArcade.collide(cobra, player);
 
         if (collision) {
-
-          var currentLife = caapora.getBaseLife() - 2;
-
-
-          caapora.setBaseLife(currentLife);
-          caapora.setText("Caapora - HP: " + caapora.getBaseLife());
-
-
-          cowboyObj.setBaseLife(cowboyObj.getBaseLife() - 2);
-          cowboyObj.setText("Cowboy - HP: " + cowboyObj.getBaseLife());
-
-          console.log('Cowboy loses 2 of life points.\n' + 'Current life: ' + cowboyObj.getBaseLife());
-
-          console.log('Caapora loses 2 of life points.\n' + 'Current life: ' + caapora.getBaseLife());
-
-          // Game is over when the life reaches 0.
-          if (caapora.getBaseLife() == 0) {
-            game.state.start('GameOver');
-          }
-
+          console.log('Ao lado do inimigo.');
+        } else {
+          console.log('Longe do inimigo.');
         }
+
+        // Each time enemy collide with player, he loses 10 life points.
+
+        // if (collision) {
+        //
+        //   var currentLife = caapora.getBaseLife() - 2;
+        //
+        //
+        //   caapora.setBaseLife(currentLife);
+        //   caapora.setText("Caapora - HP: " + caapora.getBaseLife());
+        //
+        //
+        //   cowboyObj.setBaseLife(cowboyObj.getBaseLife() - 2);
+        //   cowboyObj.setText("Cowboy - HP: " + cowboyObj.getBaseLife());
+        //
+        //   console.log('Cowboy loses 2 of life points.\n' + 'Current life: ' + cowboyObj.getBaseLife());
+        //
+        //   console.log('Caapora loses 2 of life points.\n' + 'Current life: ' + caapora.getBaseLife());
+        //
+        //   // Game is over when the life reaches 0.
+        //   if (caapora.getBaseLife() == 0) {
+        //     game.state.start('GameOver');
+        //   }
+        //
+        // }
 
         caapora.checkMovement();
 
@@ -421,7 +423,7 @@ define([
 
       game.iso.topologicalSort(isoGroup);
 
-   
+
       // Move the ENEMY
       cowboyObj.movement();
 
@@ -447,6 +449,26 @@ define([
       if (currentPlayerYtile > 28)
       currentPlayerYtile = 28;
 
+      if (currentEnemyXtile < 0)
+      currentEnemyXtile = 0;
+      if (currentEnemyYtile < 0)
+      currentEnemyYtile = 0;
+
+      if (currentEnemyXtile > 28)
+      currentEnemyXtile = 28;
+      if (currentEnemyYtile > 28)
+      currentEnemyYtile = 28;
+
+      if (currentEnemyXtile2 < 0)
+          currentEnemyXtile2 = 0;
+      if (currentEnemyYtile2 < 0)
+          currentEnemyYtile2 = 0;
+
+      if (currentEnemyXtile2 > 28)
+          currentEnemyXtile2 = 28;
+      if (currentEnemyYtile2 > 28)
+          currentEnemyYtile2 = 28;
+
 
 
       /*
@@ -463,9 +485,9 @@ define([
       currentEnemyYtile = Math.floor(cowboy.body.position.y / tileSize);
 
       // Quando o tempo atingir 5 minutos, e o gato não for capturado, muda para o level 2.
-      if (tempo > 60000) {
-        game.state.start('level2');
-      }
+      // if (tempo > 60000) {
+      //   game.state.start('level2');
+      // }
 
     },
     render: function () {
@@ -547,12 +569,15 @@ getCurrentNextPointX : function() { return currentNextPointX;  },
 
 getCurrentNextPointY : function() { return currentNextPointY; },
 
-getCurrentNextPointX2 : function() { return currentNextPointX2;  },
+getCurrentNextPointX2 : function() { return currentNextPointX2; },
 
-getCurrentNextPointY2 : function() { return currentNextPointY2; }
+getCurrentNextPointY2 : function() { return currentNextPointY2; },
 
+setCurrentNextPointX2 : function(param) { currentNextPointX2 = param; },
 
+setCurrentNextPointY2 : function(param) { currentNextPointY2 = param; },
 
+getCollision : function () { return collision; },
 
 };
 

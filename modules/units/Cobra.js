@@ -7,9 +7,10 @@ var currentEnemyXtile;
 var currentEnemyYtile;
 var currentPlayerXtile;
 var currentPlayerYtile;
-var currentNextPointX;
-var currentNextPointY;
+var currentNextPointX2;
+var currentNextPointY2;
 var cobraDirection = "STOP";
+var collision = false;
 
 // Create a cobra.
 function Cobra (opts) {
@@ -23,7 +24,7 @@ function Cobra (opts) {
   if (opts.image) {
     key = opts.image;
   }
-  
+
   cobra = game.add.isoSprite(15 * this.basicGame.getTileSize(), 15 * this.basicGame.getTileSize(), 0, image, 0, this.basicGame.getIsoGroup())
 
   cobra.anchor.set(0.5);
@@ -57,13 +58,15 @@ Cobra.prototype = {
     currentPlayerXtile = this.basicGame.getCurrentPlayerXtile();
     currentPlayerYtile = this.basicGame.getCurrentPlayerYtile();
 
-    currentEnemyXtile = this.basicGame.getCurrentEnemyXtile();
-    currentEnemyYtile = this.basicGame.getCurrentEnemyYtile();
+    currentEnemyXtile = this.basicGame.getCurrentEnemyXtile2();
+    currentEnemyYtile = this.basicGame.getCurrentEnemyYtile2();
+
+    collision = this.basicGame.getCollision();
+
     /*
     CALCULO PARA A COBRA.
     ______________________________________________________________________
     */
-
     easystar.findPath(currentEnemyXtile, currentEnemyYtile, currentPlayerXtile, currentPlayerYtile, function (path) {
       if (path === null) {
         console.log("The path to the destination point was not found.");
@@ -74,59 +77,59 @@ Cobra.prototype = {
         currentNextPointY2 = path[1].y;
       }
 
-      if (currentNextPointX2 < currentEnemyXtile && currentNextPointY2 < currentEnemyYtile)
-      {
-        // left up
-        cobraDirection = "NW";
-      }
-      else if (currentNextPointX2 == currentEnemyXtile && currentNextPointY2 < currentEnemyYtile)
-      {
-        // up
-        cobraDirection = "N";
+        if (currentNextPointX2 < currentEnemyXtile && currentNextPointY2 < currentEnemyYtile)
+        {
+          // left up
+          cobraDirection = "NW";
+        }
+        else if (currentNextPointX2 == currentEnemyXtile && currentNextPointY2 < currentEnemyYtile)
+        {
+          // up
+          cobraDirection = "N";
 
-      }
-      else if (currentNextPointX2 > currentEnemyXtile && currentNextPointY2 < currentEnemyYtile)
-      {
-        // right up
-        cobraDirection = "NE";
+        }
+        else if (currentNextPointX2 > currentEnemyXtile && currentNextPointY2 < currentEnemyYtile)
+        {
+          // right up
+          cobraDirection = "NE";
 
-      }
-      else if (currentNextPointX2 < currentEnemyXtile && currentNextPointY2 == currentEnemyYtile)
-      {
-        // left
-        cobraDirection = "W";
+        }
+        else if (currentNextPointX2 < currentEnemyXtile && currentNextPointY2 == currentEnemyYtile)
+        {
+          // left
+          cobraDirection = "W";
 
-      }
-      else if (currentNextPointX2 > currentEnemyXtile && currentNextPointY2 == currentEnemyYtile)
-      {
-        // right
-        cobraDirection = "E";
+        }
+        else if (currentNextPointX2 > currentEnemyXtile && currentNextPointY2 == currentEnemyYtile)
+        {
+          // right
+          cobraDirection = "E";
 
-      }
-      else if (currentNextPointX2 > currentEnemyXtile && currentNextPointY2 > currentEnemyYtile)
-      {
-        // right down
-        cobraDirection = "SE";
+        }
+        else if (currentNextPointX2 > currentEnemyXtile && currentNextPointY2 > currentEnemyYtile)
+        {
+          // right down
+          cobraDirection = "SE";
 
-      }
-      else if (currentNextPointX2 == currentEnemyXtile && currentNextPointY2 > currentEnemyYtile)
-      {
-        // down
-        cobraDirection = "S";
+        }
+        else if (currentNextPointX2 == currentEnemyXtile && currentNextPointY2 > currentEnemyYtile)
+        {
+          // down
+          cobraDirection = "S";
 
-      }
-      else if (currentNextPointX2 < currentEnemyXtile && currentNextPointY2 > currentEnemyYtile)
-      {
-        // left down
-        cobraDirection = "SW";
+        }
+        else if (currentNextPointX2 < currentEnemyXtile && currentNextPointY2 > currentEnemyYtile)
+        {
+          // left down
+          cobraDirection = "SW";
 
-      }
-      else
-      {
+        }
+        else
+        {
 
-        cobraDirection = "STOP";
+          cobraDirection = "STOP";
 
-      }
+        }
 
       if (cobraDirection != "STOP")
       cobra.animations.play(cobraDirection);
@@ -136,19 +139,19 @@ Cobra.prototype = {
     ______________________________________________________________________
     CALCULO PARA A COBRA.
     */
-    // PREVENT FROM GOING OUT FROM THE LOGICAL ARRAY BECAUSE OF THE PHASER PHYSICS ENGINE
 
-    if (currentEnemyXtile < 0)
-    currentEnemyXtile = 0;
-    if (currentEnemyYtile < 0)
-    currentEnemyYtile = 0;
+    if (collision) {
 
-    if (currentEnemyXtile > 28)
-    currentEnemyXtile = 28;
-    if (currentEnemyYtile > 28)
-    currentEnemyYtile = 28;
+      setInterval(function () {
+        cobraDirection = 'STOP';
+        console.log('Cobra parado por 10 segundos!');
+      }, 10000);
 
-    this.easystar.calculate();
+    } else {
+
+      this.easystar.calculate();
+      
+    }
 
   },
   movement: function () {
@@ -212,9 +215,9 @@ Cobra.prototype = {
     _________________________________________________________
     Movimentos da cobra.
     */
-   
+
   },
-   getCobraSprite : function(){
-       return cobra;
-   }
+  getCobraSprite : function(){
+    return cobra;
+  }
 }

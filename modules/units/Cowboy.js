@@ -8,21 +8,22 @@ var player = {};
 var x = 900;
 var y = 800;
 var text;
-var currentEnemyXtile;
-var currentEnemyYtile;
+var currentEnemyXtile2;
+var currentEnemyYtile2;
 var currentPlayerXtile;
 var currentPlayerYtile;
 var currentNextPointX;
 var currentNextPointY;
 var cowboyDirection = "STOP";
 var selfObj = this;
+var collision = false;
 
 function Cowboy(opts) {
 
     // Nome do Sprite
     var image = 'cowboy';
 
-    // Passa a referencia da Classe BasicGame e BasicGame.game para ser 
+    // Passa a referencia da Classe BasicGame e BasicGame.game para ser
     // modificado nesta classe
     this.basicGame = opts.basicGame;
     this.game = opts.game;
@@ -44,7 +45,7 @@ function Cowboy(opts) {
 
     cowboy.anchor.set(0.5);
 
-    // Inclui a Barra de vida do Player   
+    // Inclui a Barra de vida do Player
     cowboy.lifebar = this.game.add.sprite(-20, -30, 'lifeBarRed');
     cowboy.lifebar.anchor.setTo(0.2, 1);
     cowboy.addChild(cowboy.lifebar);
@@ -121,14 +122,15 @@ Cowboy.prototype = {
     IA: function () {
 
         var easystar = this.basicGame.getEasystar();
+        collision = this.basicGame.getCollision();
 
         currentPlayerXtile = this.basicGame.getCurrentPlayerXtile();
         currentPlayerYtile = this.basicGame.getCurrentPlayerYtile();
-        
-        currentEnemyXtile = this.basicGame.getCurrentEnemyXtile();
-        currentEnemyYtile = this.basicGame.getCurrentEnemyYtile();
 
-        easystar.findPath(currentEnemyXtile, currentEnemyYtile, currentPlayerXtile, currentPlayerYtile, function (path) {
+        currentEnemyXtile2 = this.basicGame.getCurrentEnemyXtile2();
+        currentEnemyYtile2 = this.basicGame.getCurrentEnemyYtile2();
+
+        easystar.findPath(currentEnemyXtile2, currentEnemyYtile2, currentPlayerXtile, currentPlayerYtile, function (path) {
 
             if (path === null) {
                 console.log("The path to the destination point was not found.");
@@ -139,48 +141,48 @@ Cowboy.prototype = {
                 currentNextPointY = path[1].y;
             }
 
-            if (currentNextPointX < currentEnemyXtile && currentNextPointY < currentEnemyYtile)
+            if (currentNextPointX < currentEnemyXtile2 && currentNextPointY < currentEnemyYtile2)
             {
                 // left up
                 cowboyDirection = "NW";
             }
-            else if (currentNextPointX == currentEnemyXtile && currentNextPointY < currentEnemyYtile)
+            else if (currentNextPointX == currentEnemyXtile2 && currentNextPointY < currentEnemyYtile2)
             {
                 // up
                 cowboyDirection = "N";
 
             }
-            else if (currentNextPointX > currentEnemyXtile && currentNextPointY < currentEnemyYtile)
+            else if (currentNextPointX > currentEnemyXtile2 && currentNextPointY < currentEnemyYtile2)
             {
                 // right up
                 cowboyDirection = "NE";
 
             }
-            else if (currentNextPointX < currentEnemyXtile && currentNextPointY == currentEnemyYtile)
+            else if (currentNextPointX < currentEnemyXtile2 && currentNextPointY == currentEnemyYtile2)
             {
                 // left
                 cowboyDirection = "W";
 
             }
-            else if (currentNextPointX > currentEnemyXtile && currentNextPointY == currentEnemyYtile)
+            else if (currentNextPointX > currentEnemyXtile2 && currentNextPointY == currentEnemyYtile2)
             {
                 // right
                 cowboyDirection = "E";
 
             }
-            else if (currentNextPointX > currentEnemyXtile && currentNextPointY > currentEnemyYtile)
+            else if (currentNextPointX > currentEnemyXtile2 && currentNextPointY > currentEnemyYtile2)
             {
                 // right down
                 cowboyDirection = "SE";
 
             }
-            else if (currentNextPointX == currentEnemyXtile && currentNextPointY > currentEnemyYtile)
+            else if (currentNextPointX == currentEnemyXtile2 && currentNextPointY > currentEnemyYtile2)
             {
                 // down
                 cowboyDirection = "S";
 
             }
-            else if (currentNextPointX < currentEnemyXtile && currentNextPointY > currentEnemyYtile)
+            else if (currentNextPointX < currentEnemyXtile2 && currentNextPointY > currentEnemyYtile2)
             {
                 // left down
                 cowboyDirection = "SW";
@@ -198,21 +200,18 @@ Cowboy.prototype = {
 
         });
 
-       
+        if (collision) {
 
-        // PREVENT FROM GOING OUT FROM THE LOGICAL ARRAY BECAUSE OF THE PHASER PHYSICS ENGINE
+          setInterval(function () {
+            cobraDirection = 'STOP';
+            console.log('Cobra parado por 10 segundos!');
+          }, 10000);
 
-        if (currentEnemyXtile < 0)
-            currentEnemyXtile = 0;
-        if (currentEnemyYtile < 0)
-            currentEnemyYtile = 0;
+        } else {
 
-        if (currentEnemyXtile > 28)
-            currentEnemyXtile = 28;
-        if (currentEnemyYtile > 28)
-            currentEnemyYtile = 28;
+          this.easystar.calculate();
 
-        this.easystar.calculate();
+        }
 
 
 

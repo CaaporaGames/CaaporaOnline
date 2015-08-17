@@ -16,8 +16,8 @@ function Caapora(opts) {
     // Nome do Sprite
     var image = 'dude';
     keyboard = new Keyboard();
-    
-    // Passa a referencia da Classe BasicGame e BasicGame.game para ser 
+
+    // Passa a referencia da Classe BasicGame e BasicGame.game para ser
     // modificado nesta classe
     this.game = opts.game;
     this.group = opts.group;
@@ -34,7 +34,7 @@ function Caapora(opts) {
 
     caaporaSprite.anchor.set(0.5);
 
-    // Inclui a Barra de vida do Player   
+    // Inclui a Barra de vida do Player
     caaporaSprite.lifebar = this.game.add.sprite(-20, -30, 'lifeBar');
     caaporaSprite.lifebar.anchor.setTo(0.2, 1);
     caaporaSprite.addChild(caaporaSprite.lifebar);
@@ -131,7 +131,7 @@ Caapora.prototype = {
             caaporaSprite.body.velocity.y = -150;
 
             caaporaSprite.animations.play('up');
-        } 
+        }
         else if (keyboard.getDown().isDown)
         {
             caaporaSprite.body.velocity.x = 150;
@@ -144,7 +144,7 @@ Caapora.prototype = {
          //  NOROESTE
          player.body.velocity.x = -150;
          player.body.velocity.y = 0;
-         
+
          player.animations.play('up left');
          }
          else if (down_left.isDown)
@@ -152,7 +152,7 @@ Caapora.prototype = {
          // SUDOESTE
          player.body.velocity.x = 0;
          player.body.velocity.y = 150;
-         
+
          player.animations.play('down left');
          }
          else if (up_right.isDown)
