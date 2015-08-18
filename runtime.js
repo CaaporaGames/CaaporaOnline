@@ -1,10 +1,10 @@
 requirejs.config({
   paths: {
-    EasyStar: 'bower_components/easystarjs/bin/easystar-0.2.1.min',
-    Phaser: 'bower_components/phaser/build/phaser',
-    PhaserDebug: 'bower_components/phaser-debug/dist/phaser-debug',
-    PhaserTiled: 'bower_components/phaser-tiled/dist/phaser-tiled',
-    PhaserIsometricPlugin: 'bower_components/phaser-plugin-isometric/dist/phaser-plugin-isometric'
+    EasyStar: 'vendor/js/easystar-0.2.1.min',
+    Phaser: 'vendor/js/phaser',
+    PhaserDebug: 'vendor/js/phaser-debug',
+    PhaserTiled: 'vendor/js/phaser-tiled',
+    PhaserIsometricPlugin: 'vendor/js/phaser-plugin-isometric'
     },
   shim: {
       'PhaserIsometricPlugin' :{
