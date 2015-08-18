@@ -1,3 +1,7 @@
 /nbproject/private/
 /bower_components
 /node_modules
+!phaser.js #Except for phaser.js
+!easystar-0.2.1.min.js
+!phaser-tiled.js
+!phaser-plugin-isometric.js
