@@ -7,8 +7,8 @@ define([
 
 ], function (Phaser, PhaserDebug, PhaserTiled) {
  //hahhahah
-  var BasicGame;
-  BasicGame = function () {
+  var LevelN;
+  LevelN = function () {
     // nothing here
   };
 
@@ -99,17 +99,19 @@ define([
 
   // **********************************
 
-  BasicGame.prototype = {
+  LevelN.prototype = {
     preload: function () {
 
-      console.log("preload de BasicGame");
+      console.log("preload de LevelN");
 
       /*game.debug.renderShadow = false;
       game.stage.disableVisibilityChange = false;*/
       // console.log(game);
       // game.load.atlasJSONHash('tileset', 'assets/tileset.png', 'assets/tileset.json');
       game.load.spritesheet('relogio', 'assets/images/clock.png', 32, 32);
-      game.load.image('ground', 'assets/images/ground_tile.png');
+      game.load.image('ground', 'assets/images/sand.png');
+      game.load.image('cactus1', 'assets/images/cactus1.png');
+      game.load.image('cactus2', 'assets/images/cactus2.png');
       game.load.image('tree', 'assets/images/tree2.png');
       game.load.audio('backgroundMusic', ['assets/audio/amazon-florest.mp3', 'assets/audio/amazon-florest.ogg']);
       game.load.image('rock', 'assets/images/rock.png');
@@ -260,20 +262,29 @@ define([
       var rocksTile;
 
 
-      for (var yt = 0; yt < level.length; yt++) {
+     for (var yt = 0; yt < level.length; yt++) {
 
         var tile = level[yt];
 
         for (var xt = 0; xt < level[yt].length; xt++) {
 
           if (tile[xt] == 1) {
-            treeTile = game.add.isoSprite(xt * tileSize, yt * tileSize, 0, 'tree', 0, isoGroup);
+            var rnd = rndNum(1);
+
+            if (rnd == 0) {
+              treeTile = game.add.isoSprite(xt * tileSize, yt * tileSize, 0, 'cactus1', 0, isoGroup);
+            }
+            else
+            {
+              treeTile = game.add.isoSprite(xt * tileSize, yt * tileSize, 0, 'cactus2', 0, isoGroup);
+            }
             treeTile.anchor.set(0.5);
             game.physics.isoArcade.enable(treeTile);
             treeTile.body.collideWorldBounds = true;
             treeTile.body.immovable = true;
             treeTile.tint = 0x86bfda;
             treeTile.body.bounce.set(1, 1, 0.2);
+
           }
           else if (tile[xt] == 2)
           {
@@ -286,6 +297,7 @@ define([
           }
         }
       }
+
 
       // Adicionando o relogio no jogo.
       relogio = game.add.sprite(750, 30, 'relogio');
@@ -486,7 +498,7 @@ define([
 
       // Quando o tempo atingir 5 minutos, e o gato não for capturado, muda para o level 2.
        if (tempo > 10000) {
-         game.state.start('LevelN');
+         game.state.start('BasicGame');
        }
 
     },
@@ -581,7 +593,7 @@ getCollision : function () { return collision; },
 
 };
 
-return BasicGame;
+return LevelN;
 
 });
 //

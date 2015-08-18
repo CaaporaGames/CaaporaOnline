@@ -30,10 +30,11 @@ require([
   'modules/states/level2',
   'modules/states/GameTitle',
   'modules/states/GameOver',
+  'modules/states/LevelN'
  // 'modules/units/Caapora'
  // 'modules/states/Preload',
 
-], function (PhaserGame, BasicGame, level2, GameTitle, GameOver, Caapora) { //PhaserGame, BootState, PreloadState,
+], function (PhaserGame, BasicGame, level2, GameTitle, GameOver, LevelN) { //PhaserGame, BootState, PreloadState,
 
   game = new PhaserGame(800, 600, Phaser.AUTO , 'test', null, true, false);
 
@@ -41,6 +42,7 @@ require([
   game.state.add('GameTitle', GameTitle);
   game.state.add('BasicGame', BasicGame);
   game.state.add('level2', level2);
+  game.state.add('LevelN', LevelN);
   game.state.add('GameOver', GameOver);
   game.state.start('GameTitle');
 });
