@@ -96,6 +96,7 @@ define([
 
   var tileSize = 35;
   var mapSize = 50;
+  var map;
 
   // **********************************
 
@@ -113,6 +114,7 @@ define([
       game.load.image('tree', 'assets/images/tree2.png');
       game.load.audio('backgroundMusic', ['assets/audio/amazon-florest.mp3', 'assets/audio/amazon-florest.ogg']);
       game.load.image('rock', 'assets/images/rock.png');
+      game.load.image('cube', 'assets/images/cube.png');
       game.load.image('lifeBar', 'assets/images/life-bar-green.png');
       game.load.image('lifeBarRed', 'assets/images/life-bar-red.png');
       game.load.spritesheet('dude', 'assets/images/enemy2.png', 70, 74);
@@ -121,6 +123,8 @@ define([
       game.load.spritesheet('cobra', 'assets/images/enemy1.png', 70, 74);
       game.load.image('grass', 'assets/images/grass.png');
       // Set the world size
+      game.load.tilemap('map', 'assets/isometric-tileset-test.json', null, Phaser.Tilemap.TILED_JSON);
+
 
 
       game.world.setBounds(0, 0, 2048, 1024);
@@ -129,12 +133,24 @@ define([
       game.time.advancedTiming = true;
 
       game.physics.startSystem(Phaser.Plugin.Isometric.ISOARCADE);
+      
+      
 
       game.plugins.add(new Phaser.Plugin.Isometric(game));
 
-      //game.load.tilemap('map', 'assets/isometric-tileset-test.json', null, Phaser.Tilemap.TILED_JSON);
+      game.iso.projectionAngle = Phaser.Plugin.Isometric.ISOMETRIC;
+      
+      
+      map = game.add.tilemap('map');
 
-      //  Enable p2 physics
+         //  The first parameter is the tileset name, as specified in the Tiled map editor (and in the tilemap json file)
+            //  The second parameter maps this name to the Phaser.Cache key 'tiles'
+      //map.addTilesetImage('assets/images/Caapora-tileset-teste', 'tiles');
+    
+          //  Creates a layer from the World1 layer in the map data.
+         //  A Layer is effectively like a Phaser.Sprite, so is added to the display list.
+      //layer = map.createLayer('World1');
+       //  Enable p2 physics
       //game.physics.startSystem(Phaser.Physics.P2JS);
 
       // Make things a bit more bouncey
@@ -147,6 +163,8 @@ define([
 
       // Grama no fundo
       tilesprite = game.add.tileSprite(0, 0, 4000, 4000, 'grass');
+      
+      keyboard = new Keyboard();
 
       floorGroup = game.add.group();
       isoGroup = game.add.group();
@@ -229,7 +247,7 @@ define([
       // isoGroup.create(100, 0, 'lifeBar');
 
 
-      this.camera = {x: 0, y: 0, direction: '', isMoving: false};
+      //this.camera = {x: 0, y: 0, direction: '', isMoving: false};
       // we won't really be using IsoArcade physics, but I've enabled it anyway so the debug bodies can be seen
       /*isoGroup.enableBody = true;
       isoGroup.physicsBodyType = Phaser.Plugin.Isometric.ISOARCADE;*/
@@ -256,6 +274,14 @@ define([
         }
       }
 
+      // Sprite Cubo
+      var cube = game.add.isoSprite(10 * tileSize, 10 * tileSize, 0, 'cube', 0, isoGroup);
+      cube.anchor.set(0.5);
+      game.physics.isoArcade.enable(cube);
+      cube.body.collideWorldBounds = true;
+      cube.body.immovable = true;
+            
+            
       var treeTile;
       var rocksTile;
 
@@ -311,9 +337,9 @@ define([
       // game.physics.p2.enable(player);
 
       // player.body.setCircle(44);
-      game.camera.follow(player);
+       game.camera.follow(player);
 
-
+      
 
       console.log(
         'INIMIGO\n' +
@@ -373,6 +399,12 @@ define([
 
       },
       update: function () {
+         
+        
+            
+       
+        // movendo a camera     
+       // game.camera.x = game.camera.x + 1;
 
         collision = game.physics.isoArcade.collide(cowboy, player);
         collision2 = game.physics.isoArcade.collide(cobra, player);
@@ -485,7 +517,7 @@ define([
       currentEnemyYtile = Math.floor(cowboy.body.position.y / tileSize);
 
       // Quando o tempo atingir 5 minutos, e o gato não for capturado, muda para o level 2.
-       if (tempo > 10000) {
+       if (tempo > 60000) {
          game.state.start('LevelN');
        }
 
@@ -506,6 +538,7 @@ define([
   game.debug.text("Player x = " + Math.round(player.x) || '--', 2, 44, "#a7aebe");
   game.debug.text("Player y = " + Math.round(player.y) || '--', 2, 84, "#a7aebe");
   game.debug.text("Player z = " + Math.round(player.z) || '--', 2, 124, "#a7aebe");
+  game.debug.cameraInfo(game.camera, 32, 32);
 
   // game.debug.text(Phaser.VERSION, 2, game.world.height - 2, "#ffff00");
 },

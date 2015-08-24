@@ -61,6 +61,14 @@ function Caapora(opts) {
     caaporaSprite.animations.add('up right', [40, 41, 42, 43, 44, 45, 46, 47], 10, true);
     caaporaSprite.animations.add('right', [48, 49, 50, 51, 52, 53, 54, 55], 10, true);
     caaporaSprite.animations.add('down right', [56, 57, 58, 59, 60, 61, 62, 63], 10, true);
+    
+    var space = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+
+        space.onDown.add(function () {
+            caaporaSprite.body.velocity.z = 300;
+    }, this);
+
+
 
 
 }

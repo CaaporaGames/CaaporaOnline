@@ -385,7 +385,11 @@ define([
 
       },
       update: function () {
+          
+        game.physics.isoArcade.collide(isoGroup);
 
+        game.iso.topologicalSort(isoGroup);  
+          
         collision = game.physics.isoArcade.collide(cowboy, player);
         collision2 = game.physics.isoArcade.collide(cobra, player);
 
@@ -431,9 +435,7 @@ define([
 
       this.miniMapCobraSprite.cameraOffset.setTo(cowboy.x / 5, cowboy.y / 5);
 
-      game.physics.isoArcade.collide(isoGroup);
-
-      game.iso.topologicalSort(isoGroup);
+   
 
 
       // Move the ENEMY
@@ -497,8 +499,8 @@ define([
       currentEnemyYtile = Math.floor(cowboy.body.position.y / tileSize);
 
       // Quando o tempo atingir 5 minutos, e o gato não for capturado, muda para o level 2.
-       if (tempo > 10000) {
-         game.state.start('BasicGame');
+       if (tempo > 60000) {
+         game.state.start('GameOver');
        }
 
     },
