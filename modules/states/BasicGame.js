@@ -382,31 +382,24 @@ define([
         } else {
           console.log('Longe do inimigo.');
         }
-
-        // Each time enemy collide with player, he loses 10 life points.
-
-        // if (collision) {
-        //
-        //   var currentLife = caapora.getBaseLife() - 2;
-        //
-        //
-        //   caapora.setBaseLife(currentLife);
-        //   caapora.setText("Caapora - HP: " + caapora.getBaseLife());
-        //
-        //
-        //   cowboyObj.setBaseLife(cowboyObj.getBaseLife() - 2);
-        //   cowboyObj.setText("Cowboy - HP: " + cowboyObj.getBaseLife());
-        //
-        //   console.log('Cowboy loses 2 of life points.\n' + 'Current life: ' + cowboyObj.getBaseLife());
-        //
-        //   console.log('Caapora loses 2 of life points.\n' + 'Current life: ' + caapora.getBaseLife());
-        //
-        //   // Game is over when the life reaches 0.
-        //   if (caapora.getBaseLife() == 0) {
-        //     game.state.start('GameOver');
-        //   }
-        //
-        // }
+   
+        if (collision) {
+            
+            var currentLife = caapora.getBaseLife() - 2;
+            caapora.setBaseLife(currentLife);
+            caapora.setText("Caapora - HP: " + caapora.getBaseLife());
+            
+            
+            cowboyObj.setBaseLife(cowboyObj.getBaseLife() - 2);
+            cowboyObj.setText("Cowboy - HP: " + cowboyObj.getBaseLife());
+            
+            
+          //  if (caapora.getBaseLife() == 0) {
+          //    game.state.start('GameOver');
+          // }
+            
+        }
+        
 
         caapora.checkMovement();
 
