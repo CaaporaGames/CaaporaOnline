@@ -115,7 +115,7 @@ define([
       game.load.image('rock', 'assets/images/rock.png');
       game.load.image('lifeBar', 'assets/images/life-bar-green.png');
       game.load.image('lifeBarRed', 'assets/images/life-bar-red.png');
-      game.load.spritesheet('dude', 'assets/images/enemy2.png', 70, 74);
+      game.load.spritesheet('dude', 'assets/images/128-128-sprites.png', 128, 128);
       game.load.spritesheet('cowboy', 'assets/images/enemy1.png', 70, 74);
       game.load.spritesheet('cat', 'assets/images/cat.png', 29, 28);
       game.load.spritesheet('cobra', 'assets/images/enemy1.png', 70, 74);
@@ -485,7 +485,7 @@ define([
       currentEnemyYtile = Math.floor(cowboy.body.position.y / tileSize);
 
       // Quando o tempo atingir 5 minutos, e o gato não for capturado, muda para o level 2.
-       if (tempo > 10000) {
+       if (tempo > 60000) {
          game.state.start('LevelN');
        }
 

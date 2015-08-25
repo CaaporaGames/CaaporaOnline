@@ -35,14 +35,14 @@ function Caapora(opts) {
     caaporaSprite.anchor.set(0.5);
 
     // Inclui a Barra de vida do Player
-    caaporaSprite.lifebar = this.game.add.sprite(-20, -30, 'lifeBar');
+    caaporaSprite.lifebar = this.game.add.sprite(0, -70, 'lifeBar');
     caaporaSprite.lifebar.anchor.setTo(0.2, 1);
     caaporaSprite.addChild(caaporaSprite.lifebar);
 
     // Inclui o texto acima da barra de vida
     // Este texto será atualizado no Update do game loop
     var style = {font: "bold 14px Arial", fill: "#333", wordWrap: true, wordWrapWidth: 150, align: "center"};
-    textCaapora = this.game.add.text(20, -50, "Caapora - HP:  100", style);
+    textCaapora = this.game.add.text(30, -90, "Caapora - HP:  100", style);
     textCaapora.anchor.set(0.5);
     caaporaSprite.addChild(textCaapora);
     caaporaSprite.anchor.set(0.5);
@@ -53,13 +53,13 @@ function Caapora(opts) {
 
     // Adiciona a animação referente a movimentação
     //  Our two animations, walking left and right.
-    caaporaSprite.animations.add('down', [0, 1, 2, 3, 4, 5, 6, 7], 10, true);
-    caaporaSprite.animations.add('down left', [8, 9, 10, 11, 12, 13, 14, 15], 10, true);
-    caaporaSprite.animations.add('left', [16, 17, 18, 19, 20, 21, 22, 23], 10, true);
-    caaporaSprite.animations.add('up left', [24, 25, 26, 27, 28, 29, 30, 31], 10, true);
-    caaporaSprite.animations.add('up', [32, 33, 34, 35, 36, 37, 38, 39], 10, true);
+    caaporaSprite.animations.add('down', [4,5,6,7], 10, true);
+    caaporaSprite.animations.add('down left', [4,5,6,7], 10, true);
+    caaporaSprite.animations.add('left', [12,13,14,15], 10, true);
+    caaporaSprite.animations.add('up left', [0,1,2], 10, true);
+    caaporaSprite.animations.add('up', [0,1,2,3], 10, true);
     caaporaSprite.animations.add('up right', [40, 41, 42, 43, 44, 45, 46, 47], 10, true);
-    caaporaSprite.animations.add('right', [48, 49, 50, 51, 52, 53, 54, 55], 10, true);
+    caaporaSprite.animations.add('right', [8,9,10,11], 10, true);
     caaporaSprite.animations.add('down right', [56, 57, 58, 59, 60, 61, 62, 63], 10, true);
 
 

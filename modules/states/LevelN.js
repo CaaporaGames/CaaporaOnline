@@ -113,7 +113,7 @@ define([
       game.load.image('cactus1', 'assets/images/cactus1.png');
       game.load.image('cactus2', 'assets/images/cactus2.png');
       game.load.image('tree', 'assets/images/tree2.png');
-      game.load.audio('backgroundMusic', ['assets/audio/amazon-florest.mp3', 'assets/audio/amazon-florest.ogg']);
+     // game.load.audio('backgroundMusic', ['assets/audio/amazon-florest.mp3', 'assets/audio/amazon-florest.ogg']);
       game.load.image('rock', 'assets/images/rock.png');
       game.load.image('lifeBar', 'assets/images/life-bar-green.png');
       game.load.image('lifeBarRed', 'assets/images/life-bar-red.png');
@@ -237,7 +237,7 @@ define([
       isoGroup.physicsBodyType = Phaser.Plugin.Isometric.ISOARCADE;*/
 
       // Adicionando som de fundo.
-      backgroundMusic = game.add.audio('backgroundMusic');
+     // backgroundMusic = game.add.audio('backgroundMusic');
       // backgroundMusic.play();
 
       // set the gravity in our game
@@ -497,8 +497,8 @@ define([
       currentEnemyYtile = Math.floor(cowboy.body.position.y / tileSize);
 
       // Quando o tempo atingir 5 minutos, e o gato não for capturado, muda para o level 2.
-       if (tempo > 10000) {
-         game.state.start('BasicGame');
+       if (tempo > 60000) {
+         game.state.start('GameOver');
        }
 
     },
