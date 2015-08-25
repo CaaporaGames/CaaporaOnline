@@ -111,7 +111,7 @@ define([
       game.load.spritesheet('relogio', 'assets/images/clock.png', 32, 32);
       game.load.image('ground', 'assets/images/ground_tile.png');
       game.load.image('tree', 'assets/images/tree2.png');
-      game.load.audio('backgroundMusic', ['assets/audio/amazon-florest.mp3', 'assets/audio/amazon-florest.ogg']);
+      //game.load.audio('backgroundMusic', ['assets/audio/amazon-florest.mp3', 'assets/audio/amazon-florest.ogg']);
       game.load.image('rock', 'assets/images/rock.png');
       game.load.image('lifeBar', 'assets/images/life-bar-green.png');
       game.load.image('lifeBarRed', 'assets/images/life-bar-red.png');
@@ -235,7 +235,7 @@ define([
       isoGroup.physicsBodyType = Phaser.Plugin.Isometric.ISOARCADE;*/
 
       // Adicionando som de fundo.
-      backgroundMusic = game.add.audio('backgroundMusic');
+      // backgroundMusic = game.add.audio('backgroundMusic');
       // backgroundMusic.play();
 
       // set the gravity in our game
