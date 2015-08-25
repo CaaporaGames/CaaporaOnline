@@ -111,7 +111,7 @@ define([
       game.load.spritesheet('relogio', 'assets/images/clock.png', 32, 32);
       game.load.image('ground', 'assets/images/ground_tile.png');
       game.load.image('tree', 'assets/images/tree2.png');
-      game.load.audio('backgroundMusic', ['assets/audio/amazon-florest.mp3', 'assets/audio/amazon-florest.ogg']);
+      //game.load.audio('backgroundMusic', ['assets/audio/amazon-florest.mp3', 'assets/audio/amazon-florest.ogg']);
       game.load.image('rock', 'assets/images/rock.png');
       game.load.image('lifeBar', 'assets/images/life-bar-green.png');
       game.load.image('lifeBarRed', 'assets/images/life-bar-red.png');
@@ -235,7 +235,7 @@ define([
       isoGroup.physicsBodyType = Phaser.Plugin.Isometric.ISOARCADE;*/
 
       // Adicionando som de fundo.
-      backgroundMusic = game.add.audio('backgroundMusic');
+      // backgroundMusic = game.add.audio('backgroundMusic');
       // backgroundMusic.play();
 
       // set the gravity in our game
@@ -382,31 +382,24 @@ define([
         } else {
           console.log('Longe do inimigo.');
         }
-
-        // Each time enemy collide with player, he loses 10 life points.
-
-        // if (collision) {
-        //
-        //   var currentLife = caapora.getBaseLife() - 2;
-        //
-        //
-        //   caapora.setBaseLife(currentLife);
-        //   caapora.setText("Caapora - HP: " + caapora.getBaseLife());
-        //
-        //
-        //   cowboyObj.setBaseLife(cowboyObj.getBaseLife() - 2);
-        //   cowboyObj.setText("Cowboy - HP: " + cowboyObj.getBaseLife());
-        //
-        //   console.log('Cowboy loses 2 of life points.\n' + 'Current life: ' + cowboyObj.getBaseLife());
-        //
-        //   console.log('Caapora loses 2 of life points.\n' + 'Current life: ' + caapora.getBaseLife());
-        //
-        //   // Game is over when the life reaches 0.
-        //   if (caapora.getBaseLife() == 0) {
-        //     game.state.start('GameOver');
-        //   }
-        //
-        // }
+   
+        if (collision) {
+            
+            var currentLife = caapora.getBaseLife() - 2;
+            caapora.setBaseLife(currentLife);
+            caapora.setText("Caapora - HP: " + caapora.getBaseLife());
+            
+            
+            cowboyObj.setBaseLife(cowboyObj.getBaseLife() - 2);
+            cowboyObj.setText("Cowboy - HP: " + cowboyObj.getBaseLife());
+            
+            
+          //  if (caapora.getBaseLife() == 0) {
+          //    game.state.start('GameOver');
+          // }
+            
+        }
+        
 
         caapora.checkMovement();
 

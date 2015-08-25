@@ -34,10 +34,22 @@ function Caapora(opts) {
 
     caaporaSprite.anchor.set(0.5);
 
-    // Inclui a Barra de vida do Player
-    caaporaSprite.lifebar = this.game.add.sprite(0, -70, 'lifeBar');
-    caaporaSprite.lifebar.anchor.setTo(0.2, 1);
-    caaporaSprite.addChild(caaporaSprite.lifebar);
+
+        // Barra de energia dinâmica
+        this.bar = this.game.add.bitmapData(128, 8);
+     
+        this.bar.context.fillStyle = '#0f0';
+        
+         this.bar.context.fillRect(0, 0, baseLife, 8);
+        
+        this.bar.dirty = true;
+        
+        caaporaSprite.lifebar = this.game.add.sprite(0, -70, this.bar); 
+        caaporaSprite.lifebar.anchor.setTo(0.2, 1);
+        caaporaSprite.addChild(caaporaSprite.lifebar);
+        // End Barra de Energia
+        
+        
 
     // Inclui o texto acima da barra de vida
     // Este texto será atualizado no Update do game loop
@@ -61,6 +73,8 @@ function Caapora(opts) {
     caaporaSprite.animations.add('up right', [40, 41, 42, 43, 44, 45, 46, 47], 10, true);
     caaporaSprite.animations.add('right', [8,9,10,11], 10, true);
     caaporaSprite.animations.add('down right', [56, 57, 58, 59, 60, 61, 62, 63], 10, true);
+    
+   
 
 
 }
@@ -105,6 +119,29 @@ Caapora.prototype = {
     },
     // Método que será usado no GameLoop que movimenta o Caapora
     checkMovement: function () {
+        
+        
+        
+         // Barra de Energia
+         // ensure you clear the context each time you update it or the bar will draw on top of itself
+        this.bar.context.clearRect(0, 0, this.bar.width, this.bar.height);
+        
+        // some simple colour changing to make it look like a health bar
+        if (baseLife < 32) {
+           this.bar.context.fillStyle = '#f00';   
+        }
+        else if (baseLife < 64) {
+            this.bar.context.fillStyle = '#ff0';
+        }
+        else {
+            this.bar.context.fillStyle = '#0f0';
+        }
+        
+        // draw the bar
+        this.bar.context.fillRect(0, 0, baseLife, 8);
+        
+        // important - without this line, the context will never be updated on the GPU when using webGL
+        this.bar.dirty = true;
 
         //  Reset the players velocity (movement)
         caaporaSprite.body.velocity.x = 0;
@@ -116,6 +153,7 @@ Caapora.prototype = {
             caaporaSprite.body.velocity.x = -150;
             caaporaSprite.body.velocity.y = 150;
             caaporaSprite.animations.play('left');
+
         }
         else if (keyboard.getRight().isDown)
         {
@@ -124,6 +162,7 @@ Caapora.prototype = {
             caaporaSprite.body.velocity.y = -150;
 
             caaporaSprite.animations.play('right');
+
         }
         else if (keyboard.getUp().isDown)
         {
@@ -131,6 +170,7 @@ Caapora.prototype = {
             caaporaSprite.body.velocity.y = -150;
 
             caaporaSprite.animations.play('up');
+
         }
         else if (keyboard.getDown().isDown)
         {
