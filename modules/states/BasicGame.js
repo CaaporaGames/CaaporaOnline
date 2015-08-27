@@ -23,6 +23,9 @@ define([
   var tempo = 0;
   var relogio;
   var collision = false;
+  var incendio;
+  var arrayWater = [];
+  var arrayIncendio = [];
 
   // ********************* EasyStar setup *********************
   var easystar = new EasyStar.js();
@@ -31,6 +34,7 @@ define([
   // 0 - empty space
   // 1 - tree
   // 2 - rock
+  // 3 - water
 
   // 8 - player start point
 
@@ -57,13 +61,13 @@ define([
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
+  [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+  [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+  [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+  [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+  [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+  [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+  [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]];
 
   easystar.setGrid(level);
 
@@ -109,7 +113,9 @@ define([
       // console.log(game);
       // game.load.atlasJSONHash('tileset', 'assets/tileset.png', 'assets/tileset.json');
       game.load.spritesheet('relogio', 'assets/images/clock.png', 32, 32);
+      game.load.spritesheet('flame', 'assets/images/flames.png', 16, 24);
       game.load.image('ground', 'assets/images/ground_tile.png');
+      game.load.image('water', 'assets/images/water.png');
       game.load.image('tree', 'assets/images/tree2.png');
       //game.load.audio('backgroundMusic', ['assets/audio/amazon-florest.mp3', 'assets/audio/amazon-florest.ogg']);
       game.load.image('rock', 'assets/images/rock.png');
@@ -146,7 +152,7 @@ define([
     create: function () {
 
       // Grama no fundo
-      tilesprite = game.add.tileSprite(0, 0, 4000, 4000, 'grass');
+      // tilesprite = game.add.tileSprite(0, 0, 4000, 4000, 'grass');
 
       floorGroup = game.add.group();
       isoGroup = game.add.group();
@@ -245,13 +251,24 @@ define([
       game.stage.backgroundColor = "0xffff";
 
 
-      var floorTile;
+      var floorTile, waterTile;
 
 
-      for (var xt = 0; xt < mapSize * tileSize; xt += tileSize) {
-        for (var yt = 0; yt < mapSize * tileSize; yt += tileSize) {
-          floorTile = game.add.isoSprite(xt, yt, 0.2, 'ground', 0, floorGroup);
-          floorTile.anchor.set(0.5, 0.2);
+      for (var yt = 0; yt < level.length; yt++) {
+
+        var tile = level[yt];
+
+        for (var xt = 0; xt < level[yt].length; xt++) {
+
+          if (tile[xt] != 3) {
+            floorTile = game.add.isoSprite(xt * tileSize, yt * tileSize, 0.2, 'ground', 0, floorGroup);
+            floorTile.anchor.set(0.5, 0.2);
+          } else if (tile[xt] == 3) {
+            waterTile = game.add.isoSprite(xt * tileSize, yt * tileSize, 0.2, 'water', 0, floorGroup);
+            waterTile.anchor.set(0.5, 0.2);
+
+            arrayWater.push(waterTile);
+          }
 
         }
       }
@@ -274,6 +291,12 @@ define([
             treeTile.body.immovable = true;
             treeTile.tint = 0x86bfda;
             treeTile.body.bounce.set(1, 1, 0.2);
+
+            // Create flames.
+            incendio = game.add.isoSprite(xt * tileSize, yt * tileSize, 0, 'flame', 0, isoGroup);
+            incendio.animations.add('incendiar', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 10, true);
+
+            arrayIncendio.push(incendio);
           }
           else if (tile[xt] == 2)
           {
@@ -374,32 +397,41 @@ define([
       },
       update: function () {
 
+        arrayIncendio.forEach(function (i) {
+          i.animations.play('incendiar');
+        });
+
+        arrayWater.forEach(function (w) {
+          w.isoZ = (-2 * Math.sin((game.time.now + (w.isoX * 7)) * 0.004)) + (-1 * Math.sin((game.time.now + (w.isoY * 8)) * 0.005));
+          w.alpha = Phaser.Math.clamp(1 + (w.isoZ * 0.1), 0.2, 1);
+        });
+
         collision = game.physics.isoArcade.collide(cowboy, player);
         collision2 = game.physics.isoArcade.collide(cobra, player);
 
+        // if (collision) {
+        //   console.log('Ao lado do inimigo.');
+        // } else {
+        //   console.log('Longe do inimigo.');
+        // }
+
         if (collision) {
-          console.log('Ao lado do inimigo.');
-        } else {
-          console.log('Longe do inimigo.');
-        }
-   
-        if (collision) {
-            
+
             var currentLife = caapora.getBaseLife() - 2;
             caapora.setBaseLife(currentLife);
             caapora.setText("Caapora - HP: " + caapora.getBaseLife());
-            
-            
+
+
             cowboyObj.setBaseLife(cowboyObj.getBaseLife() - 2);
             cowboyObj.setText("Cowboy - HP: " + cowboyObj.getBaseLife());
-            
-            
+
+
           //  if (caapora.getBaseLife() == 0) {
           //    game.state.start('GameOver');
           // }
-            
+
         }
-        
+
 
         caapora.checkMovement();
 
