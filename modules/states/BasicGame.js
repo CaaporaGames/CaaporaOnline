@@ -35,6 +35,8 @@ define([
   // 1 - tree
   // 2 - rock
   // 3 - water
+  // 4 - grass-beach
+  // 5 - beach-water
 
   // 8 - player start point
 
@@ -59,8 +61,8 @@ define([
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+  [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+  [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
   [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
   [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
   [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
@@ -113,10 +115,12 @@ define([
       // console.log(game);
       // game.load.atlasJSONHash('tileset', 'assets/tileset.png', 'assets/tileset.json');
       game.load.spritesheet('relogio', 'assets/images/clock.png', 32, 32);
-      game.load.spritesheet('flame', 'assets/images/flames.png', 16, 24);
+      game.load.spritesheet('flame', 'assets/images/flames.png', 32, 48);
       game.load.image('ground', 'assets/images/ground_tile.png');
       game.load.image('water', 'assets/images/water.png');
-      game.load.image('tree', 'assets/images/tree2.png');
+      game.load.image('grass-beach', 'assets/images/grass-beach.png');
+      game.load.image('beach-water', 'assets/images/beach-water.png');
+      game.load.image('tree', 'assets/images/tree.png');
       //game.load.audio('backgroundMusic', ['assets/audio/amazon-florest.mp3', 'assets/audio/amazon-florest.ogg']);
       game.load.image('rock', 'assets/images/rock.png');
       game.load.image('lifeBar', 'assets/images/life-bar-green.png');
@@ -251,7 +255,7 @@ define([
       game.stage.backgroundColor = "0xffff";
 
 
-      var floorTile, waterTile;
+      var floorTile, waterTile, grass_beachTile, beach_waterTile;
 
 
       for (var yt = 0; yt < level.length; yt++) {
@@ -260,7 +264,7 @@ define([
 
         for (var xt = 0; xt < level[yt].length; xt++) {
 
-          if (tile[xt] != 3) {
+          if ((tile[xt] != 3) && (tile[xt] != 4) && (tile[xt] != 5)) {
             floorTile = game.add.isoSprite(xt * tileSize, yt * tileSize, 0.2, 'ground', 0, floorGroup);
             floorTile.anchor.set(0.5, 0.2);
           } else if (tile[xt] == 3) {
@@ -268,6 +272,12 @@ define([
             waterTile.anchor.set(0.5, 0.2);
 
             arrayWater.push(waterTile);
+          } else if (tile[xt] == 4) {
+            grass_beachTile = game.add.isoSprite(xt * tileSize, yt * tileSize, 0.2, 'grass-beach', 0, floorGroup);
+            grass_beachTile.anchor.set(0.5, 0.2);
+          } else if (tile[xt] == 5) {
+            beach_waterTile = game.add.isoSprite(xt * tileSize, yt * tileSize, 0.2, 'beach-water', 0, floorGroup);
+            beach_waterTile.anchor.set(0.5, 0.2);
           }
 
         }
@@ -284,17 +294,18 @@ define([
         for (var xt = 0; xt < level[yt].length; xt++) {
 
           if (tile[xt] == 1) {
+            // Create flames.
+            incendio = game.add.isoSprite(xt * tileSize, yt * tileSize, 0, 'flame', 0, isoGroup);
+            incendio.anchor.set(0.5, 0.5);
+            incendio.animations.add('incendiar', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 10, true);
+
             treeTile = game.add.isoSprite(xt * tileSize, yt * tileSize, 0, 'tree', 0, isoGroup);
             treeTile.anchor.set(0.5);
             game.physics.isoArcade.enable(treeTile);
             treeTile.body.collideWorldBounds = true;
             treeTile.body.immovable = true;
-            treeTile.tint = 0x86bfda;
+            // treeTile.tint = 0x86bfda;
             treeTile.body.bounce.set(1, 1, 0.2);
-
-            // Create flames.
-            incendio = game.add.isoSprite(xt * tileSize, yt * tileSize, 0, 'flame', 0, isoGroup);
-            incendio.animations.add('incendiar', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 10, true);
 
             arrayIncendio.push(incendio);
           }
