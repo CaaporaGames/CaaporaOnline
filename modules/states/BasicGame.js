@@ -37,6 +37,7 @@ define([
   // 3 - water
   // 4 - grass-beach
   // 5 - beach-water
+  // 6 - sand;
 
   // 8 - player start point
 
@@ -62,8 +63,8 @@ define([
   [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+  [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6],
   [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
-  [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
   [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
   [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
   [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
@@ -120,6 +121,7 @@ define([
       game.load.image('water', 'assets/images/water.png');
       game.load.image('grass-beach', 'assets/images/grass-beach.png');
       game.load.image('beach-water', 'assets/images/beach-water.png');
+      game.load.image('sand', 'assets/images/sand.png');
       game.load.image('tree', 'assets/images/tree.png');
       //game.load.audio('backgroundMusic', ['assets/audio/amazon-florest.mp3', 'assets/audio/amazon-florest.ogg']);
       game.load.image('rock', 'assets/images/rock.png');
@@ -255,7 +257,7 @@ define([
       game.stage.backgroundColor = "0xffff";
 
 
-      var floorTile, waterTile, grass_beachTile, beach_waterTile;
+      var floorTile, waterTile, grass_beachTile, beach_waterTile, sand;
 
 
       for (var yt = 0; yt < level.length; yt++) {
@@ -264,7 +266,7 @@ define([
 
         for (var xt = 0; xt < level[yt].length; xt++) {
 
-          if ((tile[xt] != 3) && (tile[xt] != 4) && (tile[xt] != 5)) {
+          if ((tile[xt] != 3) && (tile[xt] != 4) && (tile[xt] != 5) && (tile[xt] != 6)) {
             floorTile = game.add.isoSprite(xt * tileSize, yt * tileSize, 0.2, 'ground', 0, floorGroup);
             floorTile.anchor.set(0.5, 0.2);
           } else if (tile[xt] == 3) {
@@ -278,6 +280,9 @@ define([
           } else if (tile[xt] == 5) {
             beach_waterTile = game.add.isoSprite(xt * tileSize, yt * tileSize, 0.2, 'beach-water', 0, floorGroup);
             beach_waterTile.anchor.set(0.5, 0.2);
+          } else if (tile[xt] == 6) {
+            sand = game.add.isoSprite(xt * tileSize, yt * tileSize, 0.2, 'sand', 0, floorGroup);
+            sand.anchor.set(0.5, 0.2);
           }
 
         }
