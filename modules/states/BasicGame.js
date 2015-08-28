@@ -127,7 +127,7 @@ define([
       game.load.image('rock', 'assets/images/rock.png');
       game.load.image('lifeBar', 'assets/images/life-bar-green.png');
       game.load.image('lifeBarRed', 'assets/images/life-bar-red.png');
-      game.load.spritesheet('dude', 'assets/images/128-128-sprites.png', 128, 128);
+      game.load.spritesheet('dude', 'assets/images/Caapora-Novo-Sprite.png', 61, 91);
       game.load.spritesheet('cowboy', 'assets/images/enemy1.png', 70, 74);
       game.load.spritesheet('cat', 'assets/images/cat.png', 29, 28);
       game.load.spritesheet('cobra', 'assets/images/enemy1.png', 70, 74);
@@ -379,7 +379,7 @@ define([
       setInterval(function () {
 
         relogio.frame += 1;
-        
+
       }, 3000);
 
     },
@@ -515,6 +515,7 @@ define([
     game.debug.body(tree, 'rgba(189, 221, 235, 0.6)', false);
   }); */
 
+
   /*
   floorGroup.forEach(function (ground) {
   game.debug.body(ground, 'rgba(189, 221, 235, 0.6)', false);
@@ -524,6 +525,10 @@ game.debug.text(game.time.fps || '--', 2, 14, "#a7aebe");
 game.debug.text("Player x = " + Math.round(player.x) || '--', 2, 44, "#a7aebe");
 game.debug.text("Player y = " + Math.round(player.y) || '--', 2, 84, "#a7aebe");
 game.debug.text("Player z = " + Math.round(player.z) || '--', 2, 124, "#a7aebe");
+
+game.debug.text("Mouse x = " + Math.round(game.input.mousePointer.x) || '--', 2, 164, "#a7aebe");
+game.debug.text("Mouse y = " + Math.round(game.input.mousePointer.y) || '--', 2, 214, "#a7aebe");
+
 
 // game.debug.text(Phaser.VERSION, 2, game.world.height - 2, "#ffff00");
 },

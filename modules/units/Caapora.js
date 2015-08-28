@@ -65,13 +65,13 @@ function Caapora(opts) {
 
     // Adiciona a animação referente a movimentação
     //  Our two animations, walking left and right.
-    caaporaSprite.animations.add('down', [4,5,6,7], 10, true);
+    caaporaSprite.animations.add('down', [0,1,2], 10, true);
     caaporaSprite.animations.add('down left', [4,5,6,7], 10, true);
-    caaporaSprite.animations.add('left', [12,13,14,15], 10, true);
-    caaporaSprite.animations.add('up left', [0,1,2], 10, true);
-    caaporaSprite.animations.add('up', [0,1,2,3], 10, true);
+    caaporaSprite.animations.add('left', [24], 10, true);
+    caaporaSprite.animations.add('up left', [3,4,5], 10, true);
+    caaporaSprite.animations.add('up', [8,9,10], 10, true);
     caaporaSprite.animations.add('up right', [40, 41, 42, 43, 44, 45, 46, 47], 10, true);
-    caaporaSprite.animations.add('right', [8,9,10,11], 10, true);
+    caaporaSprite.animations.add('right', [16], 10, true);
     caaporaSprite.animations.add('down right', [56, 57, 58, 59, 60, 61, 62, 63], 10, true);
     
    
@@ -120,8 +120,6 @@ Caapora.prototype = {
     // Método que será usado no GameLoop que movimenta o Caapora
     checkMovement: function () {
         
-        
-        
          // Barra de Energia
          // ensure you clear the context each time you update it or the bar will draw on top of itself
         this.bar.context.clearRect(0, 0, this.bar.width, this.bar.height);
@@ -146,8 +144,15 @@ Caapora.prototype = {
         //  Reset the players velocity (movement)
         caaporaSprite.body.velocity.x = 0;
         caaporaSprite.body.velocity.y = 0;
-
-        if (keyboard.getLeft().isDown)
+        
+        
+     //  only move when you click
+     if (game.input.mousePointer.isDown)
+        {
+         
+        if (game.input.mousePointer.x < 40
+                    && game.input.mousePointer.y > 40
+                        && game.input.mousePointer.y < 360)
         {
             //  Move to the left
             caaporaSprite.body.velocity.x = -150;
@@ -155,7 +160,9 @@ Caapora.prototype = {
             caaporaSprite.animations.play('left');
 
         }
-        else if (keyboard.getRight().isDown)
+        else if (game.input.mousePointer.x > 760
+                    && game.input.mousePointer.y > 40
+                        && game.input.mousePointer.y < 360)
         {
             //  Move to the right
             caaporaSprite.body.velocity.x = 150;
@@ -164,7 +171,10 @@ Caapora.prototype = {
             caaporaSprite.animations.play('right');
 
         }
-        else if (keyboard.getUp().isDown)
+        else if (game.input.mousePointer.x > 40
+                    && game.input.mousePointer.x < 760
+                        && game.input.mousePointer.y < 40
+                    )
         {
             caaporaSprite.body.velocity.x = -150;
             caaporaSprite.body.velocity.y = -150;
@@ -172,12 +182,15 @@ Caapora.prototype = {
             caaporaSprite.animations.play('up');
 
         }
-        else if (keyboard.getDown().isDown)
+        else if (game.input.mousePointer.x > 40
+                    && game.input.mousePointer.x < 760
+                        && game.input.mousePointer.y > 360 )
         {
             caaporaSprite.body.velocity.x = 150;
             caaporaSprite.body.velocity.y = 150;
             caaporaSprite.animations.play('down');
         }
+     
         /*
          else if (up_left.isDown)
          {
@@ -209,15 +222,32 @@ Caapora.prototype = {
          player.body.velocity.y = 0;
          player.animations.play('down right');
          }*/
-        else
-        {
-            //  Stand still
-            caaporaSprite.animations.stop();
+      
+            
+                //  400 is the speed it will move towards the mouse
+                //game.physics.arcade.moveToPointer(caaporaSprite, 150);
 
-            caaporaSprite.frame = 4;
-            caaporaSprite.body.velocity.x = 0;
-            caaporaSprite.body.velocity.y = 0;
-        }
+              
+            }
+            else
+            {
+                
+                        //  Stand still
+                    caaporaSprite.animations.stop();
+
+                    // Sprite inicial
+                    //caaporaSprite.frame = 1;
+
+                    caaporaSprite.body.velocity.x = 0;
+                    caaporaSprite.body.velocity.y = 0;
+            }
+
+        
+        
+        
+        /*
+        
+*/
 
     }
 
