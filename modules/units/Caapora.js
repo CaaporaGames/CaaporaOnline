@@ -120,8 +120,6 @@ Caapora.prototype = {
     // Método que será usado no GameLoop que movimenta o Caapora
     checkMovement: function () {
         
-        
-        
          // Barra de Energia
          // ensure you clear the context each time you update it or the bar will draw on top of itself
         this.bar.context.clearRect(0, 0, this.bar.width, this.bar.height);
@@ -146,8 +144,15 @@ Caapora.prototype = {
         //  Reset the players velocity (movement)
         caaporaSprite.body.velocity.x = 0;
         caaporaSprite.body.velocity.y = 0;
-
-        if (keyboard.getLeft().isDown)
+        
+        
+     //  only move when you click
+     if (game.input.mousePointer.isDown)
+        {
+         
+        if (game.input.mousePointer.x < 40
+                    && game.input.mousePointer.y > 40
+                        && game.input.mousePointer.y < 360)
         {
             //  Move to the left
             caaporaSprite.body.velocity.x = -150;
@@ -155,7 +160,9 @@ Caapora.prototype = {
             caaporaSprite.animations.play('left');
 
         }
-        else if (keyboard.getRight().isDown)
+        else if (game.input.mousePointer.x > 760
+                    && game.input.mousePointer.y > 40
+                        && game.input.mousePointer.y < 360)
         {
             //  Move to the right
             caaporaSprite.body.velocity.x = 150;
@@ -164,7 +171,10 @@ Caapora.prototype = {
             caaporaSprite.animations.play('right');
 
         }
-        else if (keyboard.getUp().isDown)
+        else if (game.input.mousePointer.x > 40
+                    && game.input.mousePointer.x < 760
+                        && game.input.mousePointer.y < 40
+                    )
         {
             caaporaSprite.body.velocity.x = -150;
             caaporaSprite.body.velocity.y = -150;
@@ -172,12 +182,15 @@ Caapora.prototype = {
             caaporaSprite.animations.play('up');
 
         }
-        else if (keyboard.getDown().isDown)
+        else if (game.input.mousePointer.x > 40
+                    && game.input.mousePointer.x < 760
+                        && game.input.mousePointer.y > 360 )
         {
             caaporaSprite.body.velocity.x = 150;
             caaporaSprite.body.velocity.y = 150;
             caaporaSprite.animations.play('down');
         }
+     
         /*
          else if (up_left.isDown)
          {
@@ -209,17 +222,32 @@ Caapora.prototype = {
          player.body.velocity.y = 0;
          player.animations.play('down right');
          }*/
-        else
-        {
-            //  Stand still
-            caaporaSprite.animations.stop();
+      
             
-            // Sprite inicial
-            caaporaSprite.frame = 1;
+                //  400 is the speed it will move towards the mouse
+                //game.physics.arcade.moveToPointer(caaporaSprite, 150);
 
-            caaporaSprite.body.velocity.x = 0;
-            caaporaSprite.body.velocity.y = 0;
-        }
+              
+            }
+            else
+            {
+                
+                        //  Stand still
+                    caaporaSprite.animations.stop();
+
+                    // Sprite inicial
+                    //caaporaSprite.frame = 1;
+
+                    caaporaSprite.body.velocity.x = 0;
+                    caaporaSprite.body.velocity.y = 0;
+            }
+
+        
+        
+        
+        /*
+        
+*/
 
     }
 
