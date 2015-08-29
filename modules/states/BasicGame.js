@@ -6,7 +6,7 @@ define([
   'EasyStar'
 
 ], function (Phaser, PhaserDebug, PhaserTiled) {
- //hahhahah
+  //hahhahah
   var BasicGame;
   BasicGame = function () {
     // nothing here
@@ -37,6 +37,7 @@ define([
   // 3 - water
   // 4 - grass-beach
   // 5 - beach-water
+  // 6 - sand;
 
   // 8 - player start point
 
@@ -62,8 +63,8 @@ define([
   [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+  [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6],
   [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
-  [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
   [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
   [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
   [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
@@ -120,6 +121,7 @@ define([
       game.load.image('water', 'assets/images/water.png');
       game.load.image('grass-beach', 'assets/images/grass-beach.png');
       game.load.image('beach-water', 'assets/images/beach-water.png');
+      game.load.image('sand', 'assets/images/sand.png');
       game.load.image('tree', 'assets/images/tree.png');
       //game.load.audio('backgroundMusic', ['assets/audio/amazon-florest.mp3', 'assets/audio/amazon-florest.ogg']);
       game.load.image('rock', 'assets/images/rock.png');
@@ -162,23 +164,17 @@ define([
       isoGroup = game.add.group();
       treeGroup = game.add.group();
 
-
       // Instanciando objeto caapora.
 
       caapora = new Caapora({
         group: isoGroup,
         game: this.game
-
-
       });
 
       catObj = new Cat({
-          basicGame: this,
-          game: this.game
-        });
-
-
-
+        basicGame: this,
+        game: this.game
+      });
 
       // Instanciando objeto caapora.
 
@@ -187,24 +183,20 @@ define([
         game: this.game,
         easystar : this.getEasystar(),
         timeStep : this.getTimeStep()
-
       });
 
-
       // Instanciando objeto cobra.
-        cobraObj = new Cobra({
-          basicGame: this,
-          game: this.game,
-          easystar: this.getEasystar(),
-          timeStep: this.getTimeStep()
-        });
+      cobraObj = new Cobra({
+        basicGame: this,
+        game: this.game,
+        easystar: this.getEasystar(),
+        timeStep: this.getTimeStep()
+      });
 
-        cobra = cobraObj.getCobraSprite();
-        // Instanciando objeto enemy.
-        cowboy.enemy = new Enemy();
-        player = caapora.getCaaporaSprite();
-
-
+      cobra = cobraObj.getCobraSprite();
+      // Instanciando objeto enemy.
+      cowboy.enemy = new Enemy();
+      player = caapora.getCaaporaSprite();
 
       // game.plugins.add(PhaserDebug);
       // tentando desenhar o minimap
@@ -216,7 +208,6 @@ define([
       miniMapSprite.fixedToCamera = true;
       miniMapSprite.cameraOffset.setTo(670, 470);
 
-
       // player no mini map
       var miniMapPlayer = game.add.bitmapData(game.width / 5, game.height / 5);
       miniMapPlayer.ctx.fillStyle = '#000';
@@ -225,7 +216,6 @@ define([
       this.miniMapPlayerSprite = game.add.sprite(game.width / 5, game.height / 50, miniMapPlayer);
       this.miniMapPlayerSprite.fixedToCamera = true;
       this.miniMapPlayerSprite.cameraOffset.setTo(670, 470);
-
 
       // King cobra
       var miniMapCobra = game.add.bitmapData(game.width / 5, game.height / 5);
@@ -237,7 +227,6 @@ define([
       this.miniMapCobraSprite.cameraOffset.setTo(670, 470);
 
       // isoGroup.create(100, 0, 'lifeBar');
-
 
       this.camera = {x: 0, y: 0, direction: '', isMoving: false};
       // we won't really be using IsoArcade physics, but I've enabled it anyway so the debug bodies can be seen
@@ -252,11 +241,9 @@ define([
       game.physics.isoArcade.gravity.setTo(0, 0, -500);
 
       // set the Background color of our game
-      game.stage.backgroundColor = "0xffff";
+      game.stage.backgroundColor = "0xfff";
 
-
-      var floorTile, waterTile, grass_beachTile, beach_waterTile;
-
+      var floorTile, waterTile, grass_beachTile, beach_waterTile, sand;
 
       for (var yt = 0; yt < level.length; yt++) {
 
@@ -264,7 +251,7 @@ define([
 
         for (var xt = 0; xt < level[yt].length; xt++) {
 
-          if ((tile[xt] != 3) && (tile[xt] != 4) && (tile[xt] != 5)) {
+          if ((tile[xt] != 3) && (tile[xt] != 4) && (tile[xt] != 5) && (tile[xt] != 6)) {
             floorTile = game.add.isoSprite(xt * tileSize, yt * tileSize, 0.2, 'ground', 0, floorGroup);
             floorTile.anchor.set(0.5, 0.2);
           } else if (tile[xt] == 3) {
@@ -278,6 +265,9 @@ define([
           } else if (tile[xt] == 5) {
             beach_waterTile = game.add.isoSprite(xt * tileSize, yt * tileSize, 0.2, 'beach-water', 0, floorGroup);
             beach_waterTile.anchor.set(0.5, 0.2);
+          } else if (tile[xt] == 6) {
+            sand = game.add.isoSprite(xt * tileSize, yt * tileSize, 0.2, 'sand', 0, floorGroup);
+            sand.anchor.set(0.5, 0.2);
           }
 
         }
@@ -285,7 +275,6 @@ define([
 
       var treeTile;
       var rocksTile;
-
 
       for (var yt = 0; yt < level.length; yt++) {
 
@@ -325,11 +314,6 @@ define([
       relogio = game.add.sprite(750, 30, 'relogio');
       relogio.fixedToCamera = true;
 
-
-
-
-
-
       console.log(
         'CAAPORA\n' +
         'Life: ' + caapora.getBaseLife() + '\n' +
@@ -347,8 +331,6 @@ define([
       // player.body.setCircle(44);
       game.camera.follow(player);
 
-
-
       console.log(
         'INIMIGO\n' +
         'Life: ' + cowboyObj.getBaseLife() + '\n' +
@@ -357,196 +339,198 @@ define([
         'Attack: ' + cowboyObj.getBaseAttack()
       );
 
-
       setInterval(function() {
 
-          cowboyObj.IA();
+        cowboyObj.IA();
 
-        }, timeStep);
+      }, timeStep);
 
+      setInterval(function () {
 
+        cobraObj.IA();
 
-        setInterval(function () {
+      }, timeStep);
 
-          cobraObj.IA();
+      // KeyCodes do Keyboard.
+      up = game.input.keyboard.addKey(Phaser.Keyboard.UP);
+      down = game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
+      left = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
+      right = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
+      up_left = game.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_7);
+      down_left = game.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_1);
+      down_right = game.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_3);
+      up_right = game.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_9);
 
-        }, timeStep);
+      // O cat se movimentará randomicamente a cada 3 segundos.
+      setInterval(function () {
 
+        numRandomico = rndNum(4);
 
+      }, 3000);
 
-        // KeyCodes do Keyboard.
-        up = game.input.keyboard.addKey(Phaser.Keyboard.UP);
-        down = game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
-        left = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
-        right = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
-        up_left = game.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_7);
-        down_left = game.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_1);
-        down_right = game.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_3);
-        up_right = game.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_9);
+      // Fazendo o tempo funcionar.
+      setInterval(function () {
 
-        // O cat se movimentará randomicamente a cada 3 segundos.
-        setInterval(function () {
+        tempo += 1000;
 
-          numRandomico = rndNum(4);
+      }, 1000);
 
-        }, 3000);
+      // Fazendo o relogio funcionar.
+      setInterval(function () {
 
-        // Fazendo o tempo funcionar.
-        setInterval(function () {
+        relogio.frame += 1;
 
-          tempo += 1000;
-
-        }, 1000);
-
-        // Fazendo o relogio funcionar.
-        setInterval(function () {
-
-          relogio.frame += 1;
-
-        }, 3000);
-
-      },
-      update: function () {
-
-        arrayIncendio.forEach(function (i) {
-          i.animations.play('incendiar');
-        });
-
-        arrayWater.forEach(function (w) {
-          w.isoZ = (-2 * Math.sin((game.time.now + (w.isoX * 7)) * 0.004)) + (-1 * Math.sin((game.time.now + (w.isoY * 8)) * 0.005));
-          w.alpha = Phaser.Math.clamp(1 + (w.isoZ * 0.1), 0.2, 1);
-        });
-
-        collision = game.physics.isoArcade.collide(cowboy, player);
-        collision2 = game.physics.isoArcade.collide(cobra, player);
-
-        // if (collision) {
-        //   console.log('Ao lado do inimigo.');
-        // } else {
-        //   console.log('Longe do inimigo.');
-        // }
-
-        if (collision) {
-
-            var currentLife = caapora.getBaseLife() - 2;
-            caapora.setBaseLife(currentLife);
-            caapora.setText("Caapora - HP: " + caapora.getBaseLife());
-
-
-            cowboyObj.setBaseLife(cowboyObj.getBaseLife() - 2);
-            cowboyObj.setText("Cowboy - HP: " + cowboyObj.getBaseLife());
-
-
-          //  if (caapora.getBaseLife() == 0) {
-          //    game.state.start('GameOver');
-          // }
-
-        }
-
-
-        caapora.checkMovement();
-
-        /*water.forEach(function (w) {
-        w.isoZ = (-2 * Math.sin((game.time.now + (w.isoX * 7)) * 0.004)) + (-1 * Math.sin((game.time.now + (w.isoY * 8)) * 0.005));
-        w.alpha = Phaser.Math.clamp(1 + (w.isoZ * 0.1), 0.2, 1);
-      });*/
-
-      this.miniMapPlayerSprite.cameraOffset.setTo(cat.x / 5, cat.y / 5);
-
-      this.miniMapCobraSprite.cameraOffset.setTo(cowboy.x / 5, cowboy.y / 5);
-
-      game.physics.isoArcade.collide(isoGroup);
-
-      game.iso.topologicalSort(isoGroup);
-
-
-      // Move the ENEMY
-      cowboyObj.movement();
-
-      // Move the cobra
-      cobraObj.movement();
-
-      // move the cat
-      catObj.movement();
-
-
-      currentPlayerXtile = Math.floor(cat.body.position.x / tileSize);
-      currentPlayerYtile = Math.floor(cat.body.position.y / tileSize);
-
-      // PREVENT FROM GOING OUT FROM THE LOGICAL ARRAY BECAUSE OF THE PHASER PHYSICS ENGINE
-
-      if (currentPlayerXtile < 0)
-      currentPlayerXtile = 0;
-      if (currentPlayerYtile < 0)
-      currentPlayerYtile = 0;
-
-      if (currentPlayerXtile > 28)
-      currentPlayerXtile = 28;
-      if (currentPlayerYtile > 28)
-      currentPlayerYtile = 28;
-
-      if (currentEnemyXtile < 0)
-      currentEnemyXtile = 0;
-      if (currentEnemyYtile < 0)
-      currentEnemyYtile = 0;
-
-      if (currentEnemyXtile > 28)
-      currentEnemyXtile = 28;
-      if (currentEnemyYtile > 28)
-      currentEnemyYtile = 28;
-
-      if (currentEnemyXtile2 < 0)
-          currentEnemyXtile2 = 0;
-      if (currentEnemyYtile2 < 0)
-          currentEnemyYtile2 = 0;
-
-      if (currentEnemyXtile2 > 28)
-          currentEnemyXtile2 = 28;
-      if (currentEnemyYtile2 > 28)
-          currentEnemyYtile2 = 28;
-
-
-
-      /*
-      Posição atual da cobra.
-      _________________________________________________________________________________________
-      */
-      currentEnemyXtile2 = Math.floor(cobra.body.position.x / tileSize);
-      currentEnemyYtile2 = Math.floor(cobra.body.position.y / tileSize);
-      /*
-      _________________________________________________________________________________________
-      Posição atual da cobra.
-      */
-      currentEnemyXtile = Math.floor(cowboy.body.position.x / tileSize);
-      currentEnemyYtile = Math.floor(cowboy.body.position.y / tileSize);
-
-      // Quando o tempo atingir 5 minutos, e o gato não for capturado, muda para o level 2.
-       if (tempo > 60000) {
-         game.state.start('LevelN');
-       }
+      }, 3000);
 
     },
-    render: function () {
+    update: function () {
 
-      /*
-      isoGroup.forEach(function (tree) {
-      game.debug.body(tree, 'rgba(189, 221, 235, 0.6)', false);
-    }); */
+      arrayIncendio.forEach(function (i) {
+        i.animations.play('incendiar');
+      });
+
+      arrayWater.forEach(function (w) {
+        w.isoZ = (-2 * Math.sin((game.time.now + (w.isoX * 7)) * 0.004)) + (-1 * Math.sin((game.time.now + (w.isoY * 8)) * 0.005));
+        w.alpha = Phaser.Math.clamp(1 + (w.isoZ * 0.1), 0.2, 1);
+      });
+
+      if (game.input.mousePointer.isDown && ) {
+        console.log(game.input.mousePointer.getX);
+        console.log(game.input.mousePointer.getY);
+      }
+
+      collision = game.physics.isoArcade.collide(cowboy, player);
+      collision2 = game.physics.isoArcade.collide(cobra, player);
+
+      // if (collision) {
+      //   console.log('Ao lado do inimigo.');
+      // } else {
+      //   console.log('Longe do inimigo.');
+      // }
+
+      if (collision) {
+
+        var currentLife = caapora.getBaseLife() - 2;
+        caapora.setBaseLife(currentLife);
+        caapora.setText("Caapora - HP: " + caapora.getBaseLife());
+
+
+        cowboyObj.setBaseLife(cowboyObj.getBaseLife() - 2);
+        cowboyObj.setText("Cowboy - HP: " + cowboyObj.getBaseLife());
+
+
+        //  if (caapora.getBaseLife() == 0) {
+        //    game.state.start('GameOver');
+        // }
+
+      }
+
+
+      caapora.checkMovement();
+
+      /*water.forEach(function (w) {
+      w.isoZ = (-2 * Math.sin((game.time.now + (w.isoX * 7)) * 0.004)) + (-1 * Math.sin((game.time.now + (w.isoY * 8)) * 0.005));
+      w.alpha = Phaser.Math.clamp(1 + (w.isoZ * 0.1), 0.2, 1);
+    });*/
+
+    this.miniMapPlayerSprite.cameraOffset.setTo(cat.x / 5, cat.y / 5);
+
+    this.miniMapCobraSprite.cameraOffset.setTo(cowboy.x / 5, cowboy.y / 5);
+
+    game.physics.isoArcade.collide(isoGroup);
+
+    game.iso.topologicalSort(isoGroup);
+
+
+    // Move the ENEMY
+    cowboyObj.movement();
+
+    // Move the cobra
+    cobraObj.movement();
+
+    // move the cat
+    catObj.movement();
+
+
+    currentPlayerXtile = Math.floor(cat.body.position.x / tileSize);
+    currentPlayerYtile = Math.floor(cat.body.position.y / tileSize);
+
+    // PREVENT FROM GOING OUT FROM THE LOGICAL ARRAY BECAUSE OF THE PHASER PHYSICS ENGINE
+
+    if (currentPlayerXtile < 0)
+    currentPlayerXtile = 0;
+    if (currentPlayerYtile < 0)
+    currentPlayerYtile = 0;
+
+    if (currentPlayerXtile > 28)
+    currentPlayerXtile = 28;
+    if (currentPlayerYtile > 28)
+    currentPlayerYtile = 28;
+
+    if (currentEnemyXtile < 0)
+    currentEnemyXtile = 0;
+    if (currentEnemyYtile < 0)
+    currentEnemyYtile = 0;
+
+    if (currentEnemyXtile > 28)
+    currentEnemyXtile = 28;
+    if (currentEnemyYtile > 28)
+    currentEnemyYtile = 28;
+
+    if (currentEnemyXtile2 < 0)
+    currentEnemyXtile2 = 0;
+    if (currentEnemyYtile2 < 0)
+    currentEnemyYtile2 = 0;
+
+    if (currentEnemyXtile2 > 28)
+    currentEnemyXtile2 = 28;
+    if (currentEnemyYtile2 > 28)
+    currentEnemyYtile2 = 28;
+
+
 
     /*
-    floorGroup.forEach(function (ground) {
-    game.debug.body(ground, 'rgba(189, 221, 235, 0.6)', false);
+    Posição atual da cobra.
+    _________________________________________________________________________________________
+    */
+    currentEnemyXtile2 = Math.floor(cobra.body.position.x / tileSize);
+    currentEnemyYtile2 = Math.floor(cobra.body.position.y / tileSize);
+    /*
+    _________________________________________________________________________________________
+    Posição atual da cobra.
+    */
+    currentEnemyXtile = Math.floor(cowboy.body.position.x / tileSize);
+    currentEnemyYtile = Math.floor(cowboy.body.position.y / tileSize);
+
+    // Quando o tempo atingir 5 minutos, e o gato não for capturado, muda para o level 2.
+    //  if (tempo > 60000) {
+    //    game.state.start('LevelN');
+    //  }
+
+  },
+  render: function () {
+
+    /*
+    isoGroup.forEach(function (tree) {
+    game.debug.body(tree, 'rgba(189, 221, 235, 0.6)', false);
   }); */
 
-  game.debug.text(game.time.fps || '--', 2, 14, "#a7aebe");
-  game.debug.text("Player x = " + Math.round(player.x) || '--', 2, 44, "#a7aebe");
-  game.debug.text("Player y = " + Math.round(player.y) || '--', 2, 84, "#a7aebe");
-  game.debug.text("Player z = " + Math.round(player.z) || '--', 2, 124, "#a7aebe");
-  
-  game.debug.text("Mouse x = " + Math.round(game.input.mousePointer.x) || '--', 2, 164, "#a7aebe");
-  game.debug.text("Mouse y = " + Math.round(game.input.mousePointer.y) || '--', 2, 214, "#a7aebe");
 
-  // game.debug.text(Phaser.VERSION, 2, game.world.height - 2, "#ffff00");
+  /*
+  floorGroup.forEach(function (ground) {
+  game.debug.body(ground, 'rgba(189, 221, 235, 0.6)', false);
+}); */
+
+game.debug.text(game.time.fps || '--', 2, 14, "#a7aebe");
+game.debug.text("Player x = " + Math.round(player.x) || '--', 2, 44, "#a7aebe");
+game.debug.text("Player y = " + Math.round(player.y) || '--', 2, 84, "#a7aebe");
+game.debug.text("Player z = " + Math.round(player.z) || '--', 2, 124, "#a7aebe");
+
+game.debug.text("Mouse x = " + Math.round(game.input.mousePointer.x) || '--', 2, 164, "#a7aebe");
+game.debug.text("Mouse y = " + Math.round(game.input.mousePointer.y) || '--', 2, 214, "#a7aebe");
+
+
+// game.debug.text(Phaser.VERSION, 2, game.world.height - 2, "#ffff00");
 },
 //Getters and Setters
 
