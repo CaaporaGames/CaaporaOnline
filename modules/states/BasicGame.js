@@ -394,7 +394,7 @@ define([
         w.alpha = Phaser.Math.clamp(1 + (w.isoZ * 0.1), 0.2, 1);
       });
 
-      if (game.input.mousePointer.isDown && ) {
+      if (game.input.mousePointer.isDown) {
         console.log(game.input.mousePointer.getX);
         console.log(game.input.mousePointer.getY);
       }
