@@ -67,11 +67,11 @@ function Caapora(opts) {
     //  Our two animations, walking left and right.
     caaporaSprite.animations.add('down', [0,1,2], 10, true);
     caaporaSprite.animations.add('down left', [4,5,6,7], 10, true);
-    caaporaSprite.animations.add('left', [24], 10, true);
+    caaporaSprite.animations.add('left', [24,25,26,27], 10, true);
     caaporaSprite.animations.add('up left', [3,4,5], 10, true);
     caaporaSprite.animations.add('up', [8,9,10], 10, true);
     caaporaSprite.animations.add('up right', [40, 41, 42, 43, 44, 45, 46, 47], 10, true);
-    caaporaSprite.animations.add('right', [16], 10, true);
+    caaporaSprite.animations.add('right', [16,17,18,19], 10, true);
     caaporaSprite.animations.add('down right', [56, 57, 58, 59, 60, 61, 62, 63], 10, true);
     
    

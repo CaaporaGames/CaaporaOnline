@@ -30,20 +30,20 @@ define([
                       
                         game.add.sprite(0, 0, 'bg');
                         
-                        game.add.sprite(game.world.centerX - 100, game.world.centerY + 125, 'menubg');
+                        game.add.sprite(game.world.centerX - 100, game.world.centerY + 115, 'menubg');
 
                         //var playButton = game.add.button(game.world.centerX , game.world.centerY + 200 ,"btnStart",this.playTheGame,this);
                         //playButton.anchor.setTo(0.5,0.5);
 
                          game.add.bitmapText(game.world.centerX - 200, game.world.centerY - 100, 'desyrel', 'Caapora Online', 64);
                          
-                         novoJogo = game.add.bitmapText(game.world.centerX - 45, game.world.centerY + 130, 'desyrel', 'Novo Jogo', 30);
+                         novoJogo = game.add.bitmapText(game.world.centerX - 45, game.world.centerY + 120, 'desyrel', 'Novo Jogo', 30);
                             
-                         player = game.add.bitmapText(game.world.centerX - 45, game.world.centerY + 170, 'desyrel', 'Jogador', 30);
+                         player = game.add.bitmapText(game.world.centerX - 45, game.world.centerY + 160, 'desyrel', 'Jogador', 30);
                          
-                         opcoes = game.add.bitmapText(game.world.centerX - 45, game.world.centerY + 210, 'desyrel', 'Opcoes', 30);
+                         opcoes = game.add.bitmapText(game.world.centerX - 45, game.world.centerY + 200, 'desyrel', 'Opcoes', 30);
                          
-                         creditos = game.add.bitmapText(game.world.centerX - 45, game.world.centerY + 250, 'desyrel', 'Creditos', 30);
+                         creditos = game.add.bitmapText(game.world.centerX - 45, game.world.centerY + 240, 'desyrel', 'Creditos', 30);
                          
                          opcoes.inputEnabled = true;
                          
