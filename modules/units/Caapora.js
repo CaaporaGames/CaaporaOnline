@@ -12,10 +12,12 @@ var keyboard;
 
 
 function Caapora(opts) {
-
+    
     // Nome do Sprite
     var image = 'dude';
     keyboard = new Keyboard();
+    
+    
 
     // Passa a referencia da Classe BasicGame e BasicGame.game para ser
     // modificado nesta classe
@@ -82,6 +84,8 @@ function Caapora(opts) {
 // Getters and Setters das Propriedades desta Classe
 // Por algum motivo os atributos não podem ser acessados diretamente (?)
 Caapora.prototype = {
+    
+    
     // Getters and Setters.
     setBaseLife: function (life) {
         baseLife = life;

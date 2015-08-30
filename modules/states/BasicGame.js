@@ -110,6 +110,25 @@ define([
     preload: function () {
 
       console.log("preload de BasicGame");
+      
+       var style = {font: "bold 14px Arial", fill: "#fff", wordWrap: true, wordWrapWidth: 150, align: "center"};
+      textCaapora = this.game.add.text(game.width/2, game.height/2 - 30, "Carregando...", style);
+      textCaapora.anchor.set(0.5);
+      
+      
+      var loadingBar = game.add.sprite(game.width/2, game.height/2 ,"loading");
+      loadingBar.anchor.setTo(0.5,0.5);
+      this.load.setPreloadSprite(loadingBar);
+      
+      
+      var styleDica = {font: "bold 12px Arial", fill: "#C77636", wordWrap: true, wordWrapWidth: 250, align: "center"};
+      textCaapora = this.game.add.text(game.width/2, game.height - 50, "Dica: Para mover o personagem clique com o mouse na direção que quer ir.", styleDica);
+      textCaapora.anchor.set(0.5);
+      
+      
+
+      
+      
 
       /*game.debug.renderShadow = false;
       game.stage.disableVisibilityChange = false;*/
@@ -125,7 +144,7 @@ define([
       game.load.image('tree', 'assets/images/tree.png');
       //game.load.audio('backgroundMusic', ['assets/audio/amazon-florest.mp3', 'assets/audio/amazon-florest.ogg']);
       game.load.image('rock', 'assets/images/rock.png');
-      game.load.spritesheet('dude', 'assets/images/Caapora-Novo-Sprite.png', 61, 91);
+      game.load.spritesheet('dude', 'assets/images/Caapora-Novo-Sprite.png', 61, 91);  
       game.load.spritesheet('cowboy', 'assets/images/enemy1.png', 70, 74);
       game.load.spritesheet('cat', 'assets/images/cat.png', 29, 28);
       game.load.spritesheet('cobra', 'assets/images/enemy1.png', 70, 74);

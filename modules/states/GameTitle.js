@@ -11,6 +11,16 @@ define([
 
         GameTitle.prototype = {
                  preload: function () {
+                     
+                     
+                     var loadingBar = game.add.sprite(game.width/2, game.height/2 ,"loading");
+                    loadingBar.anchor.setTo(0.5,0.5);
+                    this.load.setPreloadSprite(loadingBar);
+                    
+                     var style = {font: "bold 14px Arial", fill: "#fff", wordWrap: true, wordWrapWidth: 150, align: "center"};
+                     textCaapora = this.game.add.text(game.width/2, game.height/2 - 30, "Bem-vindo ao Caapora Online", style);
+                     textCaapora.anchor.set(0.5);
+
 
                      console.log("iniciando game title");
                      game.load.bitmapFont('desyrel', 'assets/fonts/bitmapFonts/desyrel.png', 'assets/fonts/bitmapFonts/desyrel.xml');
