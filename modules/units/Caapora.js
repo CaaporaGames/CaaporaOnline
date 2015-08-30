@@ -149,6 +149,7 @@ Caapora.prototype = {
      //  only move when you click
      if (game.input.mousePointer.isDown)
         {
+ 
          
         if (game.input.mousePointer.x < 40
                     && game.input.mousePointer.y > 40

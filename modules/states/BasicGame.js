@@ -125,13 +125,12 @@ define([
       game.load.image('tree', 'assets/images/tree.png');
       //game.load.audio('backgroundMusic', ['assets/audio/amazon-florest.mp3', 'assets/audio/amazon-florest.ogg']);
       game.load.image('rock', 'assets/images/rock.png');
-      game.load.image('lifeBar', 'assets/images/life-bar-green.png');
-      game.load.image('lifeBarRed', 'assets/images/life-bar-red.png');
       game.load.spritesheet('dude', 'assets/images/Caapora-Novo-Sprite.png', 61, 91);
       game.load.spritesheet('cowboy', 'assets/images/enemy1.png', 70, 74);
       game.load.spritesheet('cat', 'assets/images/cat.png', 29, 28);
       game.load.spritesheet('cobra', 'assets/images/enemy1.png', 70, 74);
       game.load.image('grass', 'assets/images/grass.png');
+     // game.load.image('menu', 'assets/images/menu-exemplo.png', 270, 180);
       // Set the world size
 
 
@@ -156,6 +155,28 @@ define([
       game.iso.anchor.setTo(0.5, 0);
     },
     create: function () {
+        
+        
+         // Create a label to use as a button
+         
+                        /*
+                        pause_label = game.add.text(game.width - 100 , 30, 'Pause', { font: '24px Arial', fill: '#fff' });
+
+                        pause_label.inputEnabled = true;
+                        pause_label.events.onInputUp.add(function () {
+                        // When the paus button is pressed, we pause the game
+                        game.paused = true;
+
+                        // Then add the menu
+                        menu = game.add.sprite(game.width/2, game.height/2, 'menu');
+                        menu.anchor.setTo(0.5, 0.5);
+
+
+
+                        // And a label to illustrate which menu item was chosen. (This is not necessary)
+                        choiseLabel = game.add.text(game.width/2, game.height-150, 'Clique fora da janela para sair', { font: '30px Arial', fill: '#fff' });
+                        choiseLabel.anchor.setTo(0.5, 0.5);
+                         });*/  
 
       // Grama no fundo
       // tilesprite = game.add.tileSprite(0, 0, 4000, 4000, 'grass');
@@ -394,9 +415,9 @@ define([
         w.alpha = Phaser.Math.clamp(1 + (w.isoZ * 0.1), 0.2, 1);
       });
 
-      if (game.input.mousePointer.isDown && ) {
-        console.log(game.input.mousePointer.getX);
-        console.log(game.input.mousePointer.getY);
+      if (game.input.mousePointer.isDown) {
+        console.log(game.input.mousePointer.x);
+        console.log(game.input.mousePointer.y);
       }
 
       collision = game.physics.isoArcade.collide(cowboy, player);
@@ -508,7 +529,7 @@ define([
     //  }
 
   },
-  render: function () {
+    render: function () {
 
     /*
     isoGroup.forEach(function (tree) {
@@ -604,7 +625,7 @@ getCollision : function () { return collision; },
 
 };
 
-return BasicGame;
+  return BasicGame;
 
 });
 //
@@ -624,5 +645,8 @@ function rndNum(num) {
 
   return Math.round(Math.random() * num);
 
-}
-;
+};
+
+
+// Add a input listener that can help us return from being paused
+   
