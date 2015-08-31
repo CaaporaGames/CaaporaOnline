@@ -25,7 +25,6 @@ define([
                      console.log("iniciando game title");
                      game.load.bitmapFont('desyrel', 'assets/fonts/bitmapFonts/desyrel.png', 'assets/fonts/bitmapFonts/desyrel.xml');
                      game.load.image('bg', 'assets/images/caipora-background.png');
-                     game.load.image('btnStart','assets/images/PlayButton.png');
                      game.load.image('menu', 'assets/images/menu.png');
                      game.load.image('creditos', 'assets/images/creditos.png');
                      game.load.image('caipora', 'assets/images/caipora.png');
@@ -40,10 +39,7 @@ define([
                       
                         game.add.sprite(0, 0, 'bg');
                         
-                        game.add.sprite(game.world.centerX - 100, game.world.centerY + 115, 'menubg');
-
-                        //var playButton = game.add.button(game.world.centerX , game.world.centerY + 200 ,"btnStart",this.playTheGame,this);
-                        //playButton.anchor.setTo(0.5,0.5);
+                         game.add.sprite(game.world.centerX - 100, game.world.centerY + 115, 'menubg');
 
                          game.add.bitmapText(game.world.centerX - 200, game.world.centerY - 100, 'desyrel', 'Caapora Online', 64);
                          

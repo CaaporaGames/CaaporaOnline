@@ -17,15 +17,21 @@ define([
   var treeGroup;
   var player, cowboy, caapora;
   var cobra, cat;
-  var up, down, right, left, up_left, up_right, down_left, down_right;
+  var up, down, right, left, up_left, up_right, down_left, down_right,z;
   var backgroundMusic;
   var numRandomico = 0;
   var tempo = 0;
   var relogio;
   var collision = false;
   var incendio;
+  var balde;
   var arrayWater = [];
   var arrayIncendio = [];
+  var inputType = 'keyboard';
+  var floresta;
+  var treeTileArray = [];
+  var textFogosContagem;
+  var contagemRegressiva;
 
   // ********************* EasyStar setup *********************
   var easystar = new EasyStar.js();
@@ -121,8 +127,9 @@ define([
       this.load.setPreloadSprite(loadingBar);
       
       
+      
       var styleDica = {font: "bold 12px Arial", fill: "#C77636", wordWrap: true, wordWrapWidth: 250, align: "center"};
-      textCaapora = this.game.add.text(game.width/2, game.height - 50, "Dica: Para mover o personagem clique com o mouse na direção que quer ir.", styleDica);
+      textCaapora = this.game.add.text(game.width/2, game.height - 50, "Dica: Tente salvar a floresta da queimada.", styleDica);
       textCaapora.anchor.set(0.5);
       
       
@@ -149,6 +156,8 @@ define([
       game.load.spritesheet('cat', 'assets/images/cat.png', 29, 28);
       game.load.spritesheet('cobra', 'assets/images/enemy1.png', 70, 74);
       game.load.image('grass', 'assets/images/grass.png');
+      game.load.image('alert', 'assets/images/alert.png');
+      game.load.image('balde', 'assets/images/balde.png'); 
      // game.load.image('menu', 'assets/images/menu-exemplo.png', 270, 180);
       // Set the world size
 
@@ -175,7 +184,7 @@ define([
     },
     create: function () {
         
-        
+           
          // Create a label to use as a button
          
                         /*
@@ -199,10 +208,23 @@ define([
 
       // Grama no fundo
       // tilesprite = game.add.tileSprite(0, 0, 4000, 4000, 'grass');
+      
+        
 
       floorGroup = game.add.group();
       isoGroup = game.add.group();
       treeGroup = game.add.group();
+      
+      
+      
+       balde = game.add.isoSprite(830, 800 , 30, 'balde', 0, isoGroup);
+            balde.anchor.set(0.5);
+            game.physics.isoArcade.enable(balde);
+            balde.body.collideWorldBounds = true;
+            //balde.body.immovable = true;
+            balde.body.bounce.set(1, 1, 0.2);
+            
+            
 
       // Instanciando objeto caapora.
 
@@ -214,6 +236,13 @@ define([
       catObj = new Cat({
         basicGame: this,
         game: this.game
+      });
+      
+      
+      floresta = new Floresta({
+          
+          incendio: arrayIncendio
+          
       });
 
       // Instanciando objeto caapora.
@@ -313,8 +342,9 @@ define([
         }
       }
 
-      var treeTile;
-      var rocksTile;
+      
+      var rocksTile, treeTile;
+      
 
       for (var yt = 0; yt < level.length; yt++) {
 
@@ -323,19 +353,34 @@ define([
         for (var xt = 0; xt < level[yt].length; xt++) {
 
           if (tile[xt] == 1) {
-            // Create flames.
-            incendio = game.add.isoSprite(xt * tileSize, yt * tileSize, 0, 'flame', 0, isoGroup);
-            incendio.anchor.set(0.5, 0.5);
-            incendio.animations.add('incendiar', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 10, true);
-
-            treeTile = game.add.isoSprite(xt * tileSize, yt * tileSize, 0, 'tree', 0, isoGroup);
+           
+            
+            var treeTile = game.add.isoSprite(xt * tileSize, yt * tileSize, 0, 'tree', 0, isoGroup);
+            
+            
+          
             treeTile.anchor.set(0.5);
             game.physics.isoArcade.enable(treeTile);
             treeTile.body.collideWorldBounds = true;
             treeTile.body.immovable = true;
             // treeTile.tint = 0x86bfda;
             treeTile.body.bounce.set(1, 1, 0.2);
+            
+            
+               // Create flames.
+            incendio = game.add.isoSprite(xt * tileSize + 50 , yt * tileSize + 50, 0, 'flame', 0, isoGroup);
+            incendio.anchor.set(0.5, 0.5);
+            incendio.animations.add('incendiar', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 10, true);
+           
+            
+            
+            game.physics.isoArcade.enable(incendio);
+            incendio.body.collideWorldBounds = true;
+            incendio.body.immovable = true;
+            incendio.body.bounce.set(1, 1, 0.2);
+            
 
+            treeTileArray.push(treeTile);
             arrayIncendio.push(incendio);
           }
           else if (tile[xt] == 2)
@@ -349,6 +394,20 @@ define([
           }
         }
       }
+      
+      
+        var estilo = {font: "bold 16px Arial", fill: "#00f", wordWrap: true, wordWrapWidth: 250, align: "center"};
+        textFogosContagem = game.add.text(game.width - 120, 10, "Arvores Queimadas: " + arrayIncendio.length , estilo);
+        textFogosContagem.anchor.set(0.5);
+        textFogosContagem.fixedToCamera = true;
+        textFogosContagem.cameraOffset.setTo(game.width - 200, 70);
+        
+        
+        contagemRegressiva = game.add.text(game.width - 120, 10, "Tempo : 60" , estilo);
+        contagemRegressiva.anchor.set(0.5);
+        contagemRegressiva.fixedToCamera = true;
+        contagemRegressiva.cameraOffset.setTo(game.width - 80, 120);
+       
 
       // Adicionando o relogio no jogo.
       relogio = game.add.sprite(750, 30, 'relogio');
@@ -400,6 +459,7 @@ define([
       down_left = game.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_1);
       down_right = game.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_3);
       up_right = game.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_9);
+      z = game.input.keyboard.addKey(Phaser.Keyboard.Z);
 
       // O cat se movimentará randomicamente a cada 3 segundos.
       setInterval(function () {
@@ -414,6 +474,9 @@ define([
         tempo += 1000;
 
       }, 1000);
+      
+      
+    
 
       // Fazendo o relogio funcionar.
       setInterval(function () {
@@ -424,6 +487,34 @@ define([
 
     },
     update: function () {
+        
+        if(tempo > 0)
+            contagemRegressiva.setText("Tempo: " + (parseFloat(60) - ((tempo / 1000))));
+        
+         // maior que 1 minuto
+          if(tempo > 60 * 1000 || arrayIncendio.length == 0){
+       
+                game.state.start('Vitoria');
+          }
+        
+         
+       for(index =0; index <arrayIncendio.length; index++){
+           
+           collision = game.physics.isoArcade.collide(arrayIncendio[index], player)
+                if(collision){
+                    
+                        
+                         arrayIncendio[index].destroy();
+                         arrayIncendio.splice(index,1);
+                         textFogosContagem.setText("Arvores Queimadas: " + arrayIncendio.length);
+                         
+                           
+                           
+                }
+
+       }
+        
+       floresta.update();
 
       arrayIncendio.forEach(function (i) {
         i.animations.play('incendiar');
@@ -441,31 +532,17 @@ define([
 
       collision = game.physics.isoArcade.collide(cowboy, player);
       collision2 = game.physics.isoArcade.collide(cobra, player);
+      collision3 = game.physics.isoArcade.collide(treeTileArray[0], player);
+
+
+      
 
       // if (collision) {
       //   console.log('Ao lado do inimigo.');
       // } else {
       //   console.log('Longe do inimigo.');
       // }
-
-      if (collision) {
-
-        var currentLife = caapora.getBaseLife() - 2;
-        caapora.setBaseLife(currentLife);
-        caapora.setText("Caapora - HP: " + caapora.getBaseLife());
-
-
-        cowboyObj.setBaseLife(cowboyObj.getBaseLife() - 2);
-        cowboyObj.setText("Cowboy - HP: " + cowboyObj.getBaseLife());
-
-
-        //  if (caapora.getBaseLife() == 0) {
-        //    game.state.start('GameOver');
-        // }
-
-      }
-
-
+      
       caapora.checkMovement();
 
       /*water.forEach(function (w) {
@@ -561,13 +638,19 @@ define([
   game.debug.body(ground, 'rgba(189, 221, 235, 0.6)', false);
 }); */
 
-game.debug.text(game.time.fps || '--', 2, 14, "#a7aebe");
-game.debug.text("Player x = " + Math.round(player.x) || '--', 2, 44, "#a7aebe");
-game.debug.text("Player y = " + Math.round(player.y) || '--', 2, 84, "#a7aebe");
-game.debug.text("Player z = " + Math.round(player.z) || '--', 2, 124, "#a7aebe");
+   // if(z.isDown){
+        
+        game.debug.text(game.time.fps || '--', 2, 14, "#a7aebe");
+        game.debug.text("Player x = " + Math.round(player.x) || '--', 2, 44, "#a7aebe");
+        game.debug.text("Player y = " + Math.round(player.y) || '--', 2, 84, "#a7aebe");
+        game.debug.text("Player z = " + Math.round(player.z) || '--', 2, 124, "#a7aebe");
 
-game.debug.text("Mouse x = " + Math.round(game.input.mousePointer.x) || '--', 2, 164, "#a7aebe");
-game.debug.text("Mouse y = " + Math.round(game.input.mousePointer.y) || '--', 2, 214, "#a7aebe");
+        game.debug.text("Mouse x = " + Math.round(game.input.mousePointer.x) || '--', 2, 164, "#a7aebe");
+        game.debug.text("Mouse y = " + Math.round(game.input.mousePointer.y) || '--', 2, 214, "#a7aebe");
+
+        game.debug.text("World x = " + Math.round(game.width) || '--', 2, 224, "#a7aebe");
+        game.debug.text("World y = " + Math.round(game.height) || '--', 2, 244, "#a7aebe");
+   // }
 
 
 // game.debug.text(Phaser.VERSION, 2, game.world.height - 2, "#ffff00");

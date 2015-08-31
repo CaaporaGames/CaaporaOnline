@@ -9,6 +9,7 @@ var y = 800;
 var textCaapora;
 var caaporaSprite;
 var keyboard;
+var alert = false;
 
 
 function Caapora(opts) {
@@ -45,7 +46,7 @@ function Caapora(opts) {
          this.bar.context.fillRect(0, 0, baseLife, 8);
         
         this.bar.dirty = true;
-        
+     
         caaporaSprite.lifebar = this.game.add.sprite(0, -70, this.bar); 
         caaporaSprite.lifebar.anchor.setTo(0.2, 1);
         caaporaSprite.addChild(caaporaSprite.lifebar);
@@ -85,7 +86,10 @@ function Caapora(opts) {
 // Por algum motivo os atributos não podem ser acessados diretamente (?)
 Caapora.prototype = {
     
-    
+    setAlert: function(state){
+        
+        alert = state;
+    },
     // Getters and Setters.
     setBaseLife: function (life) {
         baseLife = life;
@@ -124,6 +128,31 @@ Caapora.prototype = {
     // Método que será usado no GameLoop que movimenta o Caapora
     checkMovement: function () {
         
+        
+        if(this.alert == true){
+            
+            
+               
+              caaporaSprite.alert = game.add.sprite(0, -50, 'alert');
+              caaporaSprite.alert.anchor.setTo(0.2, 1);
+              caaporaSprite.addChild(caaporaSprite.alert);
+              
+                
+              var ref = this;         
+            
+             setInterval(function(){
+               
+                 caaporaSprite.alert.destroy();
+                 
+                 ref.setAlert(false);
+             
+                 },1000 );
+         
+         
+            this.alert;
+        }
+        
+      
          // Barra de Energia
          // ensure you clear the context each time you update it or the bar will draw on top of itself
         this.bar.context.clearRect(0, 0, this.bar.width, this.bar.height);
@@ -145,19 +174,13 @@ Caapora.prototype = {
         // important - without this line, the context will never be updated on the GPU when using webGL
         this.bar.dirty = true;
 
+        
         //  Reset the players velocity (movement)
         caaporaSprite.body.velocity.x = 0;
         caaporaSprite.body.velocity.y = 0;
-        
-        
-     //  only move when you click
-     if (game.input.mousePointer.isDown)
-        {
- 
-         
-        if (game.input.mousePointer.x < 40
-                    && game.input.mousePointer.y > 40
-                        && game.input.mousePointer.y < 360)
+
+        // controle pelo teclado
+        if (keyboard.getLeft().isDown)
         {
             //  Move to the left
             caaporaSprite.body.velocity.x = -150;
@@ -165,9 +188,7 @@ Caapora.prototype = {
             caaporaSprite.animations.play('left');
 
         }
-        else if (game.input.mousePointer.x > 760
-                    && game.input.mousePointer.y > 40
-                        && game.input.mousePointer.y < 360)
+        else if (keyboard.getRight().isDown)
         {
             //  Move to the right
             caaporaSprite.body.velocity.x = 150;
@@ -176,10 +197,7 @@ Caapora.prototype = {
             caaporaSprite.animations.play('right');
 
         }
-        else if (game.input.mousePointer.x > 40
-                    && game.input.mousePointer.x < 760
-                        && game.input.mousePointer.y < 40
-                    )
+        else if (keyboard.getUp().isDown)
         {
             caaporaSprite.body.velocity.x = -150;
             caaporaSprite.body.velocity.y = -150;
@@ -187,72 +205,145 @@ Caapora.prototype = {
             caaporaSprite.animations.play('up');
 
         }
-        else if (game.input.mousePointer.x > 40
-                    && game.input.mousePointer.x < 760
-                        && game.input.mousePointer.y > 360 )
+        else if (keyboard.getDown().isDown)
         {
             caaporaSprite.body.velocity.x = 150;
             caaporaSprite.body.velocity.y = 150;
             caaporaSprite.animations.play('down');
         }
-     
-        /*
+        
          else if (up_left.isDown)
          {
          //  NOROESTE
-         player.body.velocity.x = -150;
-         player.body.velocity.y = 0;
-
-         player.animations.play('up left');
+         caaporaSprite.body.velocity.x = -150;
+        caaporaSprite.body.velocity.y = 0;
+         caaporaSprite.animations.play('up left');
          }
          else if (down_left.isDown)
          {
          // SUDOESTE
-         player.body.velocity.x = 0;
-         player.body.velocity.y = 150;
-
-         player.animations.play('down left');
+         caaporaSprite.body.velocity.x = 0;
+         caaporaSprite.body.velocity.y = 150;
+         caaporaSprite.animations.play('down left');
          }
          else if (up_right.isDown)
          {
          // NORDESTE
-         player.body.velocity.x = 0;
-         player.body.velocity.y = -150;
-         player.animations.play('up right');
+         caaporaSprite.body.velocity.x = 0;
+         caaporaSprite.body.velocity.y = -150;
+         caaporaSprite.animations.play('up right');
          }
          else if (down_right.isDown)
          {
          // SUDESTE
-         player.body.velocity.x = 150;
-         player.body.velocity.y = 0;
-         player.animations.play('down right');
-         }*/
-      
-            
-                //  400 is the speed it will move towards the mouse
-                //game.physics.arcade.moveToPointer(caaporaSprite, 150);
-
-              
-            }
-            else
-            {
-                
-                        //  Stand still
-                    caaporaSprite.animations.stop();
-
-                    // Sprite inicial
-                    //caaporaSprite.frame = 1;
-
-                    caaporaSprite.body.velocity.x = 0;
-                    caaporaSprite.body.velocity.y = 0;
-            }
-
+         caaporaSprite.body.velocity.x = 150;
+         caaporaSprite.body.velocity.y = 0;
+         caaporaSprite.animations.play('down right');
+         }
+        
+        // Se não controla pelo mouse 
+        else {
         
         
-        
-        /*
-        
-*/
+            //  only move when you click
+            if (game.input.mousePointer.isDown)
+               {
+
+
+               if (game.input.mousePointer.x < 40
+                           && game.input.mousePointer.y > 40
+                               && game.input.mousePointer.y < 360)
+               {
+                   //  Move to the left
+                   caaporaSprite.body.velocity.x = -150;
+                   caaporaSprite.body.velocity.y = 150;
+                   caaporaSprite.animations.play('left');
+
+               }
+               else if (game.input.mousePointer.x > 760
+                           && game.input.mousePointer.y > 40
+                               && game.input.mousePointer.y < 360)
+               {
+                   //  Move to the right
+                   caaporaSprite.body.velocity.x = 150;
+                   caaporaSprite.body.velocity.y = -150;
+
+                   caaporaSprite.animations.play('right');
+
+               }
+               else if (game.input.mousePointer.x > 40
+                           && game.input.mousePointer.x < 760
+                               && game.input.mousePointer.y < 40
+                           )
+               {
+                   caaporaSprite.body.velocity.x = -150;
+                   caaporaSprite.body.velocity.y = -150;
+
+                   caaporaSprite.animations.play('up');
+
+               }
+               else if (game.input.mousePointer.x > 40
+                           && game.input.mousePointer.x < 760
+                               && game.input.mousePointer.y > 360 )
+               {
+                   caaporaSprite.body.velocity.x = 150;
+                   caaporaSprite.body.velocity.y = 150;
+                   caaporaSprite.animations.play('down');
+               }
+
+               /*
+                else if (up_left.isDown)
+                {
+                //  NOROESTE
+                player.body.velocity.x = -150;
+                player.body.velocity.y = 0;
+
+                player.animations.play('up left');
+                }
+                else if (down_left.isDown)
+                {
+                // SUDOESTE
+                player.body.velocity.x = 0;
+                player.body.velocity.y = 150;
+
+                player.animations.play('down left');
+                }
+                else if (up_right.isDown)
+                {
+                // NORDESTE
+                player.body.velocity.x = 0;
+                player.body.velocity.y = -150;
+                player.animations.play('up right');
+                }
+                else if (down_right.isDown)
+                {
+                // SUDESTE
+                player.body.velocity.x = 150;
+                player.body.velocity.y = 0;
+                player.animations.play('down right');
+                }*/
+
+
+                       //  400 is the speed it will move towards the mouse
+                       //game.physics.arcade.moveToPointer(caaporaSprite, 150);
+
+
+                   }
+                   else
+                   {
+
+                               //  Stand still
+                           caaporaSprite.animations.stop();
+
+                           // Sprite inicial
+                           //caaporaSprite.frame = 1;
+
+                           caaporaSprite.body.velocity.x = 0;
+                           caaporaSprite.body.velocity.y = 0;
+                   }
+
+
+           }
 
     }
 
