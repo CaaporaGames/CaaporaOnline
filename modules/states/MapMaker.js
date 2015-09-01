@@ -103,7 +103,7 @@ var easing=0.1;
       console.log("preload de BasicGame");
       
       
-        game.scale.pageAlignHorizontally = true;
+      //  game.scale.pageAlignHorizontally = true;
         game.scale.pageAlignVertically = true;
         game.scale.setScreenSize(true);
        
