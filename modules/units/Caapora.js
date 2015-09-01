@@ -10,6 +10,7 @@ var textCaapora;
 var caaporaSprite;
 var keyboard;
 var alert = false;
+var isEquiped = false;
 
 
 function Caapora(opts) {
