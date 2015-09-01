@@ -136,7 +136,8 @@ define([
       game.load.image('tree', 'assets/images/tree.png');
       //game.load.audio('backgroundMusic', ['assets/audio/amazon-florest.mp3', 'assets/audio/amazon-florest.ogg']);
       game.load.image('rock', 'assets/images/rock.png');
-      game.load.spritesheet('dude', 'assets/images/Caapora-Novo-Sprite.png', 61, 91);  
+      game.load.spritesheet('dude', 'assets/images/Caapora-Novo-Sprite.png', 61, 91);
+      game.load.spritesheet('dudeBalde', 'assets/images/Caapora-Novo-Sprite-Balde.png', 61, 91);
       game.load.spritesheet('cowboy', 'assets/images/enemy1.png', 70, 74);
       game.load.spritesheet('cat', 'assets/images/cat.png', 29, 28);
       game.load.spritesheet('cobra', 'assets/images/enemy1.png', 70, 74);
@@ -174,7 +175,7 @@ define([
             balde.anchor.set(0.5);
             game.physics.isoArcade.enable(balde);
             balde.body.collideWorldBounds = true;
-            //balde.body.immovable = true;
+            balde.body.immovable = true;
             balde.body.bounce.set(1, 1, 0.2);
             
             
@@ -440,12 +441,16 @@ define([
            collision = game.physics.isoArcade.collide(arrayIncendio[index], player)
                 if(collision){
                     
-                        
+                      if(caapora.isEquiped){
+                          
                          arrayIncendio[index].destroy();
                          arrayIncendio.splice(index,1);
                          textFogosContagem.setText("Arvores Queimadas: " + arrayIncendio.length);
                          
                            
+                          
+                      }
+                        
                            
                 }
 
@@ -470,7 +475,22 @@ define([
       collision = game.physics.isoArcade.collide(cowboy, player);
       collision2 = game.physics.isoArcade.collide(cobra, player);
       collision3 = game.physics.isoArcade.collide(treeTileArray[0], player);
+      var getBalde = game.physics.isoArcade.collide(balde, player);
 
+      if(getBalde){
+          
+          caapora.isEquiped = true;
+          balde.destroy();
+          player.loadTexture('dudeBalde');
+      }
+      
+
+      // if (collision) {
+      //   console.log('Ao lado do inimigo.');
+      // } else {
+      //   console.log('Longe do inimigo.');
+      // }
+      
       caapora.checkMovement();
 
     this.miniMapPlayerSprite.cameraOffset.setTo(cat.x / 5, cat.y / 5);

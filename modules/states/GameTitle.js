@@ -49,11 +49,11 @@ define([
                          
                          opcoes = game.add.bitmapText(game.world.centerX - 45, game.world.centerY + 200, 'desyrel', 'Opcoes', 30);
                          
-                         creditos = game.add.bitmapText(game.world.centerX - 45, game.world.centerY + 240, 'desyrel', 'Creditos', 30);
+                         mmk = game.add.bitmapText(game.world.centerX - 45, game.world.centerY + 240, 'desyrel', 'Map Maker', 30);
                          
                          opcoes.inputEnabled = true;
                          
-                         creditos.inputEnabled = true;
+                         mmk.inputEnabled = true;
                          
                          novoJogo.inputEnabled = true;
                          
@@ -61,7 +61,7 @@ define([
                          
                          opcoes.events.onInputUp.add(this.pause, self);
                          
-                         creditos.events.onInputUp.add(this.creditos, self);   
+                         mmk.events.onInputUp.add(this.mapMaker, self);   
                          
                          novoJogo.events.onInputUp.add(this.playTheGame, self);
                          
@@ -98,20 +98,9 @@ define([
                     
                 },
                 
-                creditos: function(){
+                mapMaker: function(){
                     
-                        // When the paus button is pressed, we pause the game
-                        game.paused = true;
-
-                        // Then add the menu
-                        menu = game.add.sprite(game.width/2, game.height/2, 'creditos');
-                        menu.anchor.setTo(0.5, 0.5);
-
-
-
-                        // And a label to illustrate which menu item was chosen. (This is not necessary)
-                        choiseLabel = game.add.text(game.width/2, game.height-150, 'Clique fora da janela para sair', { font: '16px Arial', fill: '#fff' });
-                        choiseLabel.anchor.setTo(0.5, 0.5);
+                    game.state.start("MapMaker");
                     
                 },
                 
