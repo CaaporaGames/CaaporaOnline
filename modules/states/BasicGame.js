@@ -1,12 +1,7 @@
 define([
   'Phaser',
-  'PhaserDebug',
-  'PhaserTiled',
-  'PhaserIsometricPlugin',
-  'EasyStar'
 
-], function (Phaser, PhaserDebug, PhaserTiled) {
-  //hahhahah
+], function (Phaser) {
   var BasicGame;
   BasicGame = function () {
     // nothing here
@@ -27,7 +22,6 @@ define([
   var balde;
   var arrayWater = [];
   var arrayIncendio = [];
-  var inputType = 'keyboard';
   var floresta;
   var treeTileArray = [];
   var textFogosContagem;
@@ -122,7 +116,7 @@ define([
       textCaapora.anchor.set(0.5);
       
       
-      var loadingBar = game.add.sprite(game.width/2, game.height/2 ,"loading");
+      loadingBar = game.add.sprite(game.width/2, game.height/2 ,"loading");
       loadingBar.anchor.setTo(0.5,0.5);
       this.load.setPreloadSprite(loadingBar);
       
@@ -132,15 +126,6 @@ define([
       textCaapora = this.game.add.text(game.width/2, game.height - 50, "Dica: Tente salvar a floresta da queimada.", styleDica);
       textCaapora.anchor.set(0.5);
       
-      
-
-      
-      
-
-      /*game.debug.renderShadow = false;
-      game.stage.disableVisibilityChange = false;*/
-      // console.log(game);
-      // game.load.atlasJSONHash('tileset', 'assets/tileset.png', 'assets/tileset.json');
       game.load.spritesheet('relogio', 'assets/images/clock.png', 32, 32);
       game.load.spritesheet('flame', 'assets/images/flames.png', 32, 48);
       game.load.image('ground', 'assets/images/ground_tile.png');
@@ -171,46 +156,14 @@ define([
 
       game.plugins.add(new Phaser.Plugin.Isometric(game));
 
-      //game.load.tilemap('map', 'assets/isometric-tileset-test.json', null, Phaser.Tilemap.TILED_JSON);
-
-      //  Enable p2 physics
-      //game.physics.startSystem(Phaser.Physics.P2JS);
-
-      // Make things a bit more bouncey
-      // game.physics.p2.restitution = 0.8;
-
-      // set the middle of the world in the middle of the screen
       game.iso.anchor.setTo(0.5, 0);
     },
     create: function () {
         
-           
-         // Create a label to use as a button
-         
-                        /*
-                        pause_label = game.add.text(game.width - 100 , 30, 'Pause', { font: '24px Arial', fill: '#fff' });
-
-                        pause_label.inputEnabled = true;
-                        pause_label.events.onInputUp.add(function () {
-                        // When the paus button is pressed, we pause the game
-                        game.paused = true;
-
-                        // Then add the menu
-                        menu = game.add.sprite(game.width/2, game.height/2, 'menu');
-                        menu.anchor.setTo(0.5, 0.5);
-
-
-
-                        // And a label to illustrate which menu item was chosen. (This is not necessary)
-                        choiseLabel = game.add.text(game.width/2, game.height-150, 'Clique fora da janela para sair', { font: '30px Arial', fill: '#fff' });
-                        choiseLabel.anchor.setTo(0.5, 0.5);
-                         });*/  
-
-      // Grama no fundo
-      // tilesprite = game.add.tileSprite(0, 0, 4000, 4000, 'grass');
-      
+        // após o carregamento deletar sprites
+        loadingBar.destroy();
+        textCaapora.destroy();
         
-
       floorGroup = game.add.group();
       isoGroup = game.add.group();
       treeGroup = game.add.group();
@@ -227,7 +180,6 @@ define([
             
 
       // Instanciando objeto caapora.
-
       caapora = new Caapora({
         group: isoGroup,
         game: this.game
@@ -245,8 +197,6 @@ define([
           
       });
 
-      // Instanciando objeto caapora.
-
       cowboyObj = new Cowboy({
         basicGame: this,
         game: this.game,
@@ -263,11 +213,9 @@ define([
       });
 
       cobra = cobraObj.getCobraSprite();
-      // Instanciando objeto enemy.
       cowboy.enemy = new Enemy();
       player = caapora.getCaaporaSprite();
 
-      // game.plugins.add(PhaserDebug);
       // tentando desenhar o minimap
       var miniMapBmd = game.add.bitmapData(game.width / 5, game.height / 5);
       miniMapBmd.ctx.fillStyle = '#00BF32';
@@ -298,10 +246,7 @@ define([
       // isoGroup.create(100, 0, 'lifeBar');
 
       this.camera = {x: 0, y: 0, direction: '', isMoving: false};
-      // we won't really be using IsoArcade physics, but I've enabled it anyway so the debug bodies can be seen
-      /*isoGroup.enableBody = true;
-      isoGroup.physicsBodyType = Phaser.Plugin.Isometric.ISOARCADE;*/
-
+      
       // Adicionando som de fundo.
       // backgroundMusic = game.add.audio('backgroundMusic');
       // backgroundMusic.play();
@@ -355,15 +300,14 @@ define([
           if (tile[xt] == 1) {
            
             
+            
             var treeTile = game.add.isoSprite(xt * tileSize, yt * tileSize, 0, 'tree', 0, isoGroup);
             
-            
-          
+
             treeTile.anchor.set(0.5);
             game.physics.isoArcade.enable(treeTile);
             treeTile.body.collideWorldBounds = true;
             treeTile.body.immovable = true;
-            // treeTile.tint = 0x86bfda;
             treeTile.body.bounce.set(1, 1, 0.2);
             
             
@@ -420,14 +364,7 @@ define([
         'Defense: ' + caapora.getBaseDefense() + '\n' +
         'Attack: ' + caapora.getBaseAttack()
       );
-      //  Player physics properties. Give the little guy a slight bounce.
 
-      /*        player.body.bounce.y = 0.2;
-      player.body.gravity.y = 300; */
-
-      // game.physics.p2.enable(player);
-
-      // player.body.setCircle(44);
       game.camera.follow(player);
 
       console.log(
@@ -534,21 +471,7 @@ define([
       collision2 = game.physics.isoArcade.collide(cobra, player);
       collision3 = game.physics.isoArcade.collide(treeTileArray[0], player);
 
-
-      
-
-      // if (collision) {
-      //   console.log('Ao lado do inimigo.');
-      // } else {
-      //   console.log('Longe do inimigo.');
-      // }
-      
       caapora.checkMovement();
-
-      /*water.forEach(function (w) {
-      w.isoZ = (-2 * Math.sin((game.time.now + (w.isoX * 7)) * 0.004)) + (-1 * Math.sin((game.time.now + (w.isoY * 8)) * 0.005));
-      w.alpha = Phaser.Math.clamp(1 + (w.isoZ * 0.1), 0.2, 1);
-    });*/
 
     this.miniMapPlayerSprite.cameraOffset.setTo(cat.x / 5, cat.y / 5);
 
@@ -619,24 +542,10 @@ define([
     currentEnemyXtile = Math.floor(cowboy.body.position.x / tileSize);
     currentEnemyYtile = Math.floor(cowboy.body.position.y / tileSize);
 
-    // Quando o tempo atingir 5 minutos, e o gato não for capturado, muda para o level 2.
-    //  if (tempo > 60000) {
-    //    game.state.start('LevelN');
-    //  }
 
   },
     render: function () {
 
-    /*
-    isoGroup.forEach(function (tree) {
-    game.debug.body(tree, 'rgba(189, 221, 235, 0.6)', false);
-  }); */
-
-
-  /*
-  floorGroup.forEach(function (ground) {
-  game.debug.body(ground, 'rgba(189, 221, 235, 0.6)', false);
-}); */
 
    // if(z.isDown){
         
@@ -723,25 +632,14 @@ setCurrentNextPointX2 : function(param) { currentNextPointX2 = param; },
 
 setCurrentNextPointY2 : function(param) { currentNextPointY2 = param; },
 
-getCollision : function () { return collision; },
+getCollision : function () { return collision; }
 
 };
 
   return BasicGame;
 
 });
-//
-///// <reference path="phaser.js" />
-// var width = window.innerWidth;
-//var height = window.innerHeight;
 
-// using canvas here just because it runs faster for the body debug stuff
-//var game = new Phaser.Game(800, 600, Phaser.AUTO, 'test', null, true, false);
-
-//game.state.add('Boot', BasicGame.Boot);
-//game.state.start('Boot');
-
-// generate random number
 
 function rndNum(num) {
 
@@ -751,4 +649,3 @@ function rndNum(num) {
 
 
 // Add a input listener that can help us return from being paused
-   

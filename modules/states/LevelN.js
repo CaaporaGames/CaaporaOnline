@@ -1,11 +1,8 @@
 define([
   'Phaser',
-  'PhaserDebug',
-  'PhaserTiled',
-  'PhaserIsometricPlugin',
-  'EasyStar'
 
-], function (Phaser, PhaserDebug, PhaserTiled) {
+
+], function (Phaser) {
  //hahhahah
   var LevelN;
   LevelN = function () {

@@ -15,7 +15,7 @@ define([
                    // this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
                    // this.scale.pageAlignHorizontally = true;
                    // this.scale.setScreenSize();
-                    this.game.state.start("GameTitle");
+                    this.game.state.start("MapMaker");
             }
     };
 
