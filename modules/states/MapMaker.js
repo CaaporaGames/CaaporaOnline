@@ -146,7 +146,7 @@ var easing=0.1;
       // Set the world size
 
 
-      game.world.setBounds(0, 0, 2048, 1024);
+      //game.world.setBounds(0, 0, 1024, 1024);
       // Start the physical system
 
       game.time.advancedTiming = true;
@@ -155,7 +155,7 @@ var easing=0.1;
 
       game.plugins.add(new Phaser.Plugin.Isometric(game));
 
-      game.iso.anchor.setTo(0.5, 0);
+      game.iso.anchor.setTo(0.5, 0.2);
     },
     create: function () {
         
@@ -179,16 +179,16 @@ var easing=0.1;
       
       
       
-      currentBounds = new Phaser.Rectangle(-mapSizeX, -mapSizeY, mapSizeX*2, mapSizeY*2); 
-      game.camera.bounds=currentBounds;
+     // currentBounds = new Phaser.Rectangle(-mapSizeX, -mapSizeY, mapSizeX*2, mapSizeY*2); 
+     // game.camera.bounds=currentBounds;
       
-      
+      /*
       game.input.mouse.mouseWheelCallback = function (event) {
             var wheelDelt = game.input.mouse.wheelDelta;
             if (wheelDelt < 0)  {   mapSizeCurrent -= 400;  mapSizeCurrent = Phaser.Math.clamp(mapSizeCurrent, worldwidth , mapSizeMax);}
             else                {   mapSizeCurrent += 400;  mapSizeCurrent = Phaser.Math.clamp(mapSizeCurrent, worldwidth , mapSizeMax);}
             worldScale = (mapSizeCurrent/mapSizeMax);
-        };
+        };*/
         
      
       // game.plugins.add(PhaserDebug);
@@ -298,6 +298,24 @@ var easing=0.1;
 
     },
     update: function () {
+        
+        
+        // Loop through all tiles and test to see if the 3D position from above intersects with the automatically generated IsoSprite tile bounds.
+        floorGroup.forEach(function (tile) {
+            var inBounds = tile.isoBounds.containsXY(cursorPos.x, cursorPos.y);
+            // If it does, do a little animation and tint change.
+            if (!tile.selected && inBounds) {
+                tile.selected = true;
+                tile.tint = 0x86bfda;
+                game.add.tween(tile).to({ isoZ: 4 }, 200, Phaser.Easing.Quadratic.InOut, true);
+            }
+            // If not, revert back to how it was.
+            else if (tile.selected && !inBounds) {
+                tile.selected = false;
+                tile.tint = 0xffffff;
+                game.add.tween(tile).to({ isoZ: 0 }, 200, Phaser.Easing.Quadratic.InOut, true);
+            }
+        });
         
         // Update the cursor position.
         // It's important to understand that screen-to-isometric projection means you have to specify a z position manually, as this cannot be easily
@@ -440,12 +458,13 @@ var easing=0.1;
         
          game.debug.text("Cursor Iso x = " + Math.round(cursorPos.x) || '--', 2, 114, "#a7aebe");
         game.debug.text("cursor Iso  y = " + Math.round(cursorPos.y) || '--', 2, 134, "#a7aebe");
+        game.debug.text("cursor Iso  z = " + Math.round(cursorPos.z) || '--', 2, 154, "#a7aebe");
 
 },
     addSprite: function() {
         
-                sprite= game.add.isoSprite(cursorPos.x,  cursorPos.y , 200, 'water', 0, isoGroup);
-                sprite.anchor.set(0.5, 0,5);
+                sprite= game.add.isoSprite(Math.floor(cursorPos.x),  Math.floor(cursorPos.y) , 0.2, 'water', 0, floorGroup);
+                sprite.anchor.set(0.5, 0.2);
                 game.physics.isoArcade.enable(sprite);
                 sprite.body.collideWorldBounds = true;
     }
