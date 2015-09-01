@@ -161,6 +161,7 @@ define([
     },
     create: function () {
         
+        
         // após o carregamento deletar sprites
         loadingBar.destroy();
         textCaapora.destroy();

@@ -94,6 +94,7 @@ var easing=0.1;
 
   var tileSize = 35;
   var mapSize = 50;
+  var cursorPos;
 
   // **********************************
 
@@ -287,22 +288,29 @@ var easing=0.1;
       
       
     
-
-      // Fazendo o relogio funcionar.
-      setInterval(function () {
-
-        relogio.frame += 1;
-
-      }, 3000);
       
       
-      cursors = game.input.keyboard.createCursorKeys();
+       cursors = game.input.keyboard.createCursorKeys();
+      
+      
+      // Provide a 3D position for the cursor
+        cursorPos = new Phaser.Plugin.Isometric.Point3();
 
     },
     update: function () {
+        
+        // Update the cursor position.
+        // It's important to understand that screen-to-isometric projection means you have to specify a z position manually, as this cannot be easily
+        // determined from the 2D pointer position without extra trickery. By default, the z position is 0 if not set.
+        game.iso.unproject(game.input.activePointer.position, cursorPos);
       
+       if(game.input.mousePointer.isDown){
+           
+           this.addSprite();
+           
+       }
       
-      if (cursors.up.isDown)
+        if (cursors.up.isDown)
         {
             game.camera.y -= 14;
         }
@@ -429,8 +437,18 @@ var easing=0.1;
 
         game.debug.text("World x = " + Math.round(game.width) || '--', 2, 74, "#a7aebe");
         game.debug.text("World y = " + Math.round(game.height) || '--', 2, 94, "#a7aebe");
+        
+         game.debug.text("Cursor Iso x = " + Math.round(cursorPos.x) || '--', 2, 114, "#a7aebe");
+        game.debug.text("cursor Iso  y = " + Math.round(cursorPos.y) || '--', 2, 134, "#a7aebe");
 
 },
+    addSprite: function() {
+        
+                sprite= game.add.isoSprite(cursorPos.x,  cursorPos.y , 200, 'water', 0, isoGroup);
+                sprite.anchor.set(0.5, 0,5);
+                game.physics.isoArcade.enable(sprite);
+                sprite.body.collideWorldBounds = true;
+    }
 
 
 };
