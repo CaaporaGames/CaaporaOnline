@@ -1,8 +1,13 @@
-//"use strict";
+"use strict";
 
 define([
     'Phaser',
-    'EasyStar'
+    'EasyStar',
+    'modules/units/Minimap',
+    'modules/factories/TreeFactory',
+    'modules/factories/FogoFactory',
+    'modules/units/Tree',
+    'modules/units/Fogo'
 
 ], function (Phaser) {
     var BasicGame;
@@ -32,6 +37,7 @@ define([
         this.contagemRegressiva;
         this.loadingBar;
         this.textCaapora;
+        this.miniMap;
         // ********************* EasyStar setup *********************
         this.easystar = new EasyStar.js();
         this.timeStep = 400; // pathway computation time interval in milliseconds
@@ -227,41 +233,8 @@ define([
             this.player = this.caapora.getCaaporaSprite();
 
 
-
-            var itemFactory = new InterfaceItemFactory();
-
-            this.miniMap = itemFactory.createItem({
-                width: 100,
-                height: 100,
-                color: '#00BF32',
-                x: 670,
-                y: 470,
-                tileName: 'water'
-
-            });
-
-
-            this.playerPonto = itemFactory.createItem({
-                width: 3,
-                height: 3,
-                color: '#000',
-                x: 670,
-                y: 470
-
-            });
-
-
-
-            this.enemyPonto = itemFactory.createItem({
-                width: 3,
-                height: 3,
-                color: '#f00',
-                x: 670,
-                y: 470
-
-            });
-
-
+            this.miniMap = new MiniMap();
+            
             // this.isoGroup.create(100, 0, 'lifeBar');
 
             this.camera = {x: 0, y: 0, direction: '', isMoving: false};
@@ -307,7 +280,9 @@ define([
             }
 
 
-            var rocksTile, treeTile;
+            var rocksTile;
+            var treeFactory = new TreeFactory();
+            var fogoFactory = new FogoFactory();
 
 
             for (var yt = 0; yt < this.level.length; yt++) {
@@ -319,32 +294,31 @@ define([
                     if (tile[xt] == 1) {
 
 
-
-                        var treeTile = game.add.isoSprite(xt * this.tileSize, yt * this.tileSize, 0, 'tree', 0, this.isoGroup);
-
-
-                        treeTile.anchor.set(0.5);
-                        game.physics.isoArcade.enable(treeTile);
-                        treeTile.body.collideWorldBounds = true;
-                        treeTile.body.immovable = true;
-                        treeTile.body.bounce.set(1, 1, 0.2);
-
-
-                        // Create flames.
-                        this.incendio = game.add.isoSprite(xt * this.tileSize + 50, yt * this.tileSize + 50, 0, 'flame', 0, this.isoGroup);
-                        this.incendio.anchor.set(0.5, 0.5);
-                        this.incendio.animations.add('incendiar', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 10, true);
-
-
-
-                        game.physics.isoArcade.enable(this.incendio);
-                        this.incendio.body.collideWorldBounds = true;
-                        this.incendio.body.immovable = true;
-                        this.incendio.body.bounce.set(1, 1, 0.2);
-
-
-                        this.treeTileArray.push(treeTile);
-                        this.arrayIncendio.push(this.incendio);
+                        this.treeTileArray.push(treeFactory.createTree({ 
+                            
+                            tileSize : this.tileSize,
+                            isoGroup : this.isoGroup,
+                            tileName : "tree",
+                            xt : xt,
+                            yt : yt,
+                            
+                            
+                            
+                         }));
+                         
+                             
+                        this.arrayIncendio.push(fogoFactory.createFogo({ 
+                            
+                            tileSize : this.tileSize,
+                            isoGroup : this.isoGroup,
+                            tileName : "flame",
+                            xt : xt,
+                            yt : yt,
+                     
+                        }));
+                         
+                         
+                         
                     }
                     else if (tile[xt] == 2)
                     {
@@ -506,10 +480,10 @@ define([
 
 
 
-
-            this.playerPonto.setPositionX(((this.player.x) / 9) + 600);
-            this.playerPonto.setPositionY(((this.player.y) / 9) + 450);
-            this.playerPonto.mover();
+            
+            this.miniMap.playerPonto.setPositionX(((this.player.x) / 9) + 600);
+            this.miniMap.playerPonto.setPositionY(((this.player.y) / 9) + 450);
+            this.miniMap.playerPonto.mover();
 
 
 
@@ -719,8 +693,4 @@ function rndNum(num) {
 
     return Math.round(Math.random() * num);
 
-}
-;
-
-
-// Add a input listener that can help us return from being paused
+};

@@ -1,23 +1,17 @@
-// Create a cat.
-function Tree(x, y) {
+function Tree(opts) {
 
-  var image = 'tree';
-  this.basicGame = opts.basicGame;
-  this.game = opts.game;
-  this.x = x;
-  this.y = y;
+    this.isoGroup = opts.isoGroup;
+    this.tileName = opts.tileName;
+    this.tileSize = opts.tileSize;
+    this.xt = opts.xt;
+    this.yt = opts.yt;
 
-  if (opts.image) {
-    key = opts.image;
-  }
+    this.treeTile = game.add.isoSprite(this.xt * this.tileSize, this.yt * this.tileSize, 0, opts.tileName , 0, this.isoGroup);
 
-  tree = game.add.isoSprite(xt * this.basicGame.tileSize, yt * this.basicGame.tileSize, 0, image, 0, this.basicGame.isoGroup);
+    this.treeTile.anchor.set(0.5);
+    game.physics.isoArcade.enable(this.treeTile);
+    this.treeTile.body.collideWorldBounds = true;
+    this.treeTile.body.immovable = true;
+    this.treeTile.body.bounce.set(1, 1, 0.2);
 
-    // enable physics on the tree
-  game.physics.isoArcade.enable(tree);
-  tree.body.collideWorldBounds = true;
-  tree.body.immovable = true;
-  tree.body.bounce.set(0.2, 0.2, 0);   
-  tree.anchor.set(0.5);
-
-}
+};

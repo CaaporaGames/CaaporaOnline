@@ -11,8 +11,8 @@ define([
     'modules/units/Keyboard',
     'modules/units/Floresta',
     'modules/units/InterfaceItem',
-    'modules/factories/InterfaceItemFactory'
-], function (Phaser, Caapora, Cowboy, Enemy, Cobra, Cat,Keyboard, Floresta, InterfaceItem, InterfaceItemFactory) {
+    'modules/factories/InterfaceItemFactory',
+], function (Phaser) {
 
     //console.log('phaser', Phaser);
     //console.log('PIXI', PIXI);

@@ -45,8 +45,7 @@ function Caapora(opts) {
         caaporaSprite.addChild(caaporaSprite.lifebar);
         // End Barra de Energia
         
-        
-
+  
     // Inclui o texto acima da barra de vida
     // Este texto será atualizado no Update do game loop
     var style = {font: "bold 14px Arial", fill: "#333", wordWrap: true, wordWrapWidth: 150, align: "center"};

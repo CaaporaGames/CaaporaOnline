@@ -6,8 +6,34 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks "grunt-contrib-copy"
   grunt.loadNpmTasks "grunt-contrib-watch"
   grunt.loadNpmTasks "grunt-exec"
+  grunt.loadNpmTasks "grunt-contrib-connect"
+  grunt.loadNpmTasks "grunt-contrib-watch"
 
   grunt.initConfig
+
+    watch: 
+        options: 
+            livereload: true
+        
+        js: 
+            files: "js/*.js"
+            tasks: ["uglify", "jshint"]
+ 
+        sass: 
+            files: "sass/*.{scss,sass}",
+            tasks: "sass"
+        
+        html: 
+            files: "/*.html"
+
+    connect:
+        server:
+            options:
+                port: 9000
+                base: "."
+                hostname: "localhost"
+                livereload: true
+                open: true
 
     copy:
       requirejs:
@@ -62,8 +88,14 @@ module.exports = (grunt) ->
 
   grunt.registerTask "build", [
     "copy"
+    "connect"
+    "watch"
+
   ]
 
   grunt.registerTask "default", [
     "build"
   ]
+
+
+
