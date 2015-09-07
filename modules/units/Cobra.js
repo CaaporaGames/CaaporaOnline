@@ -1,3 +1,4 @@
+//"use strict";
 /*
 * To change this license header, choose License Headers in Project Properties.
 * To change this template file, choose Tools | Templates
@@ -10,6 +11,7 @@ var currentPlayerYtile;
 var currentNextPointX2;
 var currentNextPointY2;
 var cobraDirection = "STOP";
+
 var collision = false;
 
 // Create a cobra.
@@ -20,6 +22,7 @@ function Cobra (opts) {
   this.game = opts.game;
   this.easystar = opts.easystar;
   this.timeStep = opts.timeStep;
+  
 
   if (opts.image) {
     key = opts.image;
@@ -132,7 +135,7 @@ Cobra.prototype = {
         }
 
       if (cobraDirection != "STOP")
-      cobra.animations.play(cobraDirection);
+            cobra.animations.play(cobraDirection);
 
     });
     /*

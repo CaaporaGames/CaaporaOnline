@@ -1,3 +1,5 @@
+'use strict';
+
 // Atributos base do personagem.
 var baseLife = 100;
 var baseEnergy = 120;
@@ -19,20 +21,10 @@ function Caapora(opts) {
     var image = 'dude';
     keyboard = new Keyboard();
     
+    this.isoGroup = opts.isoGroup;
     
-
-    // Passa a referencia da Classe BasicGame e BasicGame.game para ser
-    // modificado nesta classe
-    this.game = opts.game;
-    this.group = opts.group;
-
-    // Permite modificar o nome do sprite
-    if (opts.image) {
-        key = opts.image;
-    }
-
     // Inclui o Player do BasicGame como o Sprite
-    caaporaSprite = game.add.isoSprite(x, y, 11, image, 0, this.group);
+    caaporaSprite = game.add.isoSprite(x, y, 11, image, 0, this.isoGroup);
     //this.fullWidth = this.sprite.width;
 
 
@@ -40,7 +32,7 @@ function Caapora(opts) {
 
 
         // Barra de energia dinâmica
-        this.bar = this.game.add.bitmapData(128, 8);
+        this.bar = game.add.bitmapData(128, 8);
      
         this.bar.context.fillStyle = '#0f0';
         
@@ -48,7 +40,7 @@ function Caapora(opts) {
         
         this.bar.dirty = true;
      
-        caaporaSprite.lifebar = this.game.add.sprite(0, -70, this.bar); 
+        caaporaSprite.lifebar = game.add.sprite(0, -70, this.bar); 
         caaporaSprite.lifebar.anchor.setTo(0.2, 1);
         caaporaSprite.addChild(caaporaSprite.lifebar);
         // End Barra de Energia
@@ -58,25 +50,25 @@ function Caapora(opts) {
     // Inclui o texto acima da barra de vida
     // Este texto será atualizado no Update do game loop
     var style = {font: "bold 14px Arial", fill: "#333", wordWrap: true, wordWrapWidth: 150, align: "center"};
-    textCaapora = this.game.add.text(30, -90, "Caapora - HP:  100", style);
+    textCaapora = game.add.text(30, -90, "Caapora - HP:  100", style);
     textCaapora.anchor.set(0.5);
     caaporaSprite.addChild(textCaapora);
     caaporaSprite.anchor.set(0.5);
 
     // Habilita a Fisica no Player e Colisão
-    this.game.physics.isoArcade.enable(caaporaSprite);
+    game.physics.isoArcade.enable(caaporaSprite);
     caaporaSprite.body.collideWorldBounds = true;
 
     // Adiciona a animação referente a movimentação
     //  Our two animations, walking left and right.
     caaporaSprite.animations.add('down', [0,1,2], 10, true);
-    caaporaSprite.animations.add('down left', [4,5,6,7], 10, true);
+    //caaporaSprite.animations.add('down left', [4,5,6,7], 10, true);
     caaporaSprite.animations.add('left', [24,25,26,27], 10, true);
-    caaporaSprite.animations.add('up left', [3,4,5], 10, true);
+    //caaporaSprite.animations.add('up left', [3,4,5], 10, true);
     caaporaSprite.animations.add('up', [8,9,10], 10, true);
-    caaporaSprite.animations.add('up right', [40, 41, 42, 43, 44, 45, 46, 47], 10, true);
+    //caaporaSprite.animations.add('up right', [40, 41, 42, 43, 44, 45, 46, 47], 10, true);
     caaporaSprite.animations.add('right', [16,17,18,19], 10, true);
-    caaporaSprite.animations.add('down right', [56, 57, 58, 59, 60, 61, 62, 63], 10, true);
+    //caaporaSprite.animations.add('down right', [56, 57, 58, 59, 60, 61, 62, 63], 10, true);
     
    
 

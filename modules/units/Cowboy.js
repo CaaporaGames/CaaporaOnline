@@ -227,8 +227,8 @@ Cowboy.prototype = {
 
             }
 
-            if (this.cowboyDirection != "STOP")
-                cowboy.animations.play(this.cowboyDirection);
+            if (cowboyDirection != "STOP")
+                cowboy.animations.play(cowboyDirection);
 
         });
 

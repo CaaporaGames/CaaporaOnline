@@ -19,7 +19,7 @@
   ],
   "dependencies": {
     "phaser-plugin-isometric": "*",
-    "phaser": "~2.2.2",
+    "phaser": "~2.4.3",
     "requirejs": "~2.1.18",
     "easystarjs": "~0.2.1",
     "VisualTimer": "git://github.com/terebentina/VisualTimer.git"
