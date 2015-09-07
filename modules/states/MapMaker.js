@@ -63,38 +63,36 @@ define([
         // 8 - player start point
 
         this.level = [
-            
-[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
-[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
-[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
-[ 0, 0, 0, 0, 0, 0, 0, 0, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
-[ 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
-[ 5, 0, 5, 0, 5, 5, 5, 5, 5, 5, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
-[ 0, 0, 0, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
-[ 0, 0, 0, 0, 0, 6, 0, 0, 6, 5, 0, 5, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
-[ 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
-[ 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
-[ 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
-[ 6, 6, 6, 0, 3, 3, 3, 3, 6, 6, 6, 6, 6, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
-[ 0, 3, 3, 0, 6, 6, 6, 6, 6, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
-[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
-[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
-[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
-[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
-[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
-[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
-[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
-[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
-[ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 ], 
-[ 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6 ], 
-[ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 ], 
-[ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 ], 
-[ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 ], 
-[ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 ], 
-[ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 ], 
-[ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 ], 
-[ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 ] 
-        
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
+            [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6],
+            [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
+            [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+            [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+            [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+            [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+            [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+            [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]
         ];
 
 
@@ -266,10 +264,10 @@ define([
                 y: 170
 
             });
-            
-            
-            
-            
+
+
+
+
             this.exportBtn = itemFactory.createItem({
                 name: 'exportar',
                 width: 50,
@@ -279,64 +277,88 @@ define([
                 y: 10
 
             });
-            
-            
-              this.exportBtn.itemSprite.events.onInputDown.add(this.export, this);
-      
-         var btnBase = itemFactory.createItem({
-                name : 'water',
+
+
+            this.exportBtn.itemSprite.events.onInputDown.add(this.export, this);
+
+            var btnBase = itemFactory.createItem({
+                name: 'water',
                 width: 50,
                 height: 50,
                 x: 700,
                 y: 370,
-                tileName : 'water',
-                mapMaker : this
+                tileName: 'water',
+                mapMaker: this
             });
-            
-            
-            
-            
-         itemFactory.createItem({
+
+
+            itemFactory.createItem({
+                name: 'ground',
+                width: 50,
+                height: 50,
+                color: '#0000ff',
+                x: btnBase.positionX,
+                y: btnBase.positionY + 40,
+                tileName: 'ground',
+                mapMaker: this
+            });
+
+
+            itemFactory.createItem({
                 name: 'beach-water',
                 width: 50,
                 height: 50,
                 color: '#0000ff',
                 x: btnBase.positionX,
                 y: btnBase.positionY - 40,
-                tileName : 'beach-water',
-                mapMaker : this
+                tileName: 'beach-water',
+                mapMaker: this
             });
-            
-               
+
+
             itemFactory.createItem({
-                name : 'sand',
+                name: 'sand',
                 width: 50,
                 height: 50,
                 x: btnBase.positionX,
                 y: btnBase.positionY - 80,
-                tileName : 'sand',
-                mapMaker : this
+                tileName: 'sand',
+                mapMaker: this
             });
-            
-            
-            
-              itemFactory.createItem({
-                name : 'tree',  
+
+
+
+            itemFactory.createItem({
+                name: 'tree',
                 width: 50,
                 height: 50,
                 x: btnBase.positionX,
                 y: btnBase.positionY + 80,
-                tileName : 'tree',
-                mapMaker : this
+                tileName: 'tree',
+                mapMaker: this
             });
-            
-            
+
+
 
             this.cursors = game.input.keyboard.createCursorKeys();
 
 
             // Provide a 3D position for the cursor
             this.cursorPos = new Phaser.Plugin.Isometric.Point3();
+
+     
+            // Classe temporária para auxiliar no controle do mouse 
+            this.newPointer = { 
+            
+                x : this.newX,
+                y : this.newY,
+                
+            }; 
+            
+            this.subY = 0;
+            this.subX = 0;
+
+
 
         },
         update: function () {
@@ -354,13 +376,13 @@ define([
                         tile.selected = true;
                         tile.tint = 0x86bfda;
                         //   game.add.tween(tile).to({ isoZ: 4 }, 200, Phaser.Easing.Quadratic.InOut, true);
-                        
-                        if(that.selectedTile == 'tree'){
-                            
-                            tile.anchor.setTo(1); 
+
+                        if (that.selectedTile == 'tree') {
+
+                            tile.anchor.setTo(1);
                             tile.loadTexture(that.selectedTile);
-                            
-                        }else 
+
+                        } else
                             tile.loadTexture(that.selectedTile);
                     }
                     // If not, revert back to how it was.
@@ -375,37 +397,62 @@ define([
 
 
 
+          // Necessário transferir a posição atual do ponteiro para a classe auxiliar para ajustar a posição para 
+          // o mundo isometrico
+          this.newPointer.x = game.input.activePointer.position.x + this.subX;
+          this.newPointer.y = game.input.activePointer.position.y + this.subY;
+
+            // game.input.activePointer.position.add(this.sumx, this.sumy);
+
+
+
             // Update the cursor position.
             // It's important to understand that screen-to-isometric projection means you have to specify a z position manually, as this cannot be easily
             // determined from the 2D pointer position without extra trickery. By default, the z position is 0 if not set.
             // disable camera
-            game.iso.unproject(game.input.activePointer.position, this.cursorPos);
+            game.iso.unproject(this.newPointer , this.cursorPos);
 
 
+            // PRESS UP
             if (this.cursors.up.isDown)
             {
                 game.camera.y -= 14;
+                
+                // além da camera é necessário ajustar a projeção do ponteiro do mouse no mundo isometric
+                this.subY -=  14
+
+
+
             }
+
+            // PRESS DOWN
             else if (this.cursors.down.isDown)
             {
                 game.camera.y += 14;
+                this.subY += 14;
+
             }
 
+            // PRESS LEFT
             if (this.cursors.left.isDown)
             {
                 game.camera.x -= 14;
+               this.subX -= 14;
+
             }
+
+
+            // PRESS RIGHT
             else if (this.cursors.right.isDown)
             {
                 game.camera.x += 14;
+               this.subX += 14;
+
+
             }
 
             game.input.mouse.capture = true;
 
-            if (game.input.mousePointer.isDown) {
-               // console.log(game.input.mousePointer.x);
-               // console.log(game.input.mousePointer.y);
-            }
 
             this.zoompoint.x = game.input.mousePointer.worldX;
             this.zoompoint.y = game.input.mousePointer.worldY;
@@ -504,15 +551,18 @@ define([
             game.debug.text(game.time.fps || '--', 2, 14, "#a7aebe");
 
 
-            game.debug.text("Mouse x = " + Math.round(game.input.mousePointer.x) || '--', 2, 34, "#a7aebe");
-            game.debug.text("Mouse y = " + Math.round(game.input.mousePointer.y) || '--', 2, 54, "#a7aebe");
+            game.debug.text("Mouse x = " + Math.round(game.input.x) || '--', 2, 34, "#a7aebe");
+            game.debug.text("Mouse y = " + Math.round(game.input.y) || '--', 2, 54, "#a7aebe");
 
             game.debug.text("World x = " + Math.round(game.width) || '--', 2, 74, "#a7aebe");
             game.debug.text("World y = " + Math.round(game.height) || '--', 2, 94, "#a7aebe");
 
             game.debug.text("Camera x = " + game.camera.x || '--', 2, 114, "#a7aebe");
             game.debug.text("Camera  y = " + game.camera.y || '--', 2, 134, "#a7aebe");
-            game.debug.text("cursor Iso  z = " + Math.round(this.cursorPos.z) || '--', 2, 154, "#a7aebe");
+
+
+            game.debug.text("cursor Iso  x = " + Math.round(this.cursorPos.x) || '--', 2, 154, "#a7aebe");
+            game.debug.text("cursor Iso  y = " + Math.round(this.cursorPos.y) || '--', 2, 174, "#a7aebe");
 
         },
         addSprite: function () {
@@ -526,13 +576,11 @@ define([
         showMessage: function () {
             console.log("hello world!");
         },
-       
         rndNum: function (num) {
 
             return Math.round(Math.random() * num);
 
         },
-        
         // 0 - empty space
         // 1 - tree
         // 2 - rock
@@ -542,67 +590,67 @@ define([
         // 6 - sand;
 
         // 8 - player start point
-        
-        export: function(){
-            
 
-            var output = [];      
-            
-             this.floorGroup.forEach(function (tile) {
-                 
-                 
-                 if(tile.key == 'water'){
-                        output.push(3)
-                 }else if(tile.key == 'ground')
-                        output.push(0)
-                 else if(tile.key == 'sand')
-                        output.push(6)
-                 else 
-                        output.push(5)
-                    
-                    
-       
-             });
-             
-             var win = window.open();
-             
-            
-                 
-             win.document.write(' [ <br />');
-               
-                    var count = 0;
-                    
-                    
-                    for(var j = 0; j < 30; j++ ){
-                        
-                        win.document.write(' [ ');
-                        
-                         for(var i = 0; i < 30; i++){
+        export: function () {
 
-                                if(i == 29)
-                                  win.document.write( output[count]);
-                                 else 
-                                  win.document.write( output[count] + ', ');  
-                                  
-                           
-                           count++;       
-                         }
-                         
-                      if(j != 29)   
-                        win.document.write(' ], <br />');
-                      else   
-                         win.document.write(' ] <br />');
-                    }
 
-                       
-             
-             win.document.write(' ] ');
-             
-             
-             win.document.write('<h3>Total of tiles: ' + output.length + '</h3>');
-             
-          
-        } 
+            var output = [];
+
+            this.floorGroup.forEach(function (tile) {
+
+
+                if (tile.key == 'water') {
+                    output.push(3)
+                } else if (tile.key == 'ground')
+                    output.push(0)
+                else if (tile.key == 'sand')
+                    output.push(6)
+                else
+                    output.push(5)
+
+
+
+            });
+
+            var win = window.open();
+
+
+
+            win.document.write(' [ <br />');
+
+            var count = 0;
+
+
+            for (var j = 0; j < 30; j++) {
+
+                win.document.write(' [ ');
+
+                for (var i = 0; i < 30; i++) {
+
+                    if (i == 29)
+                        win.document.write(output[count]);
+                    else
+                        win.document.write(output[count] + ', ');
+
+
+                    count++;
+                }
+
+                if (j != 29)
+                    win.document.write(' ], <br />');
+                else
+                    win.document.write(' ] <br />');
+            }
+
+
+
+            win.document.write(' ] ');
+
+
+            win.document.write('<h3>Total of tiles: ' + output.length + '</h3>');
+
+
+        }
 
 
     };
