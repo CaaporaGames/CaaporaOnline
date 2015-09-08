@@ -1,6 +1,6 @@
 define([
   'Phaser',
-
+  'EasyStar'
 
 ], function (Phaser) {
  //hahhahah
