@@ -27,22 +27,22 @@ var game = {};
 require([
   'modules/PhaserGame',
   'modules/states/Boot',
-  // 'modules/states/Preload',
   'modules/states/BasicGame',
   'modules/states/level2',
   'modules/states/GameTitle',
   'modules/states/GameOver',
   'modules/states/LevelN',
   'modules/states/Vitoria',
-  'modules/states/MapMaker'
+  'modules/states/MapMaker',
+  'modules/states/Prologo'
 
-
-], function (PhaserGame, BootState, BasicGame, level2, GameTitle, GameOver, LevelN,Vitoria, MapMaker) { //PhaserGame, BootState, PreloadState,
+], function (PhaserGame, BootState, BasicGame, level2, GameTitle, GameOver, LevelN, Vitoria, MapMaker, Prologo) { //PhaserGame, BootState, PreloadState,
 
   game = new PhaserGame(800, 600, Phaser.AUTO , 'test', null, true, false);
 
   game.state.add('Boot', BootState);
   game.state.add('GameTitle', GameTitle);
+  game.state.add('Prologo', Prologo);
   game.state.add('MapMaker', MapMaker);
   game.state.add('BasicGame', BasicGame);
   game.state.add('level2', level2);

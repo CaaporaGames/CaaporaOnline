@@ -21,7 +21,7 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 *
-* 
+*
 *
 */
 
@@ -33,12 +33,12 @@
 
 /**
  * @class Phaser.Plugin.Isometric
- * 
+ *
  * @classdesc
  * Isometric is a comprehensive axonometric plugin for Phaser which provides an API for handling axonometric projection of assets in 3D space to the screen.
  * The goal has been to mimic as closely as possible the existing APIs provided by Phaser for standard orthogonal 2D projection, but add a third dimension.
  * Also included is an Arcade-based 3D AABB physics engine, which again is closely equivalent in functionality and its API.
- * 
+ *
  * @constructor
  * @param {Phaser.Game} game The current game instance.
  */
@@ -68,10 +68,10 @@ Phaser.Plugin.Isometric.ISOSPRITE = 'isosprite';
 Phaser.Plugin.Isometric.ISOARCADE = 'isoarcade';
 ;/**
  * @class Phaser.Plugin.Isometric.Cube
- * 
+ *
  * @classdesc
  * Creates a new Cube object with the bottom-back corner specified by the x, y and z parameters, with the specified breadth (widthX), depth (widthY) and height parameters. If you call this function without parameters, a Cube with x, y, z, breadth, depth and height properties set to 0 is created.
- * 
+ *
  * @constructor
  * @param {number} x - The x coordinate of the bottom-back corner of the Cube.
  * @param {number} y - The y coordinate of the bottom-back corner of the Cube.
@@ -707,7 +707,7 @@ Phaser.Plugin.Isometric.Cube.intersects = function (a, b) {
 *
 * IsoSprites are simply Sprites that have three new position properties (isoX, isoY and isoZ) and ask the instance of Phaser.Plugin.Isometric.Projector what their position should be in a 2D scene whenever these properties are changed.
 * The IsoSprites retain their 2D position property to prevent any problems and allow you to interact with them as you would a normal Sprite. The upside of this simplicity is that things should behave predictably for those already used to Phaser.
-* 
+*
 * @constructor
 * @extends Phaser.Sprite
 * @param {Phaser.Game} game - A reference to the currently running game.
@@ -983,7 +983,7 @@ Phaser.Utils.Debug.prototype.isoSprite = function (sprite, color, filled) {
 
     var posX = -sprite.game.camera.x;
     var posY = -sprite.game.camera.y;
-            
+
     this.start();
 
     if (filled) {
@@ -1044,7 +1044,7 @@ Phaser.Utils.Debug.prototype.isoSprite = function (sprite, color, filled) {
  * @class Phaser.Plugin.Isometric.Octree
  * @classdesc A Octree implementation based on Phaser.QuadTree.
  * Original version at https://github.com/timohausmann/quadtree-js/
- * 
+ *
  * @constructor
  * @param {number} x - The bottom-back coordinate of the octree.
  * @param {number} y - The bottom-back coordinate of the octree.
@@ -1435,13 +1435,13 @@ Phaser.Utils.Debug.prototype.octree = function (octree, color) {
 };
 ;/**
  * @class Phaser.Plugin.Isometric.Point3
- * 
+ *
  * @classdesc
  * The Point3 object represents a location in a three-dimensional coordinate system,
  * where x and y represent the horizontal axes and z represents the vertical axis.
  * The following code creates a point at (0,0,0):
  * `var myPoint = new Phaser.Plugin.Isometric.Point3();`
- * 
+ *
  * Creates a new Point3 object. If you pass no parameters a Point3 is created set to (0, 0, 0).
  *
  * @constructor
@@ -1968,11 +1968,11 @@ Object.defineProperty(Phaser.Plugin.Isometric.Projector.prototype, "projectionAn
 
 });;/**
  * @class Phaser.Plugin.Isometric.Body
- * 
+ *
  * @classdesc
  * The Physics Body is linked to a single IsoSprite. All physics operations should be performed against the body rather than
  * the IsoSprite itself. For example you can set the velocity, acceleration, bounce values etc all on the Body.
- * 
+ *
  * @constructor
  * @param {Phaser.Plugin.Isometric.IsoSprite} sprite - The IsoSprite object this physics body belongs to.
  */
@@ -2453,7 +2453,8 @@ Phaser.Plugin.Isometric.Body.prototype = {
 
         this.preRotation = this.rotation;
 
-        if (this._reset || this.sprite._cache[4] === 1) {
+        // if (this._reset || this.sprite._cache[4] === 1) {
+        if (this._reset) {
             this.prev.x = this.position.x;
             this.prev.y = this.position.y;
             this.prev.z = this.position.z;

@@ -38,6 +38,7 @@ define([
         this.loadingBar;
         this.textCaapora;
         this.miniMap;
+        this.space;
         // ********************* EasyStar setup *********************
         this.easystar = new EasyStar.js();
         this.timeStep = 400; // pathway computation time interval in milliseconds
@@ -83,8 +84,8 @@ define([
             [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
             [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
             [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]
-        
-        
+
+
         ];
 
         this.easystar.setGrid(this.level);
@@ -234,7 +235,7 @@ define([
 
 
             this.miniMap = new MiniMap();
-            
+
             // this.isoGroup.create(100, 0, 'lifeBar');
 
             this.camera = {x: 0, y: 0, direction: '', isMoving: false};
@@ -294,31 +295,31 @@ define([
                     if (tile[xt] == 1) {
 
 
-                        this.treeTileArray.push(treeFactory.createTree({ 
-                            
+                        this.treeTileArray.push(treeFactory.createTree({
+
                             tileSize : this.tileSize,
                             isoGroup : this.isoGroup,
                             tileName : "tree",
                             xt : xt,
                             yt : yt,
-                            
-                            
-                            
+
+
+
                          }));
-                         
-                             
-                        this.arrayIncendio.push(fogoFactory.createFogo({ 
-                            
+
+
+                        this.arrayIncendio.push(fogoFactory.createFogo({
+
                             tileSize : this.tileSize,
                             isoGroup : this.isoGroup,
                             tileName : "flame",
                             xt : xt,
                             yt : yt,
-                     
+
                         }));
-                         
-                         
-                         
+
+
+
                     }
                     else if (tile[xt] == 2)
                     {
@@ -367,20 +368,20 @@ define([
                     'Defense: ' + this.cowboyObj.getBaseDefense() + '\n' +
                     'Attack: ' + this.cowboyObj.getBaseAttack()
                     );
-            
+
             var that = this;
 
-            setInterval(function () {
-
-                that.cowboyObj.IA();
-
-            }, this.timeStep);
-
-            setInterval(function () {
-
-                that.cobraObj.IA();
-
-            }, this.timeStep);
+            // setInterval(function () {
+            //
+            //     that.cowboyObj.IA();
+            //
+            // }, this.timeStep);
+            //
+            // setInterval(function () {
+            //
+            //     that.cobraObj.IA();
+            //
+            // }, this.timeStep);
 
             this.z = game.input.keyboard.addKey(Phaser.Keyboard.Z);
 
@@ -408,8 +409,21 @@ define([
 
             }, 3000);
 
+            this.space = game.input.keyboard.addKey(Phaser.Keyboard.P);
+
+
+
         },
         update: function () {
+
+          if (this.space.isDown) {
+
+            game.physics.isoArcade.isPaused = true;
+
+          } else {
+            game.physics.isoArcade.isPaused = false;
+
+          }
 
             if (this.tempo > 0)
                 this.contagemRegressiva.setText("Tempo: " + (parseFloat(60) - ((this.tempo / 1000))));
@@ -480,7 +494,7 @@ define([
 
 
 
-            
+
             this.miniMap.playerPonto.setPositionX(((this.player.x) / 9) + 600);
             this.miniMap.playerPonto.setPositionY(((this.player.y) / 9) + 450);
             this.miniMap.playerPonto.mover();
@@ -502,7 +516,7 @@ define([
             this.cobraObj.movement();
 
             // move the this.cat
-            this.catObj.movement();
+            // this.catObj.movement();
 
 
             this.currentPlayerXtile = Math.floor(this.cat.body.position.x / this.tileSize);

@@ -14,15 +14,34 @@ var keyboard;
 var alert = false;
 var isEquiped = false;
 
+var text;
+var index = 0;
+var line = '';
+var content = [
+    " ",
+    "Olá, eu sou o CAAPORA!",
+    "sou o protetor da mata e dos animais que vivem nela",
+    " ",
+    "A mata está em chamas...",
+    " ",
+    "Irei precisar de sua ajuda para guiar-me a extinguir as chamas",
+    "Vá em direção ao balde com água...",
+    "    ",
+    "depois nas árvores que estão em chamas",
+    "precisamos ser rápidos, ou as chamas irão queimar tudo",
+    "VAMOS LÁ!",
+];
+var isCaaporaSpeaking = false;
+
 
 function Caapora(opts) {
-    
+
     // Nome do Sprite
     var image = 'dude';
     keyboard = new Keyboard();
-    
+
     this.isoGroup = opts.isoGroup;
-    
+
     // Inclui o Player do BasicGame como o Sprite
     caaporaSprite = game.add.isoSprite(x, y, 11, image, 0, this.isoGroup);
     //this.fullWidth = this.sprite.width;
@@ -33,26 +52,31 @@ function Caapora(opts) {
 
         // Barra de energia dinâmica
         this.bar = game.add.bitmapData(128, 8);
-     
+
         this.bar.context.fillStyle = '#0f0';
-        
+
          this.bar.context.fillRect(0, 0, baseLife, 8);
-        
+
         this.bar.dirty = true;
-     
-        caaporaSprite.lifebar = game.add.sprite(0, -70, this.bar); 
+
+        caaporaSprite.lifebar = game.add.sprite(0, -70, this.bar);
         caaporaSprite.lifebar.anchor.setTo(0.2, 1);
         caaporaSprite.addChild(caaporaSprite.lifebar);
         // End Barra de Energia
-        
-  
+
+
     // Inclui o texto acima da barra de vida
     // Este texto será atualizado no Update do game loop
     var style = {font: "bold 14px Arial", fill: "#333", wordWrap: true, wordWrapWidth: 150, align: "center"};
     textCaapora = game.add.text(30, -90, "Caapora - HP:  100", style);
     textCaapora.anchor.set(0.5);
-    caaporaSprite.addChild(textCaapora);
+    // caaporaSprite.addChild(textCaapora);
     caaporaSprite.anchor.set(0.5);
+
+    text = game.add.text(30, -90, '', { font: "10pt Courier", fill: "#19cb65", stroke: "#119f4e", strokeThickness: 2 });
+    text.anchor.set(0.5, 0.5);
+    caaporaSprite.addChild(text);
+    this.nextLine();
 
     // Habilita a Fisica no Player e Colisão
     game.physics.isoArcade.enable(caaporaSprite);
@@ -60,16 +84,16 @@ function Caapora(opts) {
 
     // Adiciona a animação referente a movimentação
     //  Our two animations, walking left and right.
-    caaporaSprite.animations.add('down', [0,1,2], 10, true);
+    caaporaSprite.animations.add('down', [0, 1, 2], 10, true);
     //caaporaSprite.animations.add('down left', [4,5,6,7], 10, true);
-    caaporaSprite.animations.add('left', [24,25,26,27], 10, true);
+    caaporaSprite.animations.add('left', [24, 25, 26, 27], 10, true);
     //caaporaSprite.animations.add('up left', [3,4,5], 10, true);
-    caaporaSprite.animations.add('up', [8,9,10], 10, true);
+    caaporaSprite.animations.add('up', [8, 9, 10], 10, true);
     //caaporaSprite.animations.add('up right', [40, 41, 42, 43, 44, 45, 46, 47], 10, true);
-    caaporaSprite.animations.add('right', [16,17,18,19], 10, true);
+    caaporaSprite.animations.add('right', [16, 17, 18, 19], 10, true);
     //caaporaSprite.animations.add('down right', [56, 57, 58, 59, 60, 61, 62, 63], 10, true);
-    
-   
+
+
 
 
 }
@@ -77,9 +101,49 @@ function Caapora(opts) {
 // Getters and Setters das Propriedades desta Classe
 // Por algum motivo os atributos não podem ser acessados diretamente (?)
 Caapora.prototype = {
-    
+
+    updateLine: function () {
+
+      if (line.length < content[index].length)
+      {
+          line = content[index].substr(0, line.length + 1);
+          // text.text = line;
+          text.setText(line);
+      }
+      else
+      {
+          //  Wait 2 seconds then start a new line
+          game.time.events.add(Phaser.Timer.SECOND * 2, this.nextLine, this);
+      }
+
+    },
+
+    nextLine: function () {
+
+      index++;
+
+      if (index < content.length)
+      {
+          line = '';
+          game.time.events.repeat(80, content[index].length + 1, this.updateLine, this);
+          this.isCaaporaSpeaking = true;
+
+      } else {
+
+        this.isCaaporaSpeaking = false;
+
+      }
+
+    },
+
+    isSpeaking: function () {
+
+      return isCaaporaSpeaking;
+
+    },
+
     setAlert: function(state){
-        
+
         alert = state;
     },
     // Getters and Setters.
@@ -119,39 +183,39 @@ Caapora.prototype = {
     },
     // Método que será usado no GameLoop que movimenta o Caapora
     checkMovement: function () {
-        
-        
+
+
         if(this.alert == true){
-            
-            
-               
+
+
+
               caaporaSprite.alert = game.add.sprite(0, -50, 'alert');
               caaporaSprite.alert.anchor.setTo(0.2, 1);
               caaporaSprite.addChild(caaporaSprite.alert);
-              
-                
-              var ref = this;         
-            
+
+
+              var ref = this;
+
              setInterval(function(){
-               
+
                  caaporaSprite.alert.destroy();
-                 
+
                  ref.setAlert(false);
-             
-                 },1000 );
-         
-         
+
+                 }, 1000);
+
+
             this.alert;
         }
-        
-      
+
+
          // Barra de Energia
          // ensure you clear the context each time you update it or the bar will draw on top of itself
         this.bar.context.clearRect(0, 0, this.bar.width, this.bar.height);
-        
+
         // some simple colour changing to make it look like a health bar
         if (baseLife < 32) {
-           this.bar.context.fillStyle = '#f00';   
+           this.bar.context.fillStyle = '#f00';
         }
         else if (baseLife < 64) {
             this.bar.context.fillStyle = '#ff0';
@@ -159,14 +223,14 @@ Caapora.prototype = {
         else {
             this.bar.context.fillStyle = '#0f0';
         }
-        
+
         // draw the bar
         this.bar.context.fillRect(0, 0, baseLife, 8);
-        
+
         // important - without this line, the context will never be updated on the GPU when using webGL
         this.bar.dirty = true;
 
-        
+
         //  Reset the players velocity (movement)
         caaporaSprite.body.velocity.x = 0;
         caaporaSprite.body.velocity.y = 0;
@@ -203,7 +267,7 @@ Caapora.prototype = {
             caaporaSprite.body.velocity.y = 150;
             caaporaSprite.animations.play('down');
         }
-        
+
          else if (up_left.isDown)
          {
          //  NOROESTE
@@ -232,11 +296,11 @@ Caapora.prototype = {
          caaporaSprite.body.velocity.y = 0;
          caaporaSprite.animations.play('down right');
          }
-        
-        // Se não controla pelo mouse 
+
+        // Se não controla pelo mouse
         else {
-        
-        
+
+
             //  only move when you click
             if (game.input.mousePointer.isDown)
                {
