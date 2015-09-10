@@ -47,17 +47,17 @@ function Cowboy(opts) {
 
         // Barra de energia dinâmica
         this.bar = this.game.add.bitmapData(128, 8);
-     
+
         this.bar.context.fillStyle = '#0f0';
-        
+
          this.bar.context.fillRect(0, 0, baseLife, 8);
-        
+
         this.bar.dirty = true;
-        
-        cowboy.lifebar = this.game.add.sprite(0, -70, this.bar); 
+
+        cowboy.lifebar = this.game.add.sprite(0, -70, this.bar);
         cowboy.lifebar.anchor.setTo(0.2, 1);
         cowboy.addChild(cowboy.lifebar);
-        
+
 
     // Inclui o texto acima da barra de vida
     // Este texto será atualizado no Update do game loop
@@ -129,15 +129,15 @@ Cowboy.prototype = {
         baseAttack = attack;
     },
     IA: function () {
-        
-        
+
+
         // Barra de Energia
          // ensure you clear the context each time you update it or the bar will draw on top of itself
         this.bar.context.clearRect(0, 0, this.bar.width, this.bar.height);
-        
+
         // some simple colour changing to make it look like a health bar
         if (baseLife < 32) {
-           this.bar.context.fillStyle = '#f00';   
+           this.bar.context.fillStyle = '#f00';
         }
         else if (baseLife < 64) {
             this.bar.context.fillStyle = '#ff0';
@@ -145,13 +145,13 @@ Cowboy.prototype = {
         else {
             this.bar.context.fillStyle = '#0f0';
         }
-        
+
         // draw the bar
         this.bar.context.fillRect(0, 0, baseLife, 8);
-        
+
         // important - without this line, the context will never be updated on the GPU when using webGL
         this.bar.dirty = true;
-        
+
 
         var easystar = this.basicGame.getEasystar();
         collision = this.basicGame.getCollision();
@@ -159,10 +159,10 @@ Cowboy.prototype = {
         currentPlayerXtile = this.basicGame.getCurrentPlayerXtile();
         currentPlayerYtile = this.basicGame.getCurrentPlayerYtile();
 
-        currentEnemyXtile2 = this.basicGame.getCurrentEnemyXtile2();
-        currentEnemyYtile2 = this.basicGame.getCurrentEnemyYtile2();
+        currentEnemyXtile2 = this.basicGame.getCurrentEnemyXtile();
+        currentEnemyYtile2 = this.basicGame.getCurrentEnemyYtile();
 
-        easystar.findPath(currentEnemyXtile2, currentEnemyYtile2, currentPlayerXtile, currentPlayerYtile, function (path) {
+        this.easystar.findPath(currentEnemyXtile2, currentEnemyYtile2, currentPlayerXtile, currentPlayerYtile, function (path) {
 
             if (path === null) {
                 console.log("The path to the destination point was not found.");

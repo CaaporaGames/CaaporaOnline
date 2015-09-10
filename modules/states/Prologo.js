@@ -38,7 +38,7 @@ define([
       text = game.add.text(32, 100, '', { font: "12pt Courier", fill: "#000000", stroke: "#000000", strokeThickness: 2 });
       this.nextLine();
 
-      this.add.button(700, 550, 'skip', this.startGame, this);
+      this.add.button(610, 525, 'skip', this.startGame, this);
 
     },
 

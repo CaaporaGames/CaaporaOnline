@@ -371,17 +371,17 @@ define([
 
             var that = this;
 
-            // setInterval(function () {
-            //
-            //     that.cowboyObj.IA();
-            //
-            // }, this.timeStep);
-            //
-            // setInterval(function () {
-            //
-            //     that.cobraObj.IA();
-            //
-            // }, this.timeStep);
+            setInterval(function () {
+
+                that.cowboyObj.IA();
+
+            }, this.timeStep);
+
+            setInterval(function () {
+
+                that.cobraObj.IA();
+
+            }, this.timeStep);
 
             this.z = game.input.keyboard.addKey(Phaser.Keyboard.Z);
 
@@ -516,7 +516,7 @@ define([
             this.cobraObj.movement();
 
             // move the this.cat
-            // this.catObj.movement();
+            this.catObj.movement();
 
 
             this.currentPlayerXtile = Math.floor(this.cat.body.position.x / this.tileSize);

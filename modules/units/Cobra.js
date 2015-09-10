@@ -22,7 +22,7 @@ function Cobra (opts) {
   this.game = opts.game;
   this.easystar = opts.easystar;
   this.timeStep = opts.timeStep;
-  
+
 
   if (opts.image) {
     key = opts.image;
@@ -70,7 +70,7 @@ Cobra.prototype = {
     CALCULO PARA A COBRA.
     ______________________________________________________________________
     */
-    easystar.findPath(currentEnemyXtile, currentEnemyYtile, currentPlayerXtile, currentPlayerYtile, function (path) {
+    this.easystar.findPath(currentEnemyXtile, currentEnemyYtile, currentPlayerXtile, currentPlayerYtile, function (path) {
       if (path === null) {
         console.log("The path to the destination point was not found.");
       }
@@ -153,7 +153,7 @@ Cobra.prototype = {
     } else {
 
       this.easystar.calculate();
-      
+
     }
 
   },
