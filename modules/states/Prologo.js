@@ -8,14 +8,14 @@ define([
   var line = '';
   var content = [
     " ",
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    "Praesent venenatis convallis sollicitudin.",
-    "Donec et neque ultricies, tristique enim at, venenatis purus.",
-    "Cras imperdiet purus quis varius condimentum.",
-    "Duis sit amet felis sed tortor hendrerit tincidunt in vel libero.",
-    "Mauris efficitur lacus a augue venenatis imperdiet.",
-    "Sed a purus ullamcorper orci ultrices efficitur vitae nec mauris.",
-    "Suspendisse tempus vel lectus a facilisis.",
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit." + "\n" +
+    "Praesent venenatis convallis sollicitudin." + "\n" +
+    "Donec et neque ultricies, tristique enim at, venenatis purus." + "\n" +
+    "Cras imperdiet purus quis varius condimentum." + "\n" +
+    "Duis sit amet felis sed tortor hendrerit tincidunt in vel libero." + "\n" +
+    "Mauris efficitur lacus a augue venenatis imperdiet." + "\n" +
+    "Sed a purus ullamcorper orci ultrices efficitur vitae nec mauris." + "\n" +
+    "Suspendisse tempus vel lectus a facilisis." + "\n",
     " "
   ];
   var content2 = [];
@@ -69,7 +69,7 @@ define([
 
       if (index < content.length)
       {
-        line = '';
+        // line = '';
         game.time.events.repeat(80, content[index].length + 1, this.updateLine, this);
 
       } else {
