@@ -2453,7 +2453,7 @@ Phaser.Plugin.Isometric.Body.prototype = {
 
         this.preRotation = this.rotation;
 
-        if (this._reset || 1 === 1) {
+        if (this._reset) {
             this.prev.x = this.position.x;
             this.prev.y = this.position.y;
             this.prev.z = this.position.z;
