@@ -25,16 +25,16 @@ requirejs.config({
 var game = {};
 //a ordem importa neste caso
 require([
-  'modules/PhaserGame',
-  'modules/states/Boot',
-  'modules/states/BasicGame',
-  'modules/states/level2',
-  'modules/states/GameTitle',
-  'modules/states/GameOver',
-  'modules/states/LevelN',
-  'modules/states/Vitoria',
-  'modules/states/MapMaker',
-  'modules/states/Prologo'
+  'PhaserGame',
+  'states/Boot',
+  'states/BasicGame',
+  'states/level2',
+  'states/GameTitle',
+  'states/GameOver',
+  'states/LevelN',
+  'states/Vitoria',
+  'states/MapMaker',
+  'states/Prologo'
 
 ], function (PhaserGame, BootState, BasicGame, level2, GameTitle, GameOver, LevelN, Vitoria, MapMaker, Prologo) { //PhaserGame, BootState, PreloadState,
 
