@@ -1,5 +1,5 @@
 // Atributos base do personagem.
-var baseLife = 800;
+var baseLife = 8000;
 var baseEnergy = 120;
 var baseDefense = 10;
 var baseAttack = 10;

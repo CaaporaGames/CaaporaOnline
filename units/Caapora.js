@@ -301,13 +301,13 @@ Caapora.prototype = {
 
 
       //  only move when you click
-      if (game.input.mousePointer.isDown)
+      if (game.input.activePointer.isDown)
       {
 
 
-        if (game.input.mousePointer.x < 40
-          && game.input.mousePointer.y > 40
-          && game.input.mousePointer.y < 360)
+        if (game.input.activePointer.x < 40
+          && game.input.activePointer.y > 40
+          && game.input.activePointer.y < 360)
           {
             //  Move to the left
             caaporaSprite.body.velocity.x = -150;
@@ -315,9 +315,9 @@ Caapora.prototype = {
             caaporaSprite.animations.play('left');
 
           }
-          else if (game.input.mousePointer.x > 760
-            && game.input.mousePointer.y > 40
-            && game.input.mousePointer.y < 360)
+          else if (game.input.activePointer.x > 760
+            && game.input.activePointer.y > 40
+            && game.input.activePointer.y < 360)
             {
               //  Move to the right
               caaporaSprite.body.velocity.x = 150;
@@ -326,9 +326,9 @@ Caapora.prototype = {
               caaporaSprite.animations.play('right');
 
             }
-            else if (game.input.mousePointer.x > 40
-              && game.input.mousePointer.x < 760
-              && game.input.mousePointer.y < 40
+            else if (game.input.activePointer.x > 40
+              && game.input.activePointer.x < 760
+              && game.input.activePointer.y < 40
             )
             {
               caaporaSprite.body.velocity.x = -150;
@@ -337,9 +337,9 @@ Caapora.prototype = {
               caaporaSprite.animations.play('up');
 
             }
-            else if (game.input.mousePointer.x > 40
-              && game.input.mousePointer.x < 760
-              && game.input.mousePointer.y > 360 )
+            else if (game.input.activePointer.x > 40
+              && game.input.activePointer.x < 760
+              && game.input.activePointer.y > 360 )
               {
                 caaporaSprite.body.velocity.x = 150;
                 caaporaSprite.body.velocity.y = 150;
