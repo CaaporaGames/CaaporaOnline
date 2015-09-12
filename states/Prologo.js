@@ -28,7 +28,8 @@ define([
 
       game.load.image('prologo', 'assets/images/prologo.png');
       game.load.image('skip', 'assets/images/skip.png');
-
+      game.load.audio('backGroundMusic', 'assets/audio/heroic-age.ogg', 'assets/audio/heroic-age.mp3');
+      
     },
 
     create: function() {
@@ -45,6 +46,8 @@ define([
     startGame: function() {
 
       game.state.start('BasicGame');
+      this.backGround = game.add.audio('backGroundMusic');
+      this.backGround.play();
 
     },
 
