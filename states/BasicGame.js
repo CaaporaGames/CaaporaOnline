@@ -7,10 +7,15 @@ define([
     'factories/TreeFactory',
     'factories/FogoFactory',
     'units/Tree',
-    'units/Fogo'
+    'units/Fogo',
+    'units/Map',
+    'units/TextoTela'
 
 ], function (Phaser) {
     var BasicGame;
+    
+    
+    
     BasicGame = function () {
 
         this.isoGroup;
@@ -22,6 +27,7 @@ define([
         this.cobra;
         this.cat;
         this.z;
+        this.pauseTexto = {};
         this.backgroundMusic;
         this.numRandomico = 0;
         this.tempo = 0;
@@ -43,52 +49,13 @@ define([
         this.easystar = new EasyStar.js();
         this.timeStep = 400; // pathway computation time interval in milliseconds
 
-        // 0 - empty space
-        // 1 - tree
-        // 2 - rock
-        // 3 - water
-        // 4 - grass-beach
-        // 5 - beach-water
-        // 6 - sand;
+        this.map = new Map({
+            
+            background: '#a7ceaf'
+            
+        });
 
-        // 8 - this.player start point
-
-        this.level = [
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
-            [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 2, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0],
-            [0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
-            [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6],
-            [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
-            [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
-            [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
-            [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
-            [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
-            [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
-            [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]
-
-
-        ];
-
-        this.easystar.setGrid(this.level);
+        this.easystar.setGrid(this.map.getLevel);
 
         this.easystar.setIterationsPerCalculation(1000);
 
@@ -123,12 +90,16 @@ define([
         // **********************************
 
     };
-
-
+    
+  
     BasicGame.prototype = {
+        
+        
+        
         preload: function () {
 
             console.log("preload de BasicGame");
+         
 
             var style = {font: "bold 14px Arial", fill: "#fff", wordWrap: true, wordWrapWidth: 150, align: "center"};
             this.textCaapora = this.game.add.text(game.width / 2, game.height / 2 - 30, "Carregando...", style);
@@ -138,7 +109,6 @@ define([
             this.loadingBar = game.add.sprite(game.width / 2, game.height / 2, "loading");
             this.loadingBar.anchor.setTo(0.5, 0.5);
             this.load.setPreloadSprite(this.loadingBar);
-
 
 
             var styleDica = {font: "bold 12px Arial", fill: "#C77636", wordWrap: true, wordWrapWidth: 250, align: "center"};
@@ -167,7 +137,9 @@ define([
             // Set the world size
 
 
-            game.world.setBounds(0, 0, 2048, 1024);
+            game.world.setBounds(0, 0, 4000, 5000);
+            
+            console.log("Mundo " + this.map.level.length * this.tileSize);
             // Start the physical system
 
             game.time.advancedTiming = true;
@@ -180,16 +152,34 @@ define([
         },
         create: function () {
 
-            // após o carregamento deletar sprites
+            // após o carregamento deletar sprites de carregamento
             this.loadingBar.destroy();
             this.textCaapora.destroy();
 
+            // Grupos de unidades 
             this.floorGroup = game.add.group();
             this.isoGroup = game.add.group();
             this.treeGroup = game.add.group();
-
-
-
+            
+            
+            // Escutando evendos do teclado
+            this.z = game.input.keyboard.addKey(Phaser.Keyboard.Z);
+            this.space = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+            
+            // Como o game sairá do game loop ao dar pause, esse metodo armazena um estado de retorno
+            
+            var that = this;
+            this.space.onDown.add(function(){
+                
+                game.paused = false;
+                that.pauseTexto.destruir();
+                
+            
+            
+            }, self);
+            
+           
+      
             this.balde = game.add.isoSprite(830, 800, 30, 'balde', 0, this.isoGroup);
             this.balde.anchor.set(0.5);
             game.physics.isoArcade.enable(this.balde);
@@ -247,15 +237,15 @@ define([
             game.physics.isoArcade.gravity.setTo(0, 0, -500);
 
             // set the Background color of our game
-            game.stage.backgroundColor = "0xfff";
+            game.stage.backgroundColor = this.map.background;
 
             var floorTile, waterTile, grass_beachTile, beach_waterTile, sand;
 
-            for (var yt = 0; yt < this.level.length; yt++) {
+            for (var yt = 0; yt < this.map.getLevel.length; yt++) {
 
-                var tile = this.level[yt];
+                var tile = this.map.getLevel[yt];
 
-                for (var xt = 0; xt < this.level[yt].length; xt++) {
+                for (var xt = 0; xt < this.map.getLevel[yt].length; xt++) {
 
                     if ((tile[xt] != 3) && (tile[xt] != 4) && (tile[xt] != 5) && (tile[xt] != 6)) {
                         floorTile = game.add.isoSprite(xt * this.tileSize, yt * this.tileSize, 0.2, 'ground', 0, this.floorGroup);
@@ -285,11 +275,11 @@ define([
             var fogoFactory = new FogoFactory();
 
 
-            for (var yt = 0; yt < this.level.length; yt++) {
+            for (var yt = 0; yt < this.map.getLevel.length; yt++) {
 
-                var tile = this.level[yt];
+                var tile = this.map.getLevel[yt];
 
-                for (var xt = 0; xt < this.level[yt].length; xt++) {
+                for (var xt = 0; xt < this.map.getLevel[yt].length; xt++) {
 
                     if (tile[xt] == 1) {
 
@@ -382,7 +372,7 @@ define([
 
             }, this.timeStep);
 
-            this.z = game.input.keyboard.addKey(Phaser.Keyboard.Z);
+          
 
             // O this.cat se movimentará randomicamente a cada 3 segundos.
             setInterval(function () {
@@ -407,22 +397,35 @@ define([
                 that.relogio.frame += 1;
 
             }, 3000);
-
-            this.space = game.input.keyboard.addKey(Phaser.Keyboard.P);
-
-
+            
+            
+            
+            
+                  
 
         },
         update: function () {
+      
+            
+             // Only act if paused
+           if(this.space.isDown){
+            
+               game.paused = true;
+               
+               this.pauseTexto = new TextoTela({
+                   text : "Pausado",
+                   size : "24",
+                   color: "#00ff00",
+                   family: "Luckiest Guy",
+                   x: 10 * this.tileSize,
+                   Y: 10 * this.tileSize       
+         
+               });
+               
+           
+            }
 
-          if (this.space.isDown) {
-
-            game.physics.isoArcade.isPaused = true;
-
-          } else {
-            game.physics.isoArcade.isPaused = false;
-
-          }
+          
 
             if (this.tempo > 0)
                 this.contagemRegressiva.setText("Tempo: " + (parseFloat(60) - ((this.tempo / 1000))));
