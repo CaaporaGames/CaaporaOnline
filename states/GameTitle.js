@@ -6,6 +6,7 @@ define([
         var clickArea;
         var _isDown = false;
         var pause;
+        var menuSound;
 
         GameTitle = function(){};
 
@@ -30,12 +31,14 @@ define([
                      game.load.image('caipora', 'assets/images/caipora.png');
                      game.load.image('saci', 'assets/images/saci.png');
                      game.load.image('menubg', 'assets/images/menubg.png');
+                     game.load.audio('menuSound', 'assets/audio/our-story-begins.ogg', 'assets/audio/our-story-begins.mp3');
 
                  },
                 create: function(){
                         //game.stage.backgroundColor = "0x0000ff";
 
-
+                        menuSound = game.add.audio('menuSound');
+                        menuSound.play();
 
                         game.add.sprite(0, 0, 'bg');
 
@@ -78,6 +81,8 @@ define([
 
                 playTheGame: function(){
                         game.state.start("Prologo");
+                        menuSound.stop();
+                        
                 },
 
 
@@ -101,6 +106,7 @@ define([
                 mapMaker: function(){
 
                     game.state.start("MapMaker");
+                    menuSound.stop();
 
                 },
 

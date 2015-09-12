@@ -39,17 +39,7 @@ var InterfaceItem = function(opts){
           
       }
       
-      
-      // Inclui o texto acima da barra de vida
-    // Este texto será atualizado no Update do game loop
-    var style = {font: "bold 12px Arial", fill: "#00ff00", wordWrap: true, wordWrapWidth: 150, align: "center"};
-    
-    this.textCaapora = game.add.text(this.positionX, this.positionY, this.name, style);
-    this.textCaapora.fixedToCamera = true;
-    this.textCaapora.cameraOffset.setTo(this.positionX, this.positionY); 
-    //this.itemSprite.anchor.set(0.5);
-    
-
+  
    
 };
 

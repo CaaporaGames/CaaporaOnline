@@ -7,7 +7,7 @@ define([
     //hahhahah
     var MapMaker = function () {
 
-
+        this.map;
         this.oldcamera;
         this.worldScale = 1;
         this.currentBounds;
@@ -46,56 +46,13 @@ define([
         this.cursorPos = {};
         this.a;
         this.z;
+        this.s;
+        this.d;
+        this.q;
         this.loadingBar;
         this.tileBtns = [];
 
-        // **********************************
-
-
-        // 0 - empty space
-        // 1 - tree
-        // 2 - rock
-        // 3 - water
-        // 4 - grass-beach
-        // 5 - beach-water
-        // 6 - sand;
-
-        // 8 - player start point
-
-        this.level = [
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
-            [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6],
-            [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
-            [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
-            [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
-            [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
-            [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
-            [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
-            [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]
-        ];
-
-
+        
     };
 
 
@@ -165,7 +122,8 @@ define([
         },
         create: function () {
 
-
+            this.map = new Map();
+            
             var itemFactory = new InterfaceItemFactory();
 
             this.loadingBar.destroy();
@@ -217,11 +175,11 @@ define([
 
             var floorTile, waterTile, grass_beachTile, beach_waterTile, sand;
 
-            for (var yt = 0; yt < this.level.length; yt++) {
+            for (var yt = 0; yt < this.map.getLevel.length; yt++) {
 
-                var tile = this.level[yt];
+                var tile = this.map.getLevel[yt];
 
-                for (var xt = 0; xt < this.level[yt].length; xt++) {
+                for (var xt = 0; xt < this.map.getLevel[yt].length; xt++) {
 
                     if ((tile[xt] != 3) && (tile[xt] != 4) && (tile[xt] != 5) && (tile[xt] != 6)) {
                         floorTile = game.add.isoSprite(xt * this.tileSize, yt * this.tileSize, 0.2, 'ground', 0, this.floorGroup);
@@ -245,9 +203,11 @@ define([
                 }
             }
 
-            this.z = game.input.keyboard.addKey(Phaser.Keyboard.Z);
-
             this.a = game.input.keyboard.addKey(Phaser.Keyboard.A);
+            this.s = game.input.keyboard.addKey(Phaser.Keyboard.S);
+            this.d = game.input.keyboard.addKey(Phaser.Keyboard.D);
+            this.w = game.input.keyboard.addKey(Phaser.Keyboard.W);
+            this.q = game.input.keyboard.addKey(Phaser.Keyboard.Q);
 
             // Fazendo o this.tempo funcionar.
             setInterval(function () {
@@ -279,9 +239,26 @@ define([
                 y: 10
 
             });
+            
+            
+            this.sairBtn = itemFactory.createItem({
+                name: 'sair',
+                width: 50,
+                height: 50,
+                color: '#00ff00',
+                x: 680,
+                y: 10
+
+            });
 
 
             this.exportBtn.itemSprite.events.onInputDown.add(this.export, this);
+            
+            this.sairBtn.itemSprite.events.onInputDown.add(function(){ 
+                
+                game.state.clearCurrentState();
+                
+                game.state.start('GameTitle') }, this);
 
             var btnBase = itemFactory.createItem({
                 name: 'water',
@@ -376,8 +353,8 @@ define([
         },
         update: function () {
 
-
-            if (this.a.isDown) {
+          
+            if (this.q.isDown) {
 
                 var that = this;
 
@@ -426,8 +403,8 @@ define([
             game.iso.unproject(this.newPointer , this.cursorPos);
 
 
-            // PRESS UP
-            if (this.cursors.up.isDown)
+            // UP(W)
+            if (this.w.isDown)
             {
                 game.camera.y -= 14;
                 
@@ -438,16 +415,16 @@ define([
 
             }
 
-            // PRESS DOWN
-            else if (this.cursors.down.isDown)
+            // DOWN (S)
+            else if (this.s.isDown)
             {
                 game.camera.y += 14;
                 this.subY += 14;
 
             }
 
-            // PRESS LEFT
-            if (this.cursors.left.isDown)
+            // LEFT (A)
+            if (this.a.isDown)
             {
                 game.camera.x -= 14;
                this.subX -= 14;
@@ -455,8 +432,8 @@ define([
             }
 
 
-            // PRESS RIGHT
-            else if (this.cursors.right.isDown)
+            // RIGHT (D)
+            else if (this.d.isDown)
             {
                 game.camera.x += 14;
                this.subX += 14;
@@ -470,12 +447,25 @@ define([
             this.zoompoint.x = game.input.mousePointer.worldX;
             this.zoompoint.y = game.input.mousePointer.worldY;
 
-            // move camera / pan
 
+            // ---- Controle de camera pelo mouse ----
+            // move camera / pan
+            // se clicar na tela e segurar move o mapa
+            /*
             if (game.input.activePointer.isDown && !game.input.pointer2.isDown) {
+                
+           
                 if (this.oldcamera) { // if moving the world always continue from the last position
-                    game.camera.x += this.oldcamera.x - game.input.activePointer.position.x;
-                    game.camera.y += this.oldcamera.y - game.input.activePointer.position.y;
+                    
+                     if(game.input.activePointer.position.x > this.worldwidth / 2){
+                    
+                                 this.subX + 140;
+                    
+                        }
+                
+                
+                    game.camera.x += this.oldcamera.x - game.input.activePointer.position.x ; // + this.subX
+                    game.camera.y += this.oldcamera.y - game.input.activePointer.position.y ; //+ this.subY
                 }
                 this.oldcamera = game.input.activePointer.position.clone();
             }
@@ -547,6 +537,7 @@ define([
 
             }
 
+            */
 
             game.physics.isoArcade.collide(this.isoGroup);
 
@@ -616,8 +607,10 @@ define([
                     output.push(3)
                 } else if (tile.key == 'ground')
                     output.push(0)
-                else if (tile.key == 'sand')
-                    output.push(6)
+                else if (tile.key == 'sand') // representing tree
+                    output.push(1)
+                 else if (tile.key == 'beach-water')
+                    output.push(4)
                 else
                     output.push(5)
 
@@ -634,13 +627,13 @@ define([
             var count = 0;
 
 
-            for (var j = 0; j < 30; j++) {
+            for (var j = 0; j < this.map.getLevel.length; j++) {
 
                 win.document.write(' [ ');
 
-                for (var i = 0; i < 30; i++) {
-
-                    if (i == 29)
+                for (var i = 0; i < this.map.getLevel[0].length; i++) {
+                    // não inserir virgula no ultimo elemento da linha    
+                    if (i == this.map.getLevel[0].length - 1)
                         win.document.write(output[count]);
                     else
                         win.document.write(output[count] + ', ');
@@ -648,8 +641,9 @@ define([
 
                     count++;
                 }
-
-                if (j != 29)
+                
+                // não inserir conchetes no último elemento da coluna
+                if (j != this.map.getLevel.length[0] - 1)
                     win.document.write(' ], <br />');
                 else
                     win.document.write(' ] <br />');
