@@ -13,7 +13,6 @@ define([
         GameTitle.prototype = {
                 preload: function () {
 
-
                     var loadingBar = game.add.sprite(game.width/2, game.height/2 ,"loading");
                     loadingBar.anchor.setTo(0.5,0.5);
                     this.load.setPreloadSprite(loadingBar);
