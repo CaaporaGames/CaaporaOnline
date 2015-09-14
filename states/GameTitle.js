@@ -3,89 +3,81 @@ define([
 ], function (Phaser) {
 
         var GameTitle;
-        var clickArea;
-        var _isDown = false;
-        var pause;
+        //var clickArea;
+        //var _isDown = false;
+        var isPlaying = true;
         var menuSound;
-
+        
         GameTitle = function(){};
 
         GameTitle.prototype = {
-                 preload: function () {
+                preload: function () {
 
 
-                     var loadingBar = game.add.sprite(game.width/2, game.height/2 ,"loading");
+                    var loadingBar = game.add.sprite(game.width/2, game.height/2 ,"loading");
                     loadingBar.anchor.setTo(0.5,0.5);
                     this.load.setPreloadSprite(loadingBar);
 
-                     var style = {font: "bold 14px Arial", fill: "#fff", wordWrap: true, wordWrapWidth: 150, align: "center"};
-                     textCaapora = this.game.add.text(game.width/2, game.height/2 - 30, "Bem-vindo ao Caapora Online", style);
-                     textCaapora.anchor.set(0.5);
+                    var style = {font: "bold 14px Arial", fill: "#fff", wordWrap: true, wordWrapWidth: 150, align: "center"};
+                    textCaapora = this.game.add.text(game.width/2, game.height/2 - 30, "Bem-vindo ao Caapora Online", style);
+                    textCaapora.anchor.set(0.5);
 
 
-                     console.log("iniciando game title");
-                     game.load.bitmapFont('desyrel', 'assets/fonts/bitmapFonts/desyrel.png', 'assets/fonts/bitmapFonts/desyrel.xml');
-                     game.load.image('bg', 'assets/images/caipora-background.png');
-                     game.load.image('menu', 'assets/images/menu.png');
-                     game.load.image('creditos', 'assets/images/creditos.png');
-                     game.load.image('caipora', 'assets/images/caipora.png');
-                     game.load.image('saci', 'assets/images/saci.png');
-                     game.load.image('menubg', 'assets/images/menubg.png');
-                     game.load.audio('menuSound', 'assets/audio/our-story-begins.ogg', 'assets/audio/our-story-begins.mp3');
+                    console.log("iniciando game title");
+                    game.load.bitmapFont('desyrel', 'assets/fonts/bitmapFonts/desyrel.png', 'assets/fonts/bitmapFonts/desyrel.xml');
+                    game.load.image('bg', 'assets/images/caipora-background.png');
+                    game.load.image('menu', 'assets/images/menu.png');
+                    game.load.image('creditos', 'assets/images/creditos.png');
+                    game.load.image('caipora', 'assets/images/caipora.png');
+                    game.load.image('saci', 'assets/images/saci.png');
+                    game.load.image('menubg', 'assets/images/menubg.png');
+                    game.load.image('controlSound', 'assets/images/volume2.png')
+                    game.load.spritesheet('button', 'assets/images/button.png', 80, 20);
+                    game.load.audio('menuSound', 'assets/audio/our-story-begins.ogg', 'assets/audio/our-story-begins.mp3');
 
-                 },
+                },
+
+
                 create: function(){
-                        //game.stage.backgroundColor = "0x0000ff";
 
+                        //game.stage.backgroundColor = "0x0000ff";
                         menuSound = game.add.audio('menuSound');
                         menuSound.play();
 
-                        game.add.sprite(0, 0, 'bg');
+                        game.add.image(0, 0, 'bg');
+                        game.add.bitmapText(game.world.centerX - 200, game.world.centerY - 100, 'desyrel', 'Caapora Online', 64);
 
-                         game.add.sprite(game.world.centerX - 100, game.world.centerY + 115, 'menubg');
-
-                         game.add.bitmapText(game.world.centerX - 200, game.world.centerY - 100, 'desyrel', 'Caapora Online', 64);
-
-                         novoJogo = game.add.bitmapText(game.world.centerX - 45, game.world.centerY + 120, 'desyrel', 'Novo Jogo', 30);
-
-                         player = game.add.bitmapText(game.world.centerX - 45, game.world.centerY + 160, 'desyrel', 'Jogador', 30);
-
-                         opcoes = game.add.bitmapText(game.world.centerX - 45, game.world.centerY + 200, 'desyrel', 'Opcoes', 30);
-
-                         mmk = game.add.bitmapText(game.world.centerX - 45, game.world.centerY + 240, 'desyrel', 'Map Maker', 30);
-
-                         opcoes.inputEnabled = true;
-
-                         mmk.inputEnabled = true;
-
-                         novoJogo.inputEnabled = true;
-
-                         player.inputEnabled = true;
-
-                         opcoes.events.onInputUp.add(this.pause, self);
-
-                         mmk.events.onInputUp.add(this.mapMaker, self);
-
-                         novoJogo.events.onInputUp.add(this.playTheGame, self);
-
-                         player.events.onInputUp.add(this.player, self);
-
-                         game.input.onDown.add(this.unpause, self);
-
-
-
-
-
-
+                        this.makeButton('Novo Jogo', game.world.centerX - 45, game.world.centerY + 120, this.playTheGame);
+                        this.makeButton('Jogador', game.world.centerX - 45, game.world.centerY + 160, this.player);
+                        this.makeButton('Opcoes', game.world.centerX - 45, game.world.centerY + 200, this.pause);
+                        this.makeButton('Map Maker', game.world.centerX - 45, game.world.centerY + 240, this.mapMaker);
+                        
+                        game.add.button(700,500, 'controlSound', this.controlSound, this, 0);
+                        
+                        game.input.onDown.add(this.unpause, self);
                 },
+                
+                
+                makeButton: function(name, x, y, z) {
 
+                    var button = game.add.button(x, y, 'button', z, this, 0, 1, 2);
+                    
+                    button.name = name;
+                    button.scale.set(2, 1.5);
+                    button.smoothed = false;
+
+                    var text = game.add.bitmapText(x, y, 'desyrel', name, 22);
+                    text.x += (button.width / 2) - (text.textWidth / 2);
+                    },
+                
+                
                 playTheGame: function(){
+                    
                         game.state.start("Prologo");
                         menuSound.stop();
-                        
                 },
-
-
+                
+                    
                 pause: function(){
 
                         // When the paus button is pressed, we pause the game
@@ -95,14 +87,25 @@ define([
                         menu = game.add.sprite(game.width/2, game.height/2, 'menu');
                         menu.anchor.setTo(0.5, 0.5);
 
-
-
-                        // And a label to illustrate which menu item was chosen. (This is not necessary)
+                    // And a label to illustrate which menu item was chosen. (This is not necessary)
                         choiseLabel = game.add.text(game.width/2, game.height-150, 'Clique fora da janela para sair', { font: '16px Arial', fill: '#fff' });
                         choiseLabel.anchor.setTo(0.5, 0.5);
-
                 },
 
+                
+                controlSound: function(){
+                   
+                   if(isPlaying === true){
+                       menuSound.pause();
+                       isPlaying = false;
+                   }
+                   else{
+                       menuSound.resume();
+                       isPlaying = true;
+                   }
+                    
+                },
+                
                 mapMaker: function(){
 
                     game.state.start("MapMaker");
