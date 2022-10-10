@@ -35,15 +35,15 @@ Youtube: https://www.youtube.com/channel/UCjr5OPUBJquAoY5Y_P9FnrQ
 
 # Como rodar 
 1. Instale o NodeJS, o NPM vem junto. 
-1. Instale o Git e na instalacao escolha a opção de usar pelo prompt de comando do windows
+1. Instale o `git` e na instalação escolha a opção de usar pelo prompt de comando do Windows
 1. Coloque a pasta do Node (C:\Users\[seu_usuario]\AppData\Roaming\npm) no PATH do sistema
-1. Instale o bower com: `npm install -g bower`
-1. Instale o grunt com `npm install -g grunt-cli grunt` 
-1. Abra o terminal 
-1. Entre uma pasta de sua preferencia pra armazenar o projeto exemplo: `mkdir workspace` e depois `cd workspace`
-1. Baixe do github com: `git clone https://github.com/CaaporaGames/CaaporaOnline`
+1. Instale o `yarn` com: `npm install -g yarn`
+1. Instale o `grunt` com `npm install -g grunt-cli grunt` 
+1. Abra o prompt de comando 
+1. Entre uma pasta de sua preferência pra armazenar o projeto exemplo: `mkdir workspace` e depois `cd workspace`
+1. Realize o `clone`: `git clone https://github.com/CaaporaGames/CaaporaOnline`
 1. Navegue até a pasta do projeto com `cd CaaporaOnline` 
-1. Instale as dependencias com: `bower install -V`
+1. Instale as dependências com: `yarn install`
 1. Instale os pacotes do node com `npm install`
 1. Execute as tarefas do gruntfile com `grunt`
 1. Navegue para http://localhost:9000
